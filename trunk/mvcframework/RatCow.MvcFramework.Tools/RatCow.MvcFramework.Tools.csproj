@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8CDC0107-0842-41A8-AD9C-E26FFB6B7F10}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{AA53FC2C-ADE1-4FEF-84F3-FCB566517D55}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ratcow.MvcFramework.MvcTool</RootNamespace>
-    <AssemblyName>mvctool</AssemblyName>
+    <RootNamespace>RatCow.MvcFramework.Tools</RootNamespace>
+    <AssemblyName>RatCow.MvcFramework.Tools</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -46,14 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="ControllerCreationEngine.cs" />
+    <Compile Include="ControlTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RatCow.MvcFramework.Tools\RatCow.MvcFramework.Tools.csproj">
-      <Project>{AA53FC2C-ADE1-4FEF-84F3-FCB566517D55}</Project>
-      <Name>RatCow.MvcFramework.Tools</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
