@@ -49,18 +49,3 @@ namespace testapp2
 
 }
 
-n button1 { get; set; }
-		[Action("button1", "Click")]
-		public void Fbutton1_Click(object sender, EventArgs e)
-		{
-			//Auto generated call
-			button1Click();
-		}
-
-		[Outlet("checkBox1")]
-		public CheckBox checkBox1 { get; set; }
-	}
-#endregion /*GUI glue code*/
-
-}
-

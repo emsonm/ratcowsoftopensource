@@ -67,7 +67,14 @@ namespace testapp
     /// </summary>
     public void Button1Clicked()
     {
-      textBox1.Text = "Hello, world!";
+      //This would obviously bee the "traditional" way to do this
+      //textBox1.Text = "Hello, world!";
+
+      //However, this method removes all assumptions about class structure.
+      //This is still experimental, and not optimised, but going forward
+      //using a methd similar to this will remove the need to assume
+      //a class has any specific structure.
+      OutletAccessor.SetPropertyValue<string>(textBox1, "Text", "Hello, world");
     }
     
     
