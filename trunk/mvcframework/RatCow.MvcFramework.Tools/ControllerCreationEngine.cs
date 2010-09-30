@@ -61,7 +61,14 @@ namespace RatCow.MvcFramework.Tools
         ControlTree tree = trees[0];
         string s = ClassGenerator(tree);
 
-        TextWriter writer = new StreamWriter(File.OpenWrite(String.Format("{0}Controller.cs", tree.ClassName)));
+        string fileName = String.Format("{0}Controller.cs", tree.ClassName);
+
+        //added a check to see if file exists, otherwise we might get weird streaming issues
+        //if it does, I delete it for now.
+        if (File.Exists(fileName))
+          File.Delete(fileName);
+
+        TextWriter writer = new StreamWriter(File.OpenWrite(fileName));
         try
         {
           writer.WriteLine(s);
@@ -338,7 +345,7 @@ namespace RatCow.MvcFramework.Tools
           code_s2.AppendFormat("\t\t[Action(\"{0}\", \"Click\")]\r\n\t\tpublic void F{0}_Click(object sender, EventArgs e)\r\n", control.Key);
           code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
 
-          code_s1.AppendFormat("\t\tvoid {0}Click()\r\n", control.Key);
+          code_s1.AppendFormat("\t\tprotected virtual void {0}Click()\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
           code_s1.AppendLine("\t\t{\r\n");
           code_s1.AppendLine("\t\t}\r\n");
 
