@@ -353,6 +353,19 @@ namespace RatCow.MvcFramework.Tools
 
           code_s2.AppendLine("\t\t}\r\n");
         }
+        else if (control.Value == typeof(System.Windows.Forms.CheckBox))
+        {
+          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"Click\")]\r\n\t\tpublic void F{0}_Click(object sender, EventArgs e)\r\n", control.Key);
+          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+          code_s1.AppendFormat("\t\tprotected virtual void {0}Click()\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
+          code_s1.AppendLine("\t\t{\r\n");
+          code_s1.AppendLine("\t\t}\r\n");
+
+          code_s2.AppendFormat("\t\t\t{0}Click();\r\n", control.Key);
+
+          code_s2.AppendLine("\t\t}\r\n");
+        }
       }
 
       code_s1.AppendLine("\t}"); //end of class declaration
