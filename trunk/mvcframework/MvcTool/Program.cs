@@ -46,13 +46,55 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
   {
     static void Main(string[] args)
     {
+      bool isAbstract = false;
+      string className;
+      //This is new - we try to interpret the compiler params
+      if (args.Length == 0)
+      {
+        Console.WriteLine("USAGE - mvctool [options] classname");
+        Console.WriteLine("\r\nOPTIONS:");
+        Console.WriteLine(" --abstract / -a : prefix controllers with \"Abstract\" prefix");
+        Console.WriteLine();
+        return;
+      }
+      else if (args.Length == 12)
+      {
+        isAbstract = false;
+        className = args[0];
+      }
+      else if (args.Length > 1 || args.Length == 2)
+      {
+        //is the param "abstract"?
+        if (args[0].Contains("-a"))
+        {
+          isAbstract = true;
+          className = args[1];
+        }
+        else
+        {
+          Console.WriteLine("Unknown parameter!");
+          return;
+        }
+      }
+      else
+      {
+        Console.WriteLine("Unknown parameter!");
+        return;
+      }
+
+
       //we currently assume thesrs is one param and that is the name of the class
       //we also assume the files will be named in a standard C# naming convention.
       //i.e. MainForm -> MainForm.Designer.cs
-      if (ControllerCreationEngine.Compile(args[0]))
+      if (ControllerCreationEngine.Compile(className))
       {
         //if we get here, we created the desired assembly above
-        ControllerCreationEngine.Generate(args[0]);
+        ControllerCreationEngine.Generate(className, isAbstract);
+      }
+      else
+      {
+        Console.WriteLine("Error! The file could not be generated.");
+        return;
       }
     }
   }

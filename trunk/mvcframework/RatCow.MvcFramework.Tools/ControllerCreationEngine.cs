@@ -49,19 +49,32 @@ namespace RatCow.MvcFramework.Tools
   {
 
     /// <summary>
-    /// Split this up in to sections so I can more easliy re-use it in the future.
+    /// retain older interface
     /// </summary>
     /// <param name="className"></param>
     public static void Generate(string className)
     {
+      Generate(className, false);
+    }
+
+    const string ABSTRACT_PREFIX = "Abstract";
+
+    /// <summary>
+    /// Split this up in to sections so I can more easliy re-use it in the future.
+    /// </summary>
+    /// <param name="className"></param>
+    public static void Generate(string className, bool isAbstract)
+    {
+      string prefix = (isAbstract ? ABSTRACT_PREFIX : String.Empty);
+
       //this *can* generate more than one entry
       ControlTree[] trees = GenerateTree(className);
       if (trees != null && trees.Length == 1)
       {
         ControlTree tree = trees[0];
-        string s = ClassGenerator(tree);
+        string s = ClassGenerator(tree, isAbstract);
 
-        string fileName = String.Format("{0}Controller.cs", tree.ClassName);
+        string fileName = String.Format("{1}{0}Controller.cs", tree.ClassName, prefix);
 
         //added a check to see if file exists, otherwise we might get weird streaming issues
         //if it does, I delete it for now.
@@ -203,7 +216,11 @@ namespace RatCow.MvcFramework.Tools
 
 
       string namespaceName = "";
-      TextReader tr = new StreamReader(File.OpenRead(String.Format("{0}.Designer.cs", className)));
+      string fileToCompile = String.Format("{0}.Designer.cs", className);
+
+      if (!File.Exists(fileToCompile)) return false;
+
+      TextReader tr = new StreamReader(File.OpenRead(fileToCompile));
       try
       {
         //read till we find the namespace
@@ -308,27 +325,46 @@ namespace RatCow.MvcFramework.Tools
       return trees.ToArray();
     }
 
+
+    /// <summary>
+    /// maintain the public inteface.
+    /// </summary>
+    /// <param name="tree"></param>
+    /// <returns></returns>
     public static string ClassGenerator(ControlTree tree)
     {
+      return ClassGenerator(tree, false);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="tree"></param>
+    /// <param name="isAbstract"></param>
+    /// <returns></returns>
+    public static string ClassGenerator(ControlTree tree, bool isAbstract)
+    {
+      string prefix = (isAbstract ? ABSTRACT_PREFIX : String.Empty);
+
       StringBuilder code = new StringBuilder();
 
-      code.AppendLine("/*Auto generated*/ \r\n\t\nusing System; \r\nusing System.Windows.Forms;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\nusing System.Text;\r\n\r\n//3rd Party\r\nusing RatCow.MvcFramework;\r\n");
+      code.AppendLine("/*Auto generated*/ \r\n\r\n\tusing System; \r\nusing System.Windows.Forms;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\nusing System.Text;\r\n\r\n//3rd Party\r\nusing RatCow.MvcFramework;\r\n");
       code.AppendFormat("namespace {0}\r\n", tree.NamespaceName);
       code.AppendLine("{");
 
       StringBuilder code_s1 = new StringBuilder();
 
-      code_s1.AppendFormat("\tinternal partial class {0}Controller: BaseController<{0}>\r\n", tree.ClassName);
+      code_s1.AppendFormat("\tinternal partial class {1}{0}Controller: BaseController<{0}>\r\n", tree.ClassName, prefix);
       code_s1.AppendLine("\t{");
 
       //constructor
-      code_s1.AppendFormat("\t\tpublic {0}Controller() : base()\r\n", tree.ClassName);
+      code_s1.AppendFormat("\t\tpublic {1}{0}Controller() : base()\r\n", tree.ClassName, prefix);
       code_s1.AppendLine("\t\t{\r\n\t\t}\r\n");
 
 
       StringBuilder code_s2 = new StringBuilder();
       code_s2.AppendLine("\r\n#region GUI glue code\r\n");
-      code_s2.AppendFormat("\tpartial class {0}Controller\r\n", tree.ClassName);
+      code_s2.AppendFormat("\tpartial class {1}{0}Controller\r\n", tree.ClassName, prefix);
       code_s2.AppendLine("\t{");
 
       //we now have access to the controls
