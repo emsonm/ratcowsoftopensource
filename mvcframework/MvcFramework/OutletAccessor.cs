@@ -31,7 +31,9 @@
 
 using System;
 using System.Collections.Generic;
+#if !CF_20
 using System.Linq;
+#endif
 using System.Text;
 
 using System.Reflection;
@@ -61,7 +63,11 @@ namespace RatCow.MvcFramework
         PropertyInfo pi = targetType.GetProperty(name);
         //run the property getter
         object o = pi.GetValue(instance, null);
+#if !USE_COMPACTFRAMEWORK
         result = (T)Convert.ChangeType(o, result.GetType()); //could just cast here
+#else
+        result = (T)o; //CF - just do CAST here as it's a lot simpler
+#endif
       }
       catch (Exception ex)
       {
