@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.MvcFramework.Tools",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testapp2", "testapp2\testapp2.csproj", "{BFE9E0DE-77EE-405B-AB7C-D1BFEEF02EB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCFrameworkCF", "MvcFramework\MVCFrameworkCF.csproj", "{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCFrameworkCF2003", "MvcFramework\MVCFrameworkCF2003.csproj", "{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFTest2003", "CFTest2003\CFTest2003.csproj", "{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +43,20 @@ Global
 		{BFE9E0DE-77EE-405B-AB7C-D1BFEEF02EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFE9E0DE-77EE-405B-AB7C-D1BFEEF02EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFE9E0DE-77EE-405B-AB7C-D1BFEEF02EB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

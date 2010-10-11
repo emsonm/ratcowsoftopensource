@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+#if !CF_20
 using System.Linq;
+#endif
 using System.Text;
 
 namespace RatCow.MvcFramework
@@ -23,7 +25,7 @@ namespace RatCow.MvcFramework
     /// <param name="title"></param>
     public static void Alert(string message, string title)
     {
-      System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning); 
+      System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation, System.Windows.Forms.MessageBoxDefaultButton.Button2); //CF needs this 
     }
 
     /// <summary>
@@ -44,7 +46,7 @@ namespace RatCow.MvcFramework
     /// <returns></returns>
     public static bool BooleanDecision(string message, string title)
     {
-      return (System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes); 
+      return (System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes); 
     }
   }
 }

@@ -31,7 +31,9 @@
 
 using System;
 using System.Collections.Generic;
+#if !CF_20
 using System.Linq;
+#endif
 using System.Text;
 
 using System.Reflection;
@@ -112,8 +114,20 @@ namespace RatCow.MvcFramework
                   EventInfo ei = ct.GetEvent(action.Action, bindingFlags);
                   if (ei != null)
                   {
+#if !USE_COMPACTFRAMEWORK
                     Delegate temp = Delegate.CreateDelegate(typeof(EventHandler), this, mi, false);
                     ei.AddEventHandler(value, temp);
+#else
+#if CF_35
+                    Delegate temp = Delegate.CreateDelegate(typeof(EventHandler), this, mi); //, false); <--CF doesn't like the 4th param
+                    ei.AddEventHandler(value, temp);
+#else
+                    //I might want to 
+                    EventHandler temp = new EventHandler(new EventHandlerProxy(mi, this).ProxyEventMethod);
+                    ei.AddEventHandler(value, temp);
+#endif
+#endif
+
                   }
                 }
               }
@@ -123,6 +137,32 @@ namespace RatCow.MvcFramework
       }
     }
 
+    #region CompactFramework 2.0 Delegate suport
+
+
+#if USE_COMPACTFRAMEWORK && CF_20
+
+    //This is required for CF 2.0 support as Delegate.CreateDelegate does not exist
+    internal class EventHandlerProxy
+    {
+      MethodInfo fmi = null;
+      object ftarget = null;
+
+      public EventHandlerProxy(MethodInfo mi, object target)
+      {
+        fmi = mi;
+        ftarget = target;
+      }
+
+      public void ProxyEventMethod(object sender, EventArgs e)
+      {
+        fmi.Invoke(ftarget, new object[] { sender, e });
+      }
+    }
+
+#endif
+
+    #endregion
 
     public T View { get { return target; } }
   }
