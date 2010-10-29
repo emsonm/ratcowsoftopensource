@@ -1,0 +1,104 @@
+History
+
+TODO: 
+UNDER WAY (1) clean up the interface and make stuff private or protected. 
+(2) bug - hiding stroke window by clicking tab losed the window...
+(3) the size check needs to be indipendant of the classes. Make both places thet do the if/else
+     check, use the same routine...
+(4) Add in a floating hint to show the matched char.
+(5) Add a 'new file' to the pref.
+(6) Add more selections to the pref app.
+(7) Tidy up the pref so that it's not monolithic in structure...
+
+1.0.10 20040307/20040308/200403010/200403014/200403016/200403017/200403018
+o Got about box to use actual version no read from exe.
+o Got settings to store the stroke file to use.
+o Added preliminary Mime types for the associated files. Need to set icons etc...
+Pref 1.01
+o Filled out the pref app. Now has two tabs, a training tab with a stroke window and a initial
+   tab which currently needs more work. 
+Pref 1.02
+o Got pref app to select the file we are using and signal the app with that file. A BMenuFIeld
+   gives a ComboBox style selection.
+Pref 1.02
+o Got pref to accept strokes and save them to the active file (boy was that "fun".)
+o Added more stuff to pref and broke it up into seperate files.
+Pref 1.03
+o As an aside... ported the previous version to PPC when laptop psu was accidentally left at
+   work ;-)
+Pref 1.04
+o Added scale slider to pref. still needs s little work as Be's slider needs to be subclasses to get
+   all functionality to work (as in the update of the position's text.. pain!!)
+Pref 1.05
+o After a false lead (reading and believing Be's docs...) I wasted most of the time today messing
+   with slider control descendednts.... just didn't work as they claimed because the routing we are
+   meant to override is a const.. DOH! I'm sure if I invested another couple of hours I could research
+   the solution, but I really can't be arsed. Instead I've just altered the label (which I thought is what the 
+   routine I was overriding was meant to be doing anyway, just aligning right instead) and wrote a 
+   function to return the right string.... I could have done that yesterday!!!!!!  
+
+
+1.09 20040307
+o Made strokes load from settings dir by default, but then looks in local dir.
+o Added in the 'reload' scripting message.. 
+o Started the pref app and got it to signal a reload.
+
+1.08 20040307
+o Added settings file using a Be penned class called 'SettingsFile'. I looked at Marcone's Pref class
+   (which is basically the exact same idea, but with a server), but decided to not use proprietry, 
+  sourceless classes. Saves the scale and the help status.
+o Scaling is now implemented including resizeing reletive to the current scale. All seems fone so far,
+   though the implementation needs a little clean up (two places use cut/paste of same if/else 
+   statement.. bad design!!)
+
+1.07 20040305/20040306
+o Found the BBitmapButton experimental source in a Be demo app. Decided to use this over my 
+   own code, because it works a lot more nicely.
+o Filled out the impl. of the scale. It works for grid, but need to resize controls etc.
+o About box now shows nicely.
+
+1.06 20040305
+o Struggled with the dubugger, but seem to have cracked the deletion lock up bug for the windows.
+   dont seem to hang app anymore.
+o Got the about box to appear.
+
+1.05 20040304
+o Added bubble help and a menu item to control its use.
+o Added a "button" to open the menu in a single click environment.
+
+1.04 20040303
+o Now loads strokes from the current path.
+o Can't draw outside of the stroke area.
+o Made the icon look a bit more professional - use same icon for the Summon window.
+o Added provisions for scaling the window.
+
+1.03 20040301
+o Altered the summon window so that it stays on top of all windows. 
+o  Added an image to the summon window. 
+o Fixed the buttons to send keycodes for the non ascii keys that previously worked flakily (DELete    
+   and RETurn)
+o Added code to handle screen resizing. Will auto move the Summon window to the bottom right if the 
+   screen resolution changes.
+o Added a popup menu. 
+o Added a 'quit' item to the popup menu.
+o Added a 'snap' popup menu item to snap the stroke window to the home position. 
+o Added code to force the Stroke window to a 'home' position (right most edge of screen, directly 
+   abobe the summon window..)
+       
+1.02 : 20040229 / 20040301
+Revised the source layout so that everything is not in a single file (it was a big hack originally....!)
+Added in the initial 'summon' functionality. User can show/hide stroke window with a mouse click.
+
+Tracked down the file read bug; added an EOF style marker "0=0" to help knowing when we hit it. There's still a crash bug if there are a lot of blank lines after the strokes, but the EOF is now a *required* feature until further notice.
+
+Altered the window look and feel, removed all the controls from the floating window. Unfortunately this means there's no was to close it... will fix this in next version ;-=)
+
+1.01 : 20040226
+Added "space", "del" and "return" keys. Altered start up position so that it appears in the bottom left
+of a 800x600 screen.
+
+1.00 : 20040225
+Added support for "modes". Both a "caps" mode and a "numeric" mode. Reduced resolution from 300 pixels wide to 150pixels to make it look more reasonable of a 800x600 screen.
+
+N/A : 20040224
+Basic implementation. Strokes work, but there is no way of entering non ascii strokes or numerals.
