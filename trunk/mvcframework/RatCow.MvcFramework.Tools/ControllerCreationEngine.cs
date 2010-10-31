@@ -367,6 +367,15 @@ namespace RatCow.MvcFramework.Tools
       code_s2.AppendFormat("\tpartial class {1}{0}Controller\r\n", tree.ClassName, prefix);
       code_s2.AppendLine("\t{");
 
+      //this is better off hardcoded for now at the BaseController level
+      ////add in "form_load" event
+      //code_s2.AppendLine();
+      //code_s2.AppendLine("\t\t[Action(\"View\", \"Load\")]\r\n\t\tprivate void View_Load(object sender, EventArgs e)\r\n\t\t{\r\n\t\t\tViewLoad();\r\n\t\t}\r\n");
+
+      //code_s1.AppendLine("\t\tprotected virtual void ViewLoad()");    //added "protected virtual" so that I can descend and not have to alter this class at all.
+      //code_s1.AppendLine("\t\t{\r\n");
+      //code_s1.AppendLine("\t\t}\r\n");
+
       //we now have access to the controls
       foreach (var control in tree.Controls)
       {

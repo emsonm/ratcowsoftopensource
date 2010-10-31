@@ -43,7 +43,7 @@ namespace RatCow.MvcFramework
 {
   public class BaseController<T>
   {
-    T target;
+    protected T target;
 
     /// <summary>
     /// required internally
@@ -63,6 +63,7 @@ namespace RatCow.MvcFramework
 
       //attach the outlets and actions
       FixUp();
+      FixUpView();
     }
 
     public BaseController(T aTarget)
@@ -71,6 +72,7 @@ namespace RatCow.MvcFramework
 
       //attach the outlets and actions
       FixUp();
+      FixUpView();
     }
 
     /// <summary>
@@ -137,6 +139,34 @@ namespace RatCow.MvcFramework
       }
     }
 
+    /// <summary>
+    /// Creates event handlers for the view
+    /// </summary>
+    /// <param name="?"></param>
+    void FixUpView()
+    {
+      Form view = (Form)((object)target);
+
+      view.Load += new EventHandler(View_Load);
+    }
+
+    //handeler to override
+    protected virtual void ViewLoad()
+    {
+    }
+    
+    /// <summary>
+    /// Hardcoded onload
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void View_Load(object sender, EventArgs e)
+    {
+      ViewLoad();
+    }
+
+
+
     #region CompactFramework 2.0 Delegate suport
 
 
@@ -163,6 +193,7 @@ namespace RatCow.MvcFramework
 #endif
 
     #endregion
+
 
     public T View { get { return target; } }
   }
