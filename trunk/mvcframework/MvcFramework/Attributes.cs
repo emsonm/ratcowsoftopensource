@@ -62,12 +62,25 @@ namespace RatCow.MvcFramework
     {
         public string Name {get; private set;}
         public string Action { get; private set; }
+        public Type EventType { get; private set; }
 
         public ActionAttribute(string name, string action)
         {
             Name = name;
             Action = action;
+            EventType = null; //default to the type of the underlying event... typeof(EventHandler);
         }
+
+        public ActionAttribute(string name, string action, Type eventType)
+        {
+          Name = name;
+          Action = action;
+          EventType = eventType; //overrides the event type (experimental)
+        }
+
+
+
+
     }
     
 }
