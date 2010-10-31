@@ -95,7 +95,8 @@ namespace RatCow.MvcFramework
         foreach (var outlet in outlets)
         {
           //do something
-          FieldInfo fi = t.GetField(outlet.Name, bindingFlags);
+          FieldInfo fi = t.GetField(outlet.Name, bindingFlags); 
+
           if (fi != null)
           {
             object value = fi.GetValue(target); //this is the value pointing to the control to hook
@@ -117,11 +118,13 @@ namespace RatCow.MvcFramework
                   if (ei != null)
                   {
 #if !USE_COMPACTFRAMEWORK
-                    Delegate temp = Delegate.CreateDelegate(typeof(EventHandler), this, mi, false);
+                    Type evt = (action.EventType == null ? ei.EventHandlerType : action.EventType);
+                    Delegate temp = Delegate.CreateDelegate(evt, this, mi, false);
                     ei.AddEventHandler(value, temp);
 #else
 #if CF_35
-                    Delegate temp = Delegate.CreateDelegate(typeof(EventHandler), this, mi); //, false); <--CF doesn't like the 4th param
+                    Type evt = (action.EventType == null ? ei.EventHandlerType : action.EventType);
+                    Delegate temp = Delegate.CreateDelegate(evt, this, mi); //, false); <--CF doesn't like the 4th param
                     ei.AddEventHandler(value, temp);
 #else
                     //I might want to 
