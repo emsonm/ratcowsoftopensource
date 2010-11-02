@@ -49,6 +49,8 @@
   <ItemGroup>
     <Compile Include="Attributes.cs" />
     <Compile Include="BaseController.cs" />
+    <Compile Include="IModalSubFormContainer.cs" />
+    <Compile Include="ModalSubFormController.cs" />
     <Compile Include="OutletAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIBridge.cs" />

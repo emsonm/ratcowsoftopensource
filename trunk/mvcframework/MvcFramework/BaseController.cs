@@ -199,5 +199,32 @@ namespace RatCow.MvcFramework
 
 
     public T View { get { return target; } }
+
+
+    //the view can own subviews - we generally have two types: 
+    // 1) Modal dialogs
+    // 2) Floating forms
+    //At the moment, only Modal dialogs are being catered for... 
+    protected Dictionary<string, IModalSubFormContainer> fModalSubControllers = new Dictionary<string, IModalSubFormContainer>();
+    public void AddModalSubController(string name, IModalSubFormContainer controller)
+    {
+      fModalSubControllers.Add(name, controller);
+    }
+
+    public bool ExecuteModalController(string name)
+    {
+      bool result = false;
+
+      IModalSubFormContainer controller = null;
+
+      if (fModalSubControllers.TryGetValue(name, out controller))
+      {
+        result = controller.PerformModalTask();
+      }
+
+      return result;
+    }
+
+
   }
 }
