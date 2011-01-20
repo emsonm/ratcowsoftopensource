@@ -15,5 +15,13 @@ namespace RatCow.MvcFramework
     /// </summary>
     /// <returns></returns>
     bool PerformModalTask();
+
+    /// <summary>
+    /// Performs a task with associated data
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    bool PerformModalTask<T>(T data);
   }
 }

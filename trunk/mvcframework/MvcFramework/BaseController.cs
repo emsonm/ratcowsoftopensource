@@ -225,6 +225,27 @@ namespace RatCow.MvcFramework
       return result;
     }
 
+    /// <summary>
+    /// This will pass a single data object to the modal routine
+    /// </summary>
+    /// <typeparam name="D"></typeparam>
+    /// <param name="name"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public bool ExecuteModalControllerWithData<D>(string name, D data)
+    {
+      bool result = false;
+
+      IModalSubFormContainer controller = null;
+
+      if (fModalSubControllers.TryGetValue(name, out controller))
+      {
+        result = controller.PerformModalTask<D>(data);
+      }
+
+      return result;
+    }
+
 
   }
 }
