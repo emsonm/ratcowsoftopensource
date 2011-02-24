@@ -42,6 +42,11 @@ namespace PricingBasket
 
   class Program
   {
+    /// <summary>
+    /// As it stands, this gives a richer output than the spec, 
+    /// define USE_BASIC_OUTPUT to keep to the original output
+    /// </summary>
+    /// <param name="args"></param>
     static void Main(string[] args)
     {
       Console.WriteLine("\r\nTill receipt:\r\n==============================================\r\n");
@@ -52,7 +57,11 @@ namespace PricingBasket
       {
         Receipt result = engine.CalculateReceipt(args);
 
+#if USE_BASIC_OUTPUT
+        Console.WriteLine(result.ToString(true));
+#else
         Console.WriteLine(result.ToString());
+#endif
       }
       else
         Console.WriteLine(engine.HelpMessage());

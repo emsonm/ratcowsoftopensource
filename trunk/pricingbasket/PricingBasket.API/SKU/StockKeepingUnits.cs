@@ -93,7 +93,7 @@ namespace PricingBasket.API.SKU
     /// 
     /// match incoming string names to SKUs
     /// </summary>
-    public StockKeepingUnit FindSKU(string skuname)
+    public StockKeepingUnit FindSingletonSKU(string skuname)
     {
       var foundSKUs = from sku in this
                       where sku.Name.ToLower() == skuname.ToLower()
@@ -102,6 +102,28 @@ namespace PricingBasket.API.SKU
       //here we really only want one item... so we double check
       int count = foundSKUs.Count<StockKeepingUnit>();
       if (count > 0 && count <= 1)
+      {
+        return foundSKUs.First<StockKeepingUnit>(); //return the first item
+      }
+      else
+        return null;
+    }
+
+    /// <summary>
+    /// This looks for a specific SKU in the list, but does not 
+    /// enforce the "single" entry rule.
+    /// 
+    /// match incoming string names to SKUs
+    /// </summary>
+    public StockKeepingUnit FindSKU(string skuname)
+    {
+      var foundSKUs = from sku in this
+                      where sku.Name.ToLower() == skuname.ToLower()
+                      select sku;
+
+      //here we really only want one item... so we double check
+      int count = foundSKUs.Count<StockKeepingUnit>();
+      if (count > 0)
       {
         return foundSKUs.First<StockKeepingUnit>(); //return the first item
       }
