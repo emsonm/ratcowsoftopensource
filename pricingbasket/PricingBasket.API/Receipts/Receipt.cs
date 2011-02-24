@@ -63,11 +63,11 @@ namespace PricingBasket.API.Receipts
     {
       if (fdiscount.Length == 0)
       {
-        fdiscount.AppendLine(discount);
+        fdiscount.Append(discount);
       }
       else
       {
-        fdiscount.AppendFormat(", {0}", discount);
+        fdiscount.AppendFormat("\r\n{0}", discount);
       }
     }
 
@@ -79,14 +79,31 @@ namespace PricingBasket.API.Receipts
     /// </summary>
     public override string ToString()
     {
+      return ToString(false);
+    }
+
+    /// <summary>
+    /// Simple formatted output
+    /// </summary>
+    public string ToString(bool useBasic)
+    {
       StringBuilder result = new StringBuilder();
 
-      //we put any additional dialogue here
-      result.AppendLine(fremarks.ToString());
+      if (useBasic)
+      {
+        result.AppendFormat("Subtotal : £{0} ", Subtotal.ToString("0.00"));
+        result.Append(Discount.Replace("\r\n", ", "));
+        result.AppendFormat(" Total : £{0}\r\n", Total.ToString("0.00"));
+      }
+      else
+      {
+        //we put any additional dialogue here
+        result.AppendLine(fremarks.ToString());
 
-      result.AppendFormat("Subtotal : £{0} \r\n\r\n", Subtotal.ToString("0.00"));
-      result.AppendLine(Discount);
-      result.AppendFormat("Total : £{0}\r\n", Total.ToString("0.00"));
+        result.AppendFormat("Subtotal : £{0} \r\n\r\n", Subtotal.ToString("0.00"));
+        result.AppendLine(Discount);
+        result.AppendFormat("Total : £{0}\r\n", Total.ToString("0.00"));
+      }
 
       return result.ToString();
     }

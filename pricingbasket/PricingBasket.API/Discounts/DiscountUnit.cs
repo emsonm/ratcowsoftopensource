@@ -136,8 +136,11 @@ namespace PricingBasket.API.Discounts
       var sku = items.FindSKUs(TargetItems[0].Name);
       int count = sku.Count;
 
-      int discountItems = ((count > TargetLevel) ? count / 2 : 0);
+      //int discountItems = ((count > TargetLevel) ? count / TargetLevel : 0);
 
+      int targetValue = (TargetLevel + 1); //this is how many items we need for each discount to apply
+
+      int discountItems = ((count > TargetLevel) ? count / targetValue : 0);
 
       return discountItems > 0;
     }
@@ -152,7 +155,9 @@ namespace PricingBasket.API.Discounts
       var sku = items.FindSKUs(TargetItems[0].Name);
       int count = sku.Count;
 
-      int discountItems = ((count > TargetLevel) ? count / 2 : 0);
+      int targetValue = (TargetLevel + 1); //this is how many items we need for each discount to apply
+
+      int discountItems = ((count > TargetLevel) ? count / targetValue : 0);
 
       return (TargetItems[0].Price * discountItems);
     }
@@ -198,9 +203,24 @@ namespace PricingBasket.API.Discounts
       var sku = items.FindSKUs(TargetItems[0].Name);
       int discountItems = sku.Count;
 
-      double actualPrice = (TargetItems[0].Price * discountItems); //what we should charge
-      double actualDiscount = (actualPrice * (Discount / 100));
-      return actualDiscount;
+      //we need to calculate how many items we need to qualify...
+      if (TargetLevel == 1)
+      {
+        //discount applied for each item
+        double actualPrice = (TargetItems[0].Price * discountItems); //what we should charge
+        double actualDiscount = (actualPrice * (Discount / 100));
+        return actualDiscount;
+      }
+      else
+      {
+        //we need more than one item to get the discount
+        int qualifyingCount = (discountItems / (TargetLevel + 1));
+        double actualPrice = (TargetItems[0].Price * qualifyingCount); //what we should charge
+        double actualDiscount = (actualPrice * (Discount / 100));
+        return actualDiscount;
+      }
+
+      
     }
 
   }

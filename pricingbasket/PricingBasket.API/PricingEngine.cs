@@ -61,6 +61,38 @@ namespace PricingBasket.API
     }
 
     /// <summary>
+    /// Adds a new SKU item
+    /// </summary>
+    public void AddSKU(StockKeepingUnit item)
+    {
+      fSKUs.Add(item);
+    }
+
+    /// <summary>
+    /// Adds a list of new SKU items
+    /// </summary>
+    public void AddSKUs(IEnumerable<StockKeepingUnit> items)
+    {
+      fSKUs.AddRange(items);
+    }
+
+    /// <summary>
+    /// Adds a new Discount
+    /// </summary>
+    public void AddDiscount(DiscountUnit item)
+    {
+      fDiscounts.Add(item);
+    }
+
+    /// <summary>
+    /// Adds a list of new Discounts
+    /// </summary>
+    public void AddDiscounts(IEnumerable<DiscountUnit> items)
+    {
+      fDiscounts.AddRange(items);
+    }
+
+    /// <summary>
     /// This inits the default SKU's for the engine
     ///   Soup   – 65p per tin
     ///   Bread  – 80p per loaf
@@ -84,10 +116,23 @@ namespace PricingBasket.API
       StockKeepingUnit soup = new StockKeepingUnit(new StockKeepingUnit("Soup", 0.65));
       fSKUs.Add(soup);
 
+#if DEBUG_ADDITIONAL_ITEMS
+      StockKeepingUnit carrots = new StockKeepingUnit(new StockKeepingUnit("Carrots", 0.50));
+      fSKUs.Add(carrots);
+
+      StockKeepingUnit beans = new StockKeepingUnit(new StockKeepingUnit("Beans", 0.60));
+      fSKUs.Add(beans);
+#endif
+
       //discounts
       fDiscounts.Add(new BuyItemsGetOneFreeDiscountUnit("Buy one pint of milk get one free", milk, 1));
       fDiscounts.Add(new BuyItemsLessPercentageDiscountUnit("Apples have a 10% discount", apples, 1, 10.0));
       fDiscounts.Add(new BuyItemsGetPercentageFromItemDiscountUnit("Buy 2 tins of soup and get a loaf of bread for half price", soup, bread, 2, 50.0));
+
+#if DEBUG_ADDITIONAL_ITEMS
+      fDiscounts.Add(new BuyItemsGetOneFreeDiscountUnit("Buy two bags of carrots get one free", carrots, 2));
+      fDiscounts.Add(new BuyItemsLessPercentageDiscountUnit("Buy 2 tins of Beans get a third at half price", beans, 2, 50.0));
+#endif
     }
 
     /// <summary>
@@ -100,7 +145,7 @@ namespace PricingBasket.API
       result.AppendLine("PricingBasket - 20110223 Matt Emson\r\n");
       result.AppendLine("How to use:");
       result.AppendLine("\tPricingBasket <item> [<item>....]\r\n");
-      
+
       result.AppendLine("Available items:");
       foreach (var item in fSKUs)
         result.AppendLine(String.Format("\t{0}", item.Name));
@@ -126,7 +171,7 @@ namespace PricingBasket.API
 
       foreach (var s in items)
       {
-        StockKeepingUnit tempRef = fSKUs.FindSKU(s);
+        StockKeepingUnit tempRef = fSKUs.FindSingletonSKU(s);
         if (tempRef != null)
           itemSKUs.Add(new StockKeepingUnit(tempRef));
         else
