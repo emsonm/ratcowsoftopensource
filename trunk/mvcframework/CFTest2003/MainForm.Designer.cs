@@ -29,38 +29,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mainMenu1 = new System.Windows.Forms.MainMenu();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(84, 93);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(72, 20);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Click";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(39, 33);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(153, 21);
-            this.textBox1.TabIndex = 1;
-            // 
-            // Form1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(240, 268);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
-            this.Menu = this.mainMenu1;
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.ResumeLayout(false);
+          this.mainMenu1 = new System.Windows.Forms.MainMenu();
+          this.button1 = new System.Windows.Forms.Button();
+          this.textBox1 = new System.Windows.Forms.TextBox();
+          this.SuspendLayout();
+          // 
+          // button1
+          // 
+          this.button1.Location = new System.Drawing.Point(84, 93);
+          this.button1.Name = "button1";
+          this.button1.Size = new System.Drawing.Size(72, 20);
+          this.button1.TabIndex = 0;
+          this.button1.Text = "Click";
+          // 
+          // textBox1
+          // 
+          this.textBox1.Location = new System.Drawing.Point(39, 33);
+          this.textBox1.Name = "textBox1";
+          this.textBox1.Size = new System.Drawing.Size(153, 21);
+          this.textBox1.TabIndex = 1;
+          // 
+          // MainForm
+          // 
+          this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+          this.AutoScroll = true;
+          this.ClientSize = new System.Drawing.Size(240, 268);
+          this.Controls.Add(this.textBox1);
+          this.Controls.Add(this.button1);
+          this.Menu = this.mainMenu1;
+          this.Name = "MainForm";
+          this.Text = "Form1";
+          this.ResumeLayout(false);
 
         }
 

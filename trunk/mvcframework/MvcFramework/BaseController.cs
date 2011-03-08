@@ -128,7 +128,15 @@ namespace RatCow.MvcFramework
                     ei.AddEventHandler(value, temp);
 #else
                     //I might want to 
-                    EventHandler temp = new EventHandler(new EventHandlerProxy(mi, this).ProxyEventMethod);
+                    //EventHandler temp = new EventHandler(new EventHandlerProxy(mi, this).ProxyEventMethod);
+                    Type evt = (action.EventType == null ? ei.EventHandlerType : action.EventType);
+                    //EventHandler temp = delegate(object sender, EventArgs e)
+                    //{
+                    //  //GenericEventHandlerProxyFactory.Create(evt, mi, this)
+                    //  mi.Invoke(this, new object[] { sender, e }); //new EventHandler(new GenericEventHandlerProxy<typeof(evt)>(mi, this).ProxyEventMethod); 
+                    //};
+                    Delegate temp = GenericEventHandlerProxyFactory.Create(evt, mi, this);
+
                     ei.AddEventHandler(value, temp);
 #endif
 #endif
@@ -157,7 +165,7 @@ namespace RatCow.MvcFramework
     protected virtual void ViewLoad()
     {
     }
-    
+
     /// <summary>
     /// Hardcoded onload
     /// </summary>
@@ -192,6 +200,8 @@ namespace RatCow.MvcFramework
         fmi.Invoke(ftarget, new object[] { sender, e });
       }
     }
+
+
 
 #endif
 
@@ -247,5 +257,105 @@ namespace RatCow.MvcFramework
     }
 
 
+  }
+
+
+  //This is required for CF 2.0 support as Delegate.CreateDelegate does not exist
+  internal class GenericEventHandlerProxy<E, EA>: IEventHandlerProxy
+  {
+    MethodInfo fmi = null;
+    object ftarget = null;
+
+    public GenericEventHandlerProxy()
+    {
+    }
+
+    public void SetHooks(MethodInfo mi, object target)
+    {
+      fmi = mi;
+      ftarget = target;
+    }
+
+    /*
+    Type t = typeof(MyType);
+var parameterlessCtor = (from c in t.GetConstructors(
+  BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+    where c.GetParameters().Length == 0
+    select c).FirstOrDefault;
+if(parameterlessCtor != null) instance = parameterlessCtor.Invoke(null);
+     * */
+
+    delegate void ProxyEventMethodDelegate(object sender, EA eventArgs);
+
+    public Delegate GetEventHook()
+    {
+      return (Delegate)null;
+    }
+
+    public void ProxyEventMethod(object sender, EA e)
+    {
+      fmi.Invoke(ftarget, new object[] { sender, e });
+    }
+  }
+
+  interface IEventHandlerProxy
+  {
+    void SetHooks(MethodInfo mi, object target);
+    Delegate GetEventHook();
+  }
+
+  /*
+  static object Create(string name, params Type[] types)
+   {
+      string t = name + "`" + types.Length;
+      Type generic = Type.GetType(t).MakeGenericType(types);
+      return Activator.CreateInstance(generic);
+   }
+   */
+
+  class GenericEventHandlerProxyFactory
+  {
+    //new EventHandler(new GenericEventHandlerProxy<typeof(evt)>(mi, this).ProxyEventMethod); 
+
+    private static Type[] GetDelegateParameterTypes(Type d)
+    {
+      if (d.BaseType != typeof(MulticastDelegate))
+        throw new ApplicationException("Not a delegate.");
+
+      MethodInfo invoke = d.GetMethod("Invoke");
+      if (invoke == null)
+        throw new ApplicationException("Not a delegate.");
+
+      ParameterInfo[] parameters = invoke.GetParameters();
+      Type[] typeParameters = new Type[parameters.Length];
+      for (int i = 0; i < parameters.Length; i++)
+      {
+        typeParameters[i] = parameters[i].ParameterType;
+      }
+      return typeParameters;
+    }
+
+
+    public static Delegate Create(Type eventType, MethodInfo mi, object target)
+    {
+      Delegate result = null;
+
+      Type[] args = GetDelegateParameterTypes(eventType);
+      //param 1 should be "sender"
+      //param 2 should be our eventArgs
+      Type eventArgs = args[1];
+
+      string s = String.Format("RatCow.MvcFramework.GenericEventHandlerProxy`2[{0}, {1}]", eventType.FullName, eventArgs.FullName);
+      Type proxyType = Type.GetType(s);
+      //Type proxyType = temp.MakeGenericType(new Type[] { eventType });
+      object proxy = Activator.CreateInstance(proxyType);
+      ((IEventHandlerProxy)proxy).SetHooks(mi, target);
+      
+      //result = ((IEventHandlerProxy)proxy).GetEventHook();
+
+
+
+      return result;
+    }
   }
 }
