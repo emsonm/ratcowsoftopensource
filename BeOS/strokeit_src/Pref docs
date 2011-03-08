@@ -1,7 +1,0 @@
-Pref layout:
-
-scale : Int32, valid values are (25, 40, *50*, 60)
-help : bool, when true the help system is 'on'
-strokefile : string, name of the file to load by default.
-
-
