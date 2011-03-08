@@ -19,6 +19,9 @@ namespace testapp2
 
 		void button1Click()
 		{
+      MessageBox.Show(textBox1.Text);
+      if (checkBox1.Checked)
+        label1.Text = textBox1.Text;
 
 		}
 
