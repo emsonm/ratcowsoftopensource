@@ -39,6 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libraries\Ionic.Zlib.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json.Net35, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libraries\Newtonsoft.Json.Net35.dll</HintPath>
+    </Reference>
     <Reference Include="NUnrar, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libraries\NUnrar.dll</HintPath>
@@ -57,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComicBookInfo\ComicBookInfo.cs" />
     <Compile Include="ComicBook\ComicBook.cs" />
     <Compile Include="ComicBook\Support\ComicBookFileType.cs" />
     <Compile Include="ComicBook\Reader\Pages\RarComicPage.cs" />
@@ -71,6 +76,9 @@
     <Compile Include="ComicBook\Reader\FileAccess\RarFileAccess.cs" />
     <Compile Include="ComicBook\Reader\Pages\ZipComicPage.cs" />
     <Compile Include="ComicBook\Reader\FileAccess\ZipFileAccess.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ComicBookInfo\ComicBookInfo.htm" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

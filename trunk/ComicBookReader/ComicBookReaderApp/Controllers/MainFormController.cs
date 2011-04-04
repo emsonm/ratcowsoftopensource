@@ -44,6 +44,11 @@ namespace cbr
   {
     ComicBook comicBook = null;
 
+    protected override void ViewLoad()
+    {
+      this.AddModalSubController("InfoFORM", new InfoFormController());
+    }
+
     /// <summary>
     /// Select a new image
     /// </summary>
@@ -92,6 +97,18 @@ namespace cbr
       finally
       {
         pageList.EndUpdate();
+      }
+    }
+
+    protected override void infoButtonClick()
+    {
+      openFileDialog.Filter = "*.cbz|*.cbz";
+      openFileDialog.FileName = "";
+
+      //we should ask for a file
+      if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+      {
+        this.ExecuteModalControllerWithData<string>("InfoFORM", openFileDialog.FileName); 
       }
     }
   }

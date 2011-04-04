@@ -32,6 +32,7 @@
       this.pageList = new System.Windows.Forms.ListBox();
       this.pageImage = new System.Windows.Forms.PictureBox();
       this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+      this.infoButton = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.pageImage)).BeginInit();
       this.SuspendLayout();
       // 
@@ -74,11 +75,21 @@
       // 
       this.openFileDialog1.FileName = "openFileDialog1";
       // 
+      // infoButton
+      // 
+      this.infoButton.Location = new System.Drawing.Point(94, 12);
+      this.infoButton.Name = "infoButton";
+      this.infoButton.Size = new System.Drawing.Size(75, 23);
+      this.infoButton.TabIndex = 8;
+      this.infoButton.Text = "Info...";
+      this.infoButton.UseVisualStyleBackColor = true;
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(534, 452);
+      this.Controls.Add(this.infoButton);
       this.Controls.Add(this.openButton);
       this.Controls.Add(this.pageList);
       this.Controls.Add(this.pageImage);
@@ -95,5 +106,6 @@
     private System.Windows.Forms.ListBox pageList;
     private System.Windows.Forms.PictureBox pageImage;
     private System.Windows.Forms.OpenFileDialog openFileDialog1;
+    private System.Windows.Forms.Button infoButton;
   }
 }
