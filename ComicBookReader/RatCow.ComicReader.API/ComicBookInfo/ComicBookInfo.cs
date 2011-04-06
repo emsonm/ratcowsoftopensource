@@ -53,39 +53,30 @@ namespace RatCow.ComicReader.API
 
     Ionic.Zip.ZipFile archive = null;
 
-    JObject json = null;
+    JObject json = null; //pointer to main data
+    JObject comicbookinfo = null; //actual updatable content
 
     public string GetValue(string name)
     {
-      string value = Convert.ToString(json[name]);
+      string value = Convert.ToString(comicbookinfo[name]).Unquote();
       return value;
     }
 
     public void SetValue(string name, string value)
-    {    
-      json[name] = value;
+    {      
+      comicbookinfo[name] = value.Quote();
     }
 
     public void SetValue(string name, int value)
     {
-      json[name] = value;
+      comicbookinfo[name] = value;
     }
 
 
     public string CreateDefaultInfo()
     {
-      string defaultJSON = 
-        "{appID:\"ComicBookLover/888\"," +
-        " lastModified:\"" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss +zzz") + "\", " +
-        " \"ComicBookInfo/1.0\" : " +
-        " { " +
-        "   series : \"None\", " +
-        "   title : \"None\", " +
-        "   publisher : \"Unknown\", " +
-        "   issue : 0, " +
-        "   numberOfIssues : 0 " +
-        " } " +
-        "}";
+      string defaultJSON =
+        "{\"ComicBookInfo/1.0\":{\"title\":\"None\",\"country\":\"\",\"language\":\"English\",\"series\":\"None\",\"rating\":0},\"appID\":\"ComicBookLover/1000\",\"lastModified\":\"" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss +zzz") + "\"}";
 
       return defaultJSON;
     }
@@ -113,6 +104,8 @@ namespace RatCow.ComicReader.API
         else
           json = JObject.Parse(CreateDefaultInfo());
 
+        comicbookinfo = (JObject)json["ComicBookInfo/1.0"];
+
       }
       catch( Exception ex)
       {
@@ -132,7 +125,7 @@ namespace RatCow.ComicReader.API
 
       string data = json.ToString(); //converts info back to string
 
-      archive.Comment = data;
+      archive.Comment = data; //hmmmm
 
       archive.Save();
 
@@ -142,6 +135,12 @@ namespace RatCow.ComicReader.API
 }
 
 /**
+ * 
+ * 
+ * 
+ "{\"ComicBookInfo/1.0\":{\"title\":\"Bleach Pilot\",\"country\":\"Japan\",\"language\":\"Japanese\",\"series\":\"Bleach\",\"rating\":0},\"appID\":\"ComicBookLover/1000\",\"lastModified\":\"2011-03-09 20:41:54 +0000\"}"
+ * 
+ * 
  {"appID":"ComicBookLover/888",
  "lastModified":"2009-10-25 14:51:31 +0000",
  "ComicBookInfo/1.0":

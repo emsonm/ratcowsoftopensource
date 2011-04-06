@@ -32,7 +32,7 @@ namespace cbr
       info.SetValue("title", titleEdit.Text);
       info.SetValue("series", seriesEdit.Text);
       info.SetValue("issue", Convert.ToInt32(issueNumEdit.Text));
-      info.SetValue("numberOfIssues", numOfIssuesEdit.Text);
+      info.SetValue("numberOfIssues", Convert.ToInt32(numOfIssuesEdit.Text));
     }
 
 
