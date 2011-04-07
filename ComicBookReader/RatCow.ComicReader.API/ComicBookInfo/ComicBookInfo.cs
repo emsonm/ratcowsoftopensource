@@ -58,13 +58,21 @@ namespace RatCow.ComicReader.API
 
     public string GetValue(string name)
     {
-      string value = Convert.ToString(comicbookinfo[name]).Unquote();
-      return value;
+      try
+      {
+        string value = (comicbookinfo[name].Type == JTokenType.String ? ((string)comicbookinfo[name]).Unquote() : Convert.ToString(comicbookinfo[name]).Unquote()); //unquote might be spurious now
+        return value;
+      }
+      catch(Exception ex)
+      {
+        System.Diagnostics.Debug.WriteLine(ex.ToString());
+        return String.Empty;
+      }
     }
 
     public void SetValue(string name, string value)
     {      
-      comicbookinfo[name] = value.Quote();
+      comicbookinfo[name] = value; //.Quote(); <- this will add extra quotes!
     }
 
     public void SetValue(string name, int value)
