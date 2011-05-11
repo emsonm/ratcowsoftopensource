@@ -31,81 +31,31 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
-using RatCow.Hiragana;
-
-namespace RatcowHiriganaTool
+namespace RatCow.KanaSupport
 {
-  public partial class MainForm : Form
+  public class ElementDescription
   {
-    public MainForm()
+    public ElementDescription(char initial, int offset, int multiplier)
     {
-      InitializeComponent();
+      this.Initial = initial;
+      this.Offset = offset;
+      this.Multiplier = multiplier;
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    public char Initial { get; internal set; }
+    public int Offset { get; internal set; }
+    public int Multiplier { get; internal set; }
+  }
+
+  public class ElementDescriptionList : List<ElementDescription>
+  {
+
+    public void Add(char initial, int offset, int multiplier)
     {
-      HiraganaTable h = new HiraganaTable();
-
-      textBox1.Text = h.Test(); //builds a table of characters
-    }
-
-    private void button2_Click(object sender, EventArgs e)
-    {
-      HiraganaTable h = new HiraganaTable();
-
-      textBox1.Text = String.Format("{0}{1}{2}", h.DecodeBlock("ta"), h.DecodeBlock("na"), h.DecodeBlock("ka"));
-    }
-
-    private void button3_Click(object sender, EventArgs e)
-    {
-      //we tokenize the word
-      List<String> tokens = new List<string>();
-
-      string buffer = null;
-
-      StringBuilder sb = new StringBuilder(textBox2.Text);
-      for(int i = 0; i < sb.Length; i++)
-      {
-        char c = sb[i];
-        buffer = buffer + c;
-
-        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
-        {
-          //convert
-          tokens.Add(buffer);
-          buffer = null;
-        }       
-      }
-
-      textBox1.Text += "\r\n--------------------------------\r\n";
-
-      HiraganaTable h = new HiraganaTable();
-      foreach (var s in tokens)
-      {
-        textBox1.Text += h.DecodeBlock(s);
-      }
-    }
-
-    private void button4_Click(object sender, EventArgs e)
-    {
-
-      textBox1.Text += "\r\n--------------------------------\r\n";
-
-      HiraganaTable h = new HiraganaTable();
-      StringBuilder sb = new StringBuilder(textBox2.Text);
-      for (int i = 0; i < sb.Length; i++)
-      {
-        textBox1.Text += h.EncodeBlock(sb[i]);
-      }
-
-      
-
+      this.Add(new ElementDescription(initial, offset, multiplier));
     }
   }
 }
