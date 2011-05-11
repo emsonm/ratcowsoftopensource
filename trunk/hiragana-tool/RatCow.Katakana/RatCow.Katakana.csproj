@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9CF94C57-855F-4942-9880-FACD12433551}</ProjectGuid>
+    <ProjectGuid>{C69D539C-CF5F-49CC-9DE5-56DD1CCF173E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RatCow.Hiragana</RootNamespace>
-    <AssemblyName>RatCow.Hiragana</AssemblyName>
+    <RootNamespace>RatCow.Katakana</RootNamespace>
+    <AssemblyName>RatCow.Katakana</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HiraganaTable.cs" />
+    <Compile Include="KataKanaTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

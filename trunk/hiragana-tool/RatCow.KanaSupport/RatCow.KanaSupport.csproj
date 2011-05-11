@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9CF94C57-855F-4942-9880-FACD12433551}</ProjectGuid>
+    <ProjectGuid>{32AD1616-4600-4655-AB01-708353A6743B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RatCow.Hiragana</RootNamespace>
-    <AssemblyName>RatCow.Hiragana</AssemblyName>
+    <RootNamespace>RatCow.KanaSupport</RootNamespace>
+    <AssemblyName>RatCow.KanaSupport</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,14 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HiraganaTable.cs" />
+    <Compile Include="ElementDescription.cs" />
+    <Compile Include="Kana.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RatCow.KanaSupport\RatCow.KanaSupport.csproj">
-      <Project>{32AD1616-4600-4655-AB01-708353A6743B}</Project>
-      <Name>RatCow.KanaSupport</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
