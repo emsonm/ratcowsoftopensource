@@ -154,5 +154,27 @@ namespace PDFBookletMaker
       System.IO.Directory.Delete(path, true);
 
     }
+
+    /// <summary>
+    /// Make a booklet from simple markup
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void button2_Click(object sender, EventArgs e)
+    {
+        //format [ ] <- chapter seperator
+        //       ^   <- page section
+        //       @   <- title section
+        //       - range
+        //       , list
+        // so, for a 20 paged pdf
+        // [@chapter1@^1,3,5-7^][@chapter2@^10-15]
+      string raw = textBox1.Text;
+      string[] list = raw.Split(']');
+      foreach (var s in list)
+      {
+
+      }
+    }
   }
 }
