@@ -18,7 +18,7 @@ namespace RatCow.MvcFramework
       throw new NotImplementedException();
     }
 
-    public bool PerformModalTask<T>(T data)
+    public bool PerformModalTask<S>(S data)
     {
       throw new NotImplementedException();
     }
