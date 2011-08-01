@@ -32,6 +32,25 @@ namespace RatCow.MvcFramework
     /// This is to save referencing the underlying OS message boxes. 
     /// </summary>
     /// <param name="message"></param>
+    public static void Acknowledge(string message)
+    {
+      Acknowledge(message, "Warning");
+    }
+
+    /// <summary>
+    /// This is to save referencing the underlying OS message boxes. 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="title"></param>
+    public static void Acknowledge(string message, string title)
+    {
+      System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information, System.Windows.Forms.MessageBoxDefaultButton.Button2); //CF needs this 
+    }
+
+    /// <summary>
+    /// This is to save referencing the underlying OS message boxes. 
+    /// </summary>
+    /// <param name="message"></param>
     /// <returns></returns>
     public static bool BooleanDecision(string message)
     {
@@ -47,6 +66,11 @@ namespace RatCow.MvcFramework
     public static bool BooleanDecision(string message, string title)
     {
       return (System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes); 
+    }
+
+    public static void ProcessSystemMessages()
+    {
+      System.Windows.Forms.Application.DoEvents(); 
     }
   }
 }
