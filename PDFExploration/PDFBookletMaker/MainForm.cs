@@ -131,6 +131,15 @@ namespace PDFBookletMaker
         sortedPages.Add(pageList[target - (i+ 1)]);
       }
 
+      //this is not actually now correct - because ever odd pair have to be swapped
+      for (int i = 0; i < sortedPages.Count; i = i + 4)
+      {
+        string temp = sortedPages[i];
+        sortedPages[i] = sortedPages[i + 1];
+        sortedPages[i + 1] = temp;
+      }
+
+
       progressBar1.Value = 0;
       label1.Text = "Render";
 
