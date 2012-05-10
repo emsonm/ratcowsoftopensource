@@ -108,7 +108,7 @@ namespace RatCow.MvcFramework
       System.Windows.Forms.Application.DoEvents();
     }
   }
- 
+
   //this is a listview helper
   public class ListViewHelper<Data> : IDisposable
   {
@@ -122,7 +122,7 @@ namespace RatCow.MvcFramework
       Updating = false;
     }
 
-    public bool Updating {get; internal set;}
+    public bool Updating { get; internal set; }
 
     public void BeginUpdate()
     {
@@ -156,6 +156,16 @@ namespace RatCow.MvcFramework
       }
     }
 
+    #region fdata access
+
+    //added to make the helper allow us to access the internal data without a reference to original instance
+
+    public Data this[int index] { get { return (fdata == null ? default(Data) : fdata[index]); } }
+
+    public int Count { get { return (fdata == null ? 0 : fdata.Count); } }
+
+    #endregion fdata access
+
     #region IDisposable Members
 
     public void Dispose()
@@ -164,6 +174,6 @@ namespace RatCow.MvcFramework
       fview = null;
     }
 
-    #endregion
+    #endregion IDisposable Members
   }
 }
