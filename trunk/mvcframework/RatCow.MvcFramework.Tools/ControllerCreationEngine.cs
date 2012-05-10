@@ -400,6 +400,30 @@ namespace RatCow.MvcFramework.Tools
           code_s2.AppendFormat("\t\t\t{0}Click();\r\n", control.Key);
 
           code_s2.AppendLine("\t\t}\r\n");
+
+          //the checkbox changed
+          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"CheckedChanged\")]\r\n\t\tpublic void F{0}_CheckedChanged(object sender, EventArgs e)\r\n", control.Key);
+          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+          code_s1.AppendFormat("\t\tprotected virtual void {0}CheckedChanged()\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
+          code_s1.AppendLine("\t\t{\r\n");
+          code_s1.AppendLine("\t\t}\r\n");
+
+          code_s2.AppendFormat("\t\t\t{0}CheckedChanged();\r\n", control.Key);
+
+          code_s2.AppendLine("\t\t}\r\n");
+
+          //CheckStateChanged
+          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"CheckStateChanged\")]\r\n\t\tpublic void F{0}_CheckStateChanged(object sender, EventArgs e)\r\n", control.Key);
+          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+          code_s1.AppendFormat("\t\tprotected virtual void {0}CheckStateChanged()\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
+          code_s1.AppendLine("\t\t{\r\n");
+          code_s1.AppendLine("\t\t}\r\n");
+
+          code_s2.AppendFormat("\t\t\t{0}CheckStateChanged();\r\n", control.Key);
+
+          code_s2.AppendLine("\t\t}\r\n");
         }
 
         else if (control.Value == typeof(System.Windows.Forms.ListView))
@@ -409,6 +433,33 @@ namespace RatCow.MvcFramework.Tools
 
           code_s2.AppendFormat("\t\t\tvar lvh = new ListViewHelper<T>({0});\r\n", control.Key);
           code_s2.AppendLine("\t\t\treturn lvh;");
+
+          code_s2.AppendLine("\t\t}\r\n");
+
+          //add in the handler for the virtual list item
+
+          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"RetrieveVirtualItem\")]\r\n\t\tpublic void F{0}_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)\r\n", control.Key);
+          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+          code_s1.AppendFormat("\t\tprotected virtual void {0}RetrieveVirtualItem(RetrieveVirtualItemEventArgs e)\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
+          code_s1.AppendLine("\t\t{\r\n");
+          code_s1.AppendLine("\t\t\t/*default placeholder to avoid crashes*/ e.Item = new ListViewItem();\r\n");
+          code_s1.AppendLine("\t\t}\r\n");
+
+          code_s2.AppendFormat("\t\t\t{0}RetrieveVirtualItem(e);\r\n", control.Key);
+
+          code_s2.AppendLine("\t\t}\r\n");
+        }
+        else if (control.Value == typeof(System.Windows.Forms.TextBox))
+        {
+          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"TextChanged\")]\r\n\t\tpublic void F{0}_TextChanged(object sender, EventArgs e)\r\n", control.Key);
+          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+          code_s1.AppendFormat("\t\tprotected virtual void {0}TextChanged(EventArgs e)\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
+          code_s1.AppendLine("\t\t{\r\n");
+          code_s1.AppendLine("\t\t}\r\n");
+
+          code_s2.AppendFormat("\t\t\t{0}TextChanged(e);\r\n", control.Key);
 
           code_s2.AppendLine("\t\t}\r\n");
         }
