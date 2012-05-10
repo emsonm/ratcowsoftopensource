@@ -401,6 +401,17 @@ namespace RatCow.MvcFramework.Tools
 
           code_s2.AppendLine("\t\t}\r\n");
         }
+
+        else if (control.Value == typeof(System.Windows.Forms.ListView))
+        {
+          code_s2.AppendFormat("\t\tpublic ListViewHelper<T> Get{0}Helper<T>()\r\n", control.Key);
+          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+          code_s2.AppendFormat("\t\t\tvar lvh = new ListViewHelper<T>({0});\r\n", control.Key);
+          code_s2.AppendLine("\t\t\treturn lvh;");
+
+          code_s2.AppendLine("\t\t}\r\n");
+        }
       }
 
       code_s1.AppendLine("\t}"); //end of class declaration
