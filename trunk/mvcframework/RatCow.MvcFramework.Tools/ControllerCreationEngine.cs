@@ -52,7 +52,7 @@ namespace RatCow.MvcFramework.Tools
     /// <param name="className"></param>
     public static void Generate(string className)
     {
-      Generate(className, false);
+      Generate(className, new CompilerFlags());
     }
 
     const string ABSTRACT_PREFIX = "Abstract";
@@ -61,16 +61,16 @@ namespace RatCow.MvcFramework.Tools
     /// Split this up in to sections so I can more easliy re-use it in the future.
     /// </summary>
     /// <param name="className"></param>
-    public static void Generate(string className, bool isAbstract)
+    public static void Generate(string className, CompilerFlags flags)
     {
-      string prefix = (isAbstract ? ABSTRACT_PREFIX : String.Empty);
+      string prefix = (flags.IsAbstract ? ABSTRACT_PREFIX : String.Empty);
 
       //this *can* generate more than one entry
       ControlTree[] trees = GenerateTree(className);
       if (trees != null && trees.Length == 1)
       {
         ControlTree tree = trees[0];
-        string s = ClassGenerator(tree, isAbstract);
+        string s = ClassGenerator(tree, flags);
 
         string fileName = String.Format("{1}{0}Controller.cs", tree.ClassName, prefix);
 
@@ -324,7 +324,7 @@ namespace RatCow.MvcFramework.Tools
     /// <returns></returns>
     public static string ClassGenerator(ControlTree tree)
     {
-      return ClassGenerator(tree, false);
+      return ClassGenerator(tree, new CompilerFlags());
     }
 
     /// <summary>
@@ -333,9 +333,9 @@ namespace RatCow.MvcFramework.Tools
     /// <param name="tree"></param>
     /// <param name="isAbstract"></param>
     /// <returns></returns>
-    public static string ClassGenerator(ControlTree tree, bool isAbstract)
+    public static string ClassGenerator(ControlTree tree, CompilerFlags flags)
     {
-      string prefix = (isAbstract ? ABSTRACT_PREFIX : String.Empty);
+      string prefix = (flags.IsAbstract ? ABSTRACT_PREFIX : String.Empty);
 
       StringBuilder code = new StringBuilder();
 
@@ -377,101 +377,34 @@ namespace RatCow.MvcFramework.Tools
         //add in the click handlers for buttons, coz I'm lazy like that
         if (control.Value == typeof(System.Windows.Forms.Button))
         {
-          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"Click\")]\r\n\t\tpublic void F{0}_Click(object sender, EventArgs e)\r\n", control.Key);
-          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
-
-          code_s1.AppendFormat("\t\tprotected virtual void {0}Click()\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
-          code_s1.AppendLine("\t\t{\r\n");
-          code_s1.AppendLine("\t\t}\r\n");
-
-          code_s2.AppendFormat("\t\t\t{0}Click();\r\n", control.Key);
-
-          code_s2.AppendLine("\t\t}\r\n");
+          AddStandardAction(tree.ClassName, control.Key, "Click", code_s2, code_s1, flags);
         }
         else if (control.Value == typeof(System.Windows.Forms.CheckBox))
         {
-          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"Click\")]\r\n\t\tpublic void F{0}_Click(object sender, EventArgs e)\r\n", control.Key);
-          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
-
-          code_s1.AppendFormat("\t\tprotected virtual void {0}Click()\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
-          code_s1.AppendLine("\t\t{\r\n");
-          code_s1.AppendLine("\t\t}\r\n");
-
-          code_s2.AppendFormat("\t\t\t{0}Click();\r\n", control.Key);
-
-          code_s2.AppendLine("\t\t}\r\n");
+          AddStandardAction(tree.ClassName, control.Key, "Click", code_s2, code_s1, flags);
 
           //the checkbox changed
-          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"CheckedChanged\")]\r\n\t\tpublic void F{0}_CheckedChanged(object sender, EventArgs e)\r\n", control.Key);
-          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
-
-          code_s1.AppendFormat("\t\tprotected virtual void {0}CheckedChanged()\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
-          code_s1.AppendLine("\t\t{\r\n");
-          code_s1.AppendLine("\t\t}\r\n");
-
-          code_s2.AppendFormat("\t\t\t{0}CheckedChanged();\r\n", control.Key);
-
-          code_s2.AppendLine("\t\t}\r\n");
-
-          //CheckStateChanged
-          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"CheckStateChanged\")]\r\n\t\tpublic void F{0}_CheckStateChanged(object sender, EventArgs e)\r\n", control.Key);
-          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
-
-          code_s1.AppendFormat("\t\tprotected virtual void {0}CheckStateChanged()\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
-          code_s1.AppendLine("\t\t{\r\n");
-          code_s1.AppendLine("\t\t}\r\n");
-
-          code_s2.AppendFormat("\t\t\t{0}CheckStateChanged();\r\n", control.Key);
-
-          code_s2.AppendLine("\t\t}\r\n");
+          AddStandardAction(tree.ClassName, control.Key, "CheckedChanged", code_s2, code_s1, flags);
+          AddStandardAction(tree.ClassName, control.Key, "CheckStateChanged", code_s2, code_s1, flags);
         }
 
         else if (control.Value == typeof(System.Windows.Forms.ListView))
         {
-          code_s2.AppendFormat("\t\tprotected ListViewHelper<T> Get{0}Helper<T>()\r\n", control.Key);
-          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
-
-          code_s2.AppendFormat("\t\t\tvar lvh = new ListViewHelper<T>({0});\r\n", control.Key);
-          code_s2.AppendLine("\t\t\treturn lvh;");
-
-          code_s2.AppendLine("\t\t}\r\n");
-
-          //add in the handler for the virtual list item
-
-          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"RetrieveVirtualItem\")]\r\n\t\tpublic void F{0}_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)\r\n", control.Key);
-          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
-
-          code_s1.AppendFormat("\t\tprotected virtual void {0}RetrieveVirtualItem(RetrieveVirtualItemEventArgs e)\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
-          code_s1.AppendLine("\t\t{\r\n");
-          code_s1.AppendLine("\t\t\t/*default placeholder to avoid crashes*/ e.Item = new ListViewItem();\r\n");
-          code_s1.AppendLine("\t\t}\r\n");
-
-          code_s2.AppendFormat("\t\t\t{0}RetrieveVirtualItem(e);\r\n", control.Key);
-
-          code_s2.AppendLine("\t\t}\r\n");
+          AddListViewHandler(control.Key, code_s2, code_s1, flags);
         }
         else if (control.Value == typeof(System.Windows.Forms.TextBox))
         {
-          code_s2.AppendFormat("\t\t[Action(\"{0}\", \"TextChanged\")]\r\n\t\tpublic void F{0}_TextChanged(object sender, EventArgs e)\r\n", control.Key);
-          code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
-
-          code_s1.AppendFormat("\t\tprotected virtual void {0}TextChanged(EventArgs e)\r\n", control.Key);    //added "protected virtual" so that I can descend and not have to alter this class at all.
-          code_s1.AppendLine("\t\t{\r\n");
-          code_s1.AppendLine("\t\t}\r\n");
-
-          code_s2.AppendFormat("\t\t\t{0}TextChanged(e);\r\n", control.Key);
-
-          code_s2.AppendLine("\t\t}\r\n");
+          AddStandardAction(tree.ClassName, control.Key, "TextChanged", code_s2, code_s1, flags);
         }
       }
 
       //some boiler plate code which helps set the data for a LisViewHelper
 
-      code_s2.AppendLine("\t\tprotected void SetData<T>(ListViewHelper<T> view, List<T> data)");
+      code_s2.AppendLine("\t\tprotected void SetData<T>(ListViewHelper<T> helper, List<T> data) where T : class");
       code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
 
-      code_s2.AppendLine("\t\t\tType t = view.GetType();");
-      code_s2.AppendLine("\t\t\tt.InvokeMember(\"SetData\", BindingFlags.Default | BindingFlags.InvokeMethod, null, view, new object[] { data });");
+      code_s2.AppendLine("\t\t\tType t = helper.GetType();");
+      code_s2.AppendLine("\t\t\tt.InvokeMember(\"SetData\", BindingFlags.Default | BindingFlags.InvokeMethod, null, helper, new object[] { data });");
 
       code_s2.AppendLine("\t\t}\r\n");
 
@@ -485,6 +418,97 @@ namespace RatCow.MvcFramework.Tools
       code.AppendLine("}");
 
       return code.ToString();
+    }
+
+    //simplify the code
+    private static void AddStandardAction(string viewName, string controlName, string actionName, StringBuilder hook, StringBuilder action, CompilerFlags flags)
+    {
+      //DEBUG - Console.WriteLine("{0}Controller :: {1} :: {2} - -a : {3} -p : {4} -e : {5} -v : {6}", viewName, controlName, actionName, flags.IsAbstract, flags.UsePartialMethods, flags.PassControllerToEvents, flags.ProtectListViews);
+
+      hook.AppendFormat("\t\t[Action(\"{0}\", \"{1}\")]\r\n\t\tpublic void F{0}_{1}(object sender, EventArgs e)\r\n", controlName, actionName);
+      hook.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+      action.AppendFormat(
+        "\t\t{2} void {0}{1}({4}EventArgs e){3}\r\n",
+        controlName,
+        actionName,
+        (flags.UsePartialMethods ? "partial" : "protected virtual"),
+        (flags.UsePartialMethods ? ";" : String.Empty),
+        (flags.PassControllerToEvents ? String.Format("{0}Controller controller,", viewName) : String.Empty)
+       );
+      //added "protected virtual" so that I can descend and not have to alter this class at all.
+      //20120529 - added partial method option for 3.5+
+
+      if (!flags.UsePartialMethods)
+      {
+        action.AppendLine("\t\t{\r\n");
+        action.AppendLine("\t\t}\r\n");
+      }//20120529 - added partial method option for 3.5+
+
+      hook.AppendFormat("\t\t\t{0}{1}({2}e);\r\n", controlName, actionName, (flags.PassControllerToEvents ? "this, " : String.Empty));
+
+      hook.AppendLine("\t\t}\r\n");
+    }
+
+    /// <summary>
+    /// This adds is a standard hook for the ListView and creates a ListViewHelper attached to it.
+    /// </summary>
+    /// <param name="controlName"></param>
+    /// <param name="hook"></param>
+    /// <param name="action"></param>
+    private static void AddListViewHandler(string controlName, StringBuilder hook, StringBuilder action, CompilerFlags flags)
+    {
+      hook.AppendFormat("\t\tprotected ListViewHelper<T> Get{0}Helper<T>() where T : class\r\n", controlName);
+      hook.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+      hook.AppendFormat("\t\t\tvar lvh = new ListViewHelper<T>({0});\r\n", controlName);
+      hook.AppendLine("\t\t\treturn lvh;");
+
+      hook.AppendLine("\t\t}\r\n");
+
+      //add in the handler for the virtual list item
+
+      hook.AppendFormat("\t\t[Action(\"{0}\", \"RetrieveVirtualItem\")]\r\n\t\tpublic void F{0}_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)\r\n", controlName);
+      hook.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
+
+      action.AppendFormat("\t\tprotected virtual void {0}RetrieveVirtualItem(RetrieveVirtualItemEventArgs e)\r\n", controlName);    //added "protected virtual" so that I can descend and not have to alter this class at all.
+      action.AppendLine("\t\t{");
+
+      action.AppendLine("\t\t\t/*we will first try to get an item from the partial method*/");
+      action.AppendLine("\t\t\tListViewItem item = null; //set to a known value");
+
+      if (flags.UsePartialMethods)
+      {
+        action.AppendFormat("\t\t\t{0}GetItem(ref item, e); //try to get the value from partial implementation\r\n", controlName);
+      }
+
+      if (flags.ProtectListViews)
+      {
+        action.AppendLine("\t\t\tif (item == null) //if, null, save ourselves from crashing \r\n\t\t\t{");
+        action.AppendLine("\t\t\t/*default placeholder to avoid crashes*/\r\n\t\t\titem = new ListViewItem();\r\n");
+        action.AppendLine("\t\t\t/*we need to provide a value for each column*/");
+        action.AppendFormat("\t\t\tint count = ({0}.Columns.Count);\r\n", controlName);
+        action.AppendLine("\t\t\tif (count > 1)\r\n\t\t\t{");
+        action.AppendLine("\t\t\t\titem.Text = \"Temp value\";");
+        action.AppendLine("\t\t\t\tfor (int i = 1; i < count; i++)\r\n\t\t\t\t{");
+        action.AppendLine("\t\t\t\t\titem.SubItems.Add(\"Temp Subitem\");\r\n\t\t\t\t}\t\r\n\t\t\t}\r\n\t\t}");
+      }
+
+      action.AppendLine("\r\n\t\t\te.Item = item;");
+
+      action.AppendLine("\t\t}\r\n");
+
+      hook.AppendFormat("\t\t\t{0}RetrieveVirtualItem(e);\r\n", controlName);
+
+      hook.AppendLine("\t\t}\r\n");
+
+      if (flags.UsePartialMethods)
+      {
+        action.AppendFormat(
+        "\t\tpartial void {0}GetItem(ref ListViewItem item, RetrieveVirtualItemEventArgs e);\r\n",
+        controlName
+       );
+      }
     }
   }
 }

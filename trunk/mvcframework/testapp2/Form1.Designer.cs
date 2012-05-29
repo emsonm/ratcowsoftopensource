@@ -32,6 +32,12 @@
       this.button1 = new System.Windows.Forms.Button();
       this.label1 = new System.Windows.Forms.Label();
       this.textBox1 = new System.Windows.Forms.TextBox();
+      this.listView1 = new System.Windows.Forms.ListView();
+      this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+      this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+      this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+      this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
+      this.checkBox2 = new System.Windows.Forms.CheckBox();
       this.SuspendLayout();
       // 
       // checkBox1
@@ -70,11 +76,37 @@
       this.textBox1.TabIndex = 3;
       this.textBox1.Text = "This is an text box";
       // 
+      // listView1
+      // 
+      this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+      this.listView1.Location = new System.Drawing.Point(15, 141);
+      this.listView1.Name = "listView1";
+      this.listView1.Size = new System.Drawing.Size(249, 146);
+      this.listView1.TabIndex = 4;
+      this.listView1.UseCompatibleStateImageBehavior = false;
+      this.listView1.View = System.Windows.Forms.View.Details;
+      // 
+      // checkBox2
+      // 
+      this.checkBox2.AutoSize = true;
+      this.checkBox2.Location = new System.Drawing.Point(12, 118);
+      this.checkBox2.Name = "checkBox2";
+      this.checkBox2.Size = new System.Drawing.Size(135, 17);
+      this.checkBox2.TabIndex = 5;
+      this.checkBox2.Text = "Use Form1Data source";
+      this.checkBox2.UseVisualStyleBackColor = true;
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(273, 123);
+      this.ClientSize = new System.Drawing.Size(273, 299);
+      this.Controls.Add(this.checkBox2);
+      this.Controls.Add(this.listView1);
       this.Controls.Add(this.textBox1);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.button1);
@@ -92,6 +124,12 @@
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox textBox1;
+    private System.Windows.Forms.ListView listView1;
+    private System.Windows.Forms.ColumnHeader columnHeader1;
+    private System.Windows.Forms.ColumnHeader columnHeader2;
+    private System.Windows.Forms.ColumnHeader columnHeader3;
+    private System.Windows.Forms.ColumnHeader columnHeader4;
+    private System.Windows.Forms.CheckBox checkBox2;
   }
 }
 
