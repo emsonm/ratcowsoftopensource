@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompilerFlags.cs" />
     <Compile Include="ControllerCreationEngine.cs" />
     <Compile Include="ControlTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,18 +1,18 @@
 ﻿/*
  * Copyright 2010 Rat Cow Software and Matt Emson. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this list of
  *    conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
  *    of conditions and the following disclaimer in the documentation and/or other materials
  *    provided with the distribution.
- * 3. Neither the name of the Rat Cow Software nor the names of its contributors may be used 
- *    to endorse or promote products derived from this software without specific prior written 
+ * 3. Neither the name of the Rat Cow Software nor the names of its contributors may be used
+ *    to endorse or promote products derived from this software without specific prior written
  *    permission.
- *    
+ *
  * THIS SOFTWARE IS PROVIDED BY RAT COW SOFTWARE "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> OR
@@ -26,7 +26,7 @@
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of Rat Cow Software and Matt Emson.
- * 
+ *
  */
 
 using System;
@@ -42,46 +42,76 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
   /// without any donkey work. It obviuously does *not* accout for future changes
   /// to the form... this will come later on.
   /// </summary>
-  class Program
+  internal class Program
   {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
-      bool isAbstract = false;
-      string className;
+      CompilerFlags flags = new CompilerFlags();
+
+      string className = null;
       //This is new - we try to interpret the compiler params
       if (args.Length == 0)
       {
         Console.WriteLine("USAGE - mvctool [options] classname");
         Console.WriteLine("\r\nOPTIONS:");
         Console.WriteLine(" --abstract / -a : prefix controllers with \"Abstract\" prefix");
+        Console.WriteLine(" --partial-methods / -p : use partial methods (.Net 3.5+)");
+        Console.WriteLine(" -e : send the controller to event handlers");
+        Console.WriteLine(" -v : add pad code to protect list views");
         Console.WriteLine();
         return;
       }
-      else if (args.Length == 12)
-      {
-        isAbstract = false;
-        className = args[0];
-      }
       else if (args.Length > 1 || args.Length == 2)
       {
-        //is the param "abstract"?
-        if (args[0].Contains("-a"))
+        bool foundFormName = false;
+        foreach (string arg in args)
         {
-          isAbstract = true;
-          className = args[1];
+          Console.WriteLine(arg);
+
+          if (arg.StartsWith("-"))
+          {
+            //assume it's a param
+            if (arg.Contains("-a"))
+              flags.IsAbstract = true; //okay, this is a bit of a cheat
+            if (arg.Contains("-p"))
+              flags.UsePartialMethods = true;
+            if (arg.Contains("-e"))
+              flags.PassControllerToEvents = true;
+            if (arg.Contains("-v"))
+              flags.ProtectListViews = true;
+          }
+          else
+          {
+            //assume it's the form name
+            if (foundFormName)
+            {
+              Console.WriteLine(String.Format("Did not understand \"{0}\", already found \"{1}\", ignoring.", className, arg));
+            }
+            else
+            {
+              className = arg;
+              foundFormName = true;
+            }
+          }
         }
-        else
+
+        Console.WriteLine(flags);
+
+        if (!foundFormName)
         {
-          Console.WriteLine("Unknown parameter!");
+          Console.WriteLine("Could not find the form name in the params! Aborted");
           return;
         }
       }
-      else
+      else //assume one param is form name
       {
-        Console.WriteLine("Unknown parameter!");
-        return;
+        //this fixes a bug where user was unable to create a non abstract controller
+        flags.IsAbstract = false;
+        flags.UsePartialMethods = false;
+        flags.PassControllerToEvents = false;
+        flags.ProtectListViews = false;
+        className = args[0];
       }
-
 
       //we currently assume thesrs is one param and that is the name of the class
       //we also assume the files will be named in a standard C# naming convention.
@@ -89,7 +119,7 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
       if (ControllerCreationEngine.Compile(className))
       {
         //if we get here, we created the desired assembly above
-        ControllerCreationEngine.Generate(className, isAbstract);
+        ControllerCreationEngine.Generate(className, flags);
       }
       else
       {

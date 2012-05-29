@@ -119,6 +119,7 @@ namespace RatCow.MvcFramework
     {
       fview = view;
       fview.VirtualMode = true;
+      fview.MultiSelect = false; //select one and only one
       Updating = false;
     }
 
@@ -154,6 +155,23 @@ namespace RatCow.MvcFramework
         if (Updating)
           EndUpdate();
       }
+    }
+
+    /// <summary>
+    /// Virtual mode notoriously screws this up badly
+    /// </summary>
+    public int GetSelectedIndex()
+    {
+      int result = -1;
+      for (int i = 0; i < fview.Items.Count; i++)
+      {
+        if (fview.Items[i].Selected)
+        {
+          result = i; //could just return here, but that's messy
+          break;
+        }
+      }
+      return result;
     }
 
     #region fdata access
