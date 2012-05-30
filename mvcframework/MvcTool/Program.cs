@@ -113,13 +113,15 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
         className = args[0];
       }
 
+      string outputAssemblyName = String.Format("{0}_{1}.dll", className, DateTime.Now.Ticks);
+
       //we currently assume thesrs is one param and that is the name of the class
       //we also assume the files will be named in a standard C# naming convention.
       //i.e. MainForm -> MainForm.Designer.cs
-      if (ControllerCreationEngine.Compile(className))
+      if (ControllerCreationEngine.Compile(className, outputAssemblyName))
       {
         //if we get here, we created the desired assembly above
-        ControllerCreationEngine.Generate(className, flags);
+        ControllerCreationEngine.Generate(className, outputAssemblyName, flags);
       }
       else
       {

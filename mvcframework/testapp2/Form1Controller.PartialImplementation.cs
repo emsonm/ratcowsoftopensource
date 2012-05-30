@@ -18,6 +18,11 @@ namespace testapp2
         label1.Text = textBox1.Text;
     }
 
+    partial void button4Click(EventArgs e)
+    {
+      textBox3.Text = "Control recursion works!";
+    }
+
     partial void listView1GetItem(ref ListViewItem item, RetrieveVirtualItemEventArgs e)
     {
       if (checkBox2.Checked)

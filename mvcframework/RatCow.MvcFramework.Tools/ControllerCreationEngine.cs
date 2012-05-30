@@ -46,27 +46,18 @@ namespace RatCow.MvcFramework.Tools
   /// </summary>
   public class ControllerCreationEngine
   {
-    /// <summary>
-    /// retain older interface
-    /// </summary>
-    /// <param name="className"></param>
-    public static void Generate(string className)
-    {
-      Generate(className, new CompilerFlags());
-    }
-
     const string ABSTRACT_PREFIX = "Abstract";
 
     /// <summary>
     /// Split this up in to sections so I can more easliy re-use it in the future.
     /// </summary>
     /// <param name="className"></param>
-    public static void Generate(string className, CompilerFlags flags)
+    public static void Generate(string className, string outputAssemblyName, CompilerFlags flags)
     {
       string prefix = (flags.IsAbstract ? ABSTRACT_PREFIX : String.Empty);
 
       //this *can* generate more than one entry
-      ControlTree[] trees = GenerateTree(className);
+      ControlTree[] trees = GenerateTree(className, outputAssemblyName);
       if (trees != null && trees.Length == 1)
       {
         ControlTree tree = trees[0];
@@ -91,106 +82,12 @@ namespace RatCow.MvcFramework.Tools
       }
     }
 
-    #region Deprecated
-
-    /// <summary>
-    /// This loads the generated assembly and gets the class info
-    /// </summary>
-    /// <param name="className"></param>
-    public static void LegacyGenerate(string className)
-    {
-      Assembly a = Assembly.LoadFrom("temp.dll"); //we dictate this name
-      Type[] ts = a.GetTypes();
-      foreach (Type t in ts)
-      {
-        if (t.Name.Equals(className))
-        {
-          System.Console.WriteLine(t.FullName);
-          System.Console.WriteLine(t.Name);
-          System.Console.WriteLine(t.Module);
-          System.Console.WriteLine(t.Assembly.FullName);
-
-          //essentially, we only support "Winforms" so we assume it is a form or descends from one
-          //I might be able to alter this to "component" I gues...
-          System.Windows.Forms.Form form = (Activator.CreateInstance(t) as System.Windows.Forms.Form);
-
-          StringBuilder code = new StringBuilder();
-
-          code.AppendLine("/*Auto generated*/ \r\n\t\nusing System; \r\nusing System.Windows.Forms;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\nusing System.Text;\r\nusing System.Reflection;\r\n\r\n//3rd Party\r\nusing RatCow.MvcFramework;\r\n");
-          code.AppendFormat("namespace {0}\r\n", t.Namespace);
-          code.AppendLine("{");
-
-          StringBuilder code_s1 = new StringBuilder();
-
-          code_s1.AppendFormat("\tinternal partial class {0}Controller: BaseController<{0}>\r\n", t.Name);
-          code_s1.AppendLine("\t{");
-
-          //constructor
-          code_s1.AppendFormat("\t\tpublic {0}Controller() : base()\r\n", t.Name);
-          code_s1.AppendLine("\t\t{\r\n\t\t}\r\n");
-
-          StringBuilder code_s2 = new StringBuilder();
-          code_s2.AppendLine("\r\n#region GUI glue code\r\n");
-          code_s2.AppendFormat("\tpartial class {0}Controller\r\n", t.Name);
-          code_s2.AppendLine("\t{");
-
-          //we now have access to the controls
-          foreach (System.Windows.Forms.Control control in form.Controls)
-          {
-            //System.Console.WriteLine(" var {0} : {1} ", control.Name, control.GetType().Name);
-            //add the declaration to code_s2
-            code_s2.AppendFormat("\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.GetType().Name, control.Name); //add var
-            code_s2.AppendLine("{ get; set; }");
-
-            //add in the click handlers for buttons, coz I'm lazy like that
-            if (control is System.Windows.Forms.Button)
-            {
-              code_s2.AppendFormat("\t\t[Action(\"{0}\", \"Click\")]\r\n\t\tpublic void F{0}_Click(object sender, EventArgs e)\r\n", control.Name);
-              code_s2.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
-
-              code_s1.AppendFormat("\t\tvoid {0}Click()\r\n", control.Name);
-              code_s1.AppendLine("\t\t{\r\n");
-              code_s1.AppendLine("\t\t}\r\n");
-
-              code_s2.AppendFormat("\t\t\t{0}Click();\r\n", control.Name);
-
-              code_s2.AppendLine("\t\t}\r\n");
-            }
-          }
-
-          code_s1.AppendLine("\t}"); //end of class declaration
-          code.AppendLine(code_s1.ToString());
-
-          code_s2.AppendLine("\t}"); //end of class declaration
-          code_s2.AppendLine("#endregion /*GUI glue code*/");
-          code.AppendLine(code_s2.ToString());
-
-          code.AppendLine("}");
-
-          TextWriter writer = new StreamWriter(File.OpenWrite(String.Format("{0}Controller.cs", className)));
-          try
-          {
-            writer.WriteLine(code.ToString());
-          }
-          finally
-          {
-            writer.Close();
-          }
-
-          System.Console.WriteLine(code.ToString());
-        }
-      }
-      return;
-    }
-
-    #endregion Deprecated
-
     /// <summary>
     /// Hacked mini compiler - it does enough to compile *basic* designer classes
     /// </summary>
     /// <param name="className"></param>
     /// <returns></returns>
-    public static bool Compile(string className)
+    public static bool Compile(string className, string outputAssemblyName)
     {
       //we attempt to compile the file provided and then read info from it
       CSharpCodeProvider compiler = new CSharpCodeProvider();
@@ -205,7 +102,7 @@ namespace RatCow.MvcFramework.Tools
 
       compParams.GenerateExecutable = false;
       compParams.CompilerOptions = "/t:library";
-      compParams.OutputAssembly = "./temp.dll";
+      compParams.OutputAssembly = outputAssemblyName; // "./temp.dll";
 
       StringBuilder s = new StringBuilder();
 
@@ -284,14 +181,14 @@ namespace RatCow.MvcFramework.Tools
     }
 
     /// <summary>
-    /// This is a version that builds a tree of info rather than directly creating the source
+    /// Builds a tree of control info
     /// </summary>
     /// <param name="className"></param>
-    public static ControlTree[] GenerateTree(string className)
+    public static ControlTree[] GenerateTree(string className, string outputAssemblyName)
     {
       List<ControlTree> trees = new List<ControlTree>();
 
-      Assembly a = Assembly.LoadFrom("temp.dll"); //we dictate this name
+      Assembly a = Assembly.LoadFrom(outputAssemblyName /*"temp.dll"*/); //we dictate this name
       Type[] ts = a.GetTypes();
       foreach (Type t in ts)
       {
@@ -307,24 +204,33 @@ namespace RatCow.MvcFramework.Tools
           tree.ClassName = t.Name;
           tree.NamespaceName = t.Namespace;
 
-          //we now have access to the controls
-          foreach (System.Windows.Forms.Control control in form.Controls)
-          {
-            tree.AddControl(control.Name, control.GetType());
-          }
+          ////we now have access to the controls
+          //foreach (System.Windows.Forms.Control control in form.Controls)
+          //{
+          //  tree.AddControl(control.Name, control.GetType());
+          //}
+
+          IterateTree(form, tree, className);
         }
       }
       return trees.ToArray();
     }
 
     /// <summary>
-    /// maintain the public inteface.
+    /// This fixes the subcontrol issues
     /// </summary>
-    /// <param name="tree"></param>
-    /// <returns></returns>
-    public static string ClassGenerator(ControlTree tree)
+    private static void IterateTree(System.Windows.Forms.Control targetControl, ControlTree tree, string path)
     {
-      return ClassGenerator(tree, new CompilerFlags());
+      Console.WriteLine(path);
+
+      foreach (System.Windows.Forms.Control control in targetControl.Controls)
+      {
+        tree.AddControl(control.Name, control.GetType());
+        if (control.Controls.Count > 0)
+        {
+          IterateTree(control, tree, String.Format("{0}_{1}", path, control.Name)); //recurse....
+        }
+      }
     }
 
     /// <summary>
@@ -374,28 +280,41 @@ namespace RatCow.MvcFramework.Tools
         code_s2.AppendFormat("\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.Value.Name, control.Key); //add var
         code_s2.AppendLine("{ get; set; }");
 
-        //add in the click handlers for buttons, coz I'm lazy like that
-        if (control.Value == typeof(System.Windows.Forms.Button))
-        {
-          AddStandardAction(tree.ClassName, control.Key, "Click", code_s2, code_s1, flags);
-        }
-        else if (control.Value == typeof(System.Windows.Forms.CheckBox))
-        {
-          AddStandardAction(tree.ClassName, control.Key, "Click", code_s2, code_s1, flags);
+        //this should find all known event types
+        AddKnownActions(tree.ClassName, control, code_s2, code_s1, flags);
 
-          //the checkbox changed
-          AddStandardAction(tree.ClassName, control.Key, "CheckedChanged", code_s2, code_s1, flags);
-          AddStandardAction(tree.ClassName, control.Key, "CheckStateChanged", code_s2, code_s1, flags);
-        }
-
-        else if (control.Value == typeof(System.Windows.Forms.ListView))
+        //specific listView hooks
+        if (control.Value == typeof(System.Windows.Forms.ListView))
         {
           AddListViewHandler(control.Key, code_s2, code_s1, flags);
         }
-        else if (control.Value == typeof(System.Windows.Forms.TextBox))
-        {
-          AddStandardAction(tree.ClassName, control.Key, "TextChanged", code_s2, code_s1, flags);
-        }
+
+        #region Legacy code
+
+        //add in the click handlers for buttons, coz I'm lazy like that
+        //if (control.Value == typeof(System.Windows.Forms.Button))
+        //{
+        //  AddStandardAction(tree.ClassName, control.Key, "Click", code_s2, code_s1, flags);
+        //}
+        //else if (control.Value == typeof(System.Windows.Forms.CheckBox))
+        //{
+        //  AddStandardAction(tree.ClassName, control.Key, "Click", code_s2, code_s1, flags);
+
+        //  //the checkbox changed
+        //  AddStandardAction(tree.ClassName, control.Key, "CheckedChanged", code_s2, code_s1, flags);
+        //  AddStandardAction(tree.ClassName, control.Key, "CheckStateChanged", code_s2, code_s1, flags);
+        //}
+
+        //else if (control.Value == typeof(System.Windows.Forms.ListView))
+        //{
+        //  AddListViewHandler(control.Key, code_s2, code_s1, flags);
+        //}
+        //else if (control.Value == typeof(System.Windows.Forms.TextBox))
+        //{
+        //  AddStandardAction(tree.ClassName, control.Key, "TextChanged", code_s2, code_s1, flags);
+        //}
+
+        #endregion Legacy code
       }
 
       //some boiler plate code which helps set the data for a LisViewHelper
@@ -420,21 +339,87 @@ namespace RatCow.MvcFramework.Tools
       return code.ToString();
     }
 
-    //simplify the code
+    /// <summary>
+    /// Start to implement generic event handling
+    /// </summary>
+    private static void AddKnownActions(string viewName, KeyValuePair<string, Type> control, StringBuilder hook, StringBuilder action, CompilerFlags flags)
+    {
+      //test - get a list of all the events for this control
+      EventInfo[] eva = control.Value.GetEvents();
+      foreach (var ev in eva)
+      {
+        //generally, the event is XXXXEvent and the args are XXXXArgs..
+        //TODO: look at making htis more generic.. can we get at the param info for the delegate?
+        if (ev.EventHandlerType == typeof(System.EventHandler))
+        {
+          AddStandardAction(viewName, control.Key, ev.Name, hook, action, flags);
+        }
+        else if (ev.EventHandlerType == typeof(System.Windows.Forms.MouseEventHandler))
+        {
+          AddMouseAction(viewName, control.Key, ev.Name, hook, action, flags);
+        }
+        else if (ev.EventHandlerType == typeof(System.Windows.Forms.KeyEventHandler))
+        {
+          AddKeyAction(viewName, control.Key, ev.Name, hook, action, flags);
+        }
+        else if (ev.EventHandlerType == typeof(System.Windows.Forms.DragEventHandler))
+        {
+          AddDragAction(viewName, control.Key, ev.Name, hook, action, flags);
+        }
+        //could add an else clause to create a theoretical event arg from the handler name here...
+      }
+    }
+
+    /// <summary>
+    /// EventArgs stub
+    /// </summary>
     private static void AddStandardAction(string viewName, string controlName, string actionName, StringBuilder hook, StringBuilder action, CompilerFlags flags)
+    {
+      AddAction(viewName, controlName, actionName, "EventArgs", hook, action, flags);
+    }
+
+    /// <summary>
+    /// MouseEventArgs stub.
+    /// </summary>
+    private static void AddMouseAction(string viewName, string controlName, string actionName, StringBuilder hook, StringBuilder action, CompilerFlags flags)
+    {
+      AddAction(viewName, controlName, actionName, "MouseEventArgs", hook, action, flags);
+    }
+
+    /// <summary>
+    /// DragEventHandler stub
+    /// </summary>
+    private static void AddDragAction(string viewName, string controlName, string actionName, StringBuilder hook, StringBuilder action, CompilerFlags flags)
+    {
+      AddAction(viewName, controlName, actionName, "DragEventArgs", hook, action, flags);
+    }
+
+    /// <summary>
+    /// KeyEventHandler stub.
+    /// </summary>
+    private static void AddKeyAction(string viewName, string controlName, string actionName, StringBuilder hook, StringBuilder action, CompilerFlags flags)
+    {
+      AddAction(viewName, controlName, actionName, "KeyEventArgs", hook, action, flags);
+    }
+
+    /// <summary>
+    /// Create generic event hooks
+    /// </summary>
+    private static void AddAction(string viewName, string controlName, string actionName, string eventArgsType, StringBuilder hook, StringBuilder action, CompilerFlags flags)
     {
       //DEBUG - Console.WriteLine("{0}Controller :: {1} :: {2} - -a : {3} -p : {4} -e : {5} -v : {6}", viewName, controlName, actionName, flags.IsAbstract, flags.UsePartialMethods, flags.PassControllerToEvents, flags.ProtectListViews);
 
-      hook.AppendFormat("\t\t[Action(\"{0}\", \"{1}\")]\r\n\t\tpublic void F{0}_{1}(object sender, EventArgs e)\r\n", controlName, actionName);
+      hook.AppendFormat("\t\t[Action(\"{0}\", \"{1}\")]\r\n\t\tpublic void F{0}_{1}(object sender, {2} e)\r\n", controlName, actionName, eventArgsType);
       hook.AppendLine("\t\t{\r\n\t\t\t//Auto generated call");
 
       action.AppendFormat(
-        "\t\t{2} void {0}{1}({4}EventArgs e){3}\r\n",
+        "\t\t{2} void {0}{1}({4}{5} e){3}\r\n",
         controlName,
         actionName,
         (flags.UsePartialMethods ? "partial" : "protected virtual"),
         (flags.UsePartialMethods ? ";" : String.Empty),
-        (flags.PassControllerToEvents ? String.Format("{0}Controller controller,", viewName) : String.Empty)
+        (flags.PassControllerToEvents ? String.Format("{0}Controller controller,", viewName) : String.Empty),
+        eventArgsType
        );
       //added "protected virtual" so that I can descend and not have to alter this class at all.
       //20120529 - added partial method option for 3.5+
