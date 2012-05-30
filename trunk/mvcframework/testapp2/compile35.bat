@@ -6,7 +6,7 @@ echo building file
 ..\MvcTool\bin\debug\mvctool -p -v Form1
 
 echo cleaning up
-del temp.dll
+del *.dll
 
 echo DONE!
 pause
