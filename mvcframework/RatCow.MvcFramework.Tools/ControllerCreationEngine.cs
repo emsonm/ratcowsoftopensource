@@ -263,58 +263,48 @@ namespace RatCow.MvcFramework.Tools
       code_s2.AppendFormat("\tpartial class {1}{0}Controller\r\n", tree.ClassName, prefix);
       code_s2.AppendLine("\t{");
 
-      //this is better off hardcoded for now at the BaseController level
-      ////add in "form_load" event
-      //code_s2.AppendLine();
-      //code_s2.AppendLine("\t\t[Action(\"View\", \"Load\")]\r\n\t\tprivate void View_Load(object sender, EventArgs e)\r\n\t\t{\r\n\t\t\tViewLoad();\r\n\t\t}\r\n");
-
-      //code_s1.AppendLine("\t\tprotected virtual void ViewLoad()");    //added "protected virtual" so that I can descend and not have to alter this class at all.
-      //code_s1.AppendLine("\t\t{\r\n");
-      //code_s1.AppendLine("\t\t}\r\n");
-
-      //we now have access to the controls
-      foreach (var control in tree.Controls)
+      if (flags.RestrictActions)
       {
-        //System.Console.WriteLine(" var {0} : {1} ", control.Name, control.GetType().Name);
-        //add the declaration to code_s2
-        code_s2.AppendFormat("\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.Value.Name, control.Key); //add var
-        code_s2.AppendLine("{ get; set; }");
+        //load the actions file
+        ViewActionMap map = (flags.UseDefaultActionsFile ? GetDefaultViewActionMap() : GetNamedViewActionMap(tree.ClassName, true));
 
-        //this should find all known event types
-        AddKnownActions(tree.ClassName, control, code_s2, code_s1, flags);
-
-        //specific listView hooks
-        if (control.Value == typeof(System.Windows.Forms.ListView))
+        //we now have access to the controls
+        foreach (var control in tree.Controls)
         {
-          AddListViewHandler(control.Key, code_s2, code_s1, flags);
+          //System.Console.WriteLine(" var {0} : {1} ", control.Name, control.GetType().Name);
+          //add the declaration to code_s2
+          code_s2.AppendFormat("\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.Value.Name, control.Key); //add var
+          code_s2.AppendLine("{ get; set; }");
+
+          //this should find all known event types
+          AddMappedActions(tree.ClassName, control, code_s2, code_s1, flags, map);
+
+          //specific listView hooks
+          if (control.Value == typeof(System.Windows.Forms.ListView))
+          {
+            AddListViewHandler(control.Key, code_s2, code_s1, flags);
+          }
         }
+      }
+      else
+      {
+        //we now have access to the controls
+        foreach (var control in tree.Controls)
+        {
+          //System.Console.WriteLine(" var {0} : {1} ", control.Name, control.GetType().Name);
+          //add the declaration to code_s2
+          code_s2.AppendFormat("\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.Value.Name, control.Key); //add var
+          code_s2.AppendLine("{ get; set; }");
 
-        #region Legacy code
+          //this should find all known event types
+          AddKnownActions(tree.ClassName, control, code_s2, code_s1, flags);
 
-        //add in the click handlers for buttons, coz I'm lazy like that
-        //if (control.Value == typeof(System.Windows.Forms.Button))
-        //{
-        //  AddStandardAction(tree.ClassName, control.Key, "Click", code_s2, code_s1, flags);
-        //}
-        //else if (control.Value == typeof(System.Windows.Forms.CheckBox))
-        //{
-        //  AddStandardAction(tree.ClassName, control.Key, "Click", code_s2, code_s1, flags);
-
-        //  //the checkbox changed
-        //  AddStandardAction(tree.ClassName, control.Key, "CheckedChanged", code_s2, code_s1, flags);
-        //  AddStandardAction(tree.ClassName, control.Key, "CheckStateChanged", code_s2, code_s1, flags);
-        //}
-
-        //else if (control.Value == typeof(System.Windows.Forms.ListView))
-        //{
-        //  AddListViewHandler(control.Key, code_s2, code_s1, flags);
-        //}
-        //else if (control.Value == typeof(System.Windows.Forms.TextBox))
-        //{
-        //  AddStandardAction(tree.ClassName, control.Key, "TextChanged", code_s2, code_s1, flags);
-        //}
-
-        #endregion Legacy code
+          //specific listView hooks
+          if (control.Value == typeof(System.Windows.Forms.ListView))
+          {
+            AddListViewHandler(control.Key, code_s2, code_s1, flags);
+          }
+        }
       }
 
       //some boiler plate code which helps set the data for a LisViewHelper
@@ -337,6 +327,38 @@ namespace RatCow.MvcFramework.Tools
       code.AppendLine("}");
 
       return code.ToString();
+    }
+
+    /// <summary>
+    /// Loads a specific file
+    /// </summary>
+    private static ViewActionMap GetNamedViewActionMap(string className, bool useDefaltIfNotFound)
+    {
+      var path = Path.Combine(System.Environment.CurrentDirectory, String.Format("{0}.mvcmap", className));
+      if (File.Exists(path))
+      {
+        ViewActionMap result = ViewActionMap.Load(path);
+        return result;
+      }
+      else if (useDefaltIfNotFound)
+        return GetDefaultViewActionMap();
+      else
+        throw new Exception("The mvcmap file specified was not found");
+    }
+
+    /// <summary>
+    /// Loads a generic file for all classes in project
+    /// </summary>
+    private static ViewActionMap GetDefaultViewActionMap()
+    {
+      var path = Path.Combine(System.Environment.CurrentDirectory, "default.mvcmap");
+      if (File.Exists(path))
+      {
+        ViewActionMap result = ViewActionMap.Load(path);
+        return result;
+      }
+      else
+        return new ViewActionMap(true); //fallback
     }
 
     /// <summary>
@@ -367,6 +389,55 @@ namespace RatCow.MvcFramework.Tools
           AddDragAction(viewName, control.Key, ev.Name, hook, action, flags);
         }
         //could add an else clause to create a theoretical event arg from the handler name here...
+      }
+    }
+
+    /// <summary>
+    /// This is going to initially be fairly slow
+    /// </summary>
+    private static void AddMappedActions(string viewName, KeyValuePair<string, Type> control, StringBuilder hook, StringBuilder action, CompilerFlags flags, ViewActionMap map)
+    {
+      var added = new List<String>(); //tally, to avoid double adds
+      //we first add the generic stuff
+      foreach (var ev in map.GlobalMap)
+      {
+        if (!added.Contains(ev.EventName))
+        {
+          //does the event exist?
+          var evi = control.Value.GetEvent(ev.EventName);
+
+          if (evi == null) continue;
+          else
+          {
+            AddAction(viewName, control.Key, ev.EventName, ev.EventArgsName, hook, action, flags);
+            added.Add(ev.EventName);
+          }
+        }
+      }
+
+      //IEnumerable<ViewControlAction> controlMapItems = map.ControlActionMap.F(ev => ev.ControlType == control.Value.Name);
+      var controlMapItems = from item in map.ControlActionMap
+                            where (item.ControlType == control.Value.Name)
+                            select item;
+
+      if (controlMapItems == null) return;
+      else
+      {
+        foreach (var controlMap in controlMapItems)
+        {
+          if (controlMap != null)
+          {
+            foreach (var ev in controlMap.ControlActions)
+            {
+              //this has to be here
+              if (!added.Contains(ev.EventName))
+              {
+                AddAction(viewName, control.Key, ev.EventName, ev.EventArgsName, hook, action, flags);
+                added.Add(ev.EventName);
+              }
+            }
+          }
+        }
       }
     }
 

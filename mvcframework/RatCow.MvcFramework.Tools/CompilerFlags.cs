@@ -11,5 +11,7 @@ namespace RatCow.MvcFramework.Tools
     public bool UsePartialMethods = false;
     public bool PassControllerToEvents = false;
     public bool ProtectListViews = false;
+    public bool RestrictActions = false;
+    public bool UseDefaultActionsFile = false;
   }
 }

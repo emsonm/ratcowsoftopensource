@@ -46,9 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewActions.cs" />
+    <Compile Include="ViewActionMap.cs" />
     <Compile Include="CompilerFlags.cs" />
     <Compile Include="ControllerCreationEngine.cs" />
     <Compile Include="ControlTree.cs" />
+    <Compile Include="ViewAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
