@@ -39,13 +39,15 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
   /// <summary>
   /// This is an extremely basic and pretty much a "giant hack". It is meant to
   /// get us to the point that we could create the desired XxxxController initially
-  /// without any donkey work. It obviuously does *not* accout for future changes
+  /// without any donkey work. It obviouusly does *not* account for future changes
   /// to the form... this will come later on.
   /// </summary>
   internal class Program
   {
     private static void Main(string[] args)
     {
+      //System.Diagnostics.Debugger.Break(); //Use this for force debugging
+
       CompilerFlags flags = new CompilerFlags();
 
       string className = null;
@@ -58,12 +60,23 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
         Console.WriteLine(" --partial-methods / -p : use partial methods (.Net 3.5+)");
         Console.WriteLine(" -e : send the controller to event handlers");
         Console.WriteLine(" -v : add pad code to protect list views");
+        Console.WriteLine(" -c : create a new action config file called \"default.mvcmap\" (this can't be used with any other params)");
+        Console.WriteLine(" -C : create a new action config file with view name passed (this can't be used with any other params)");
+        Console.WriteLine(" -r : use the default mvcmap when creating actions");
+        Console.WriteLine(" -R : use the mvcmap with the same name as the form passed when creating actions");
         Console.WriteLine();
         return;
       }
-      else if (args.Length > 1 || args.Length == 2)
+      else if (args.Length > 1)
       {
         bool foundFormName = false;
+
+        if (args[0].Contains("-C"))
+        {
+          CreateNewActionConfig(String.Format("{0}.mvcmap", args[1]));
+          return;
+        }
+
         foreach (string arg in args)
         {
           Console.WriteLine(arg);
@@ -79,6 +92,16 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
               flags.PassControllerToEvents = true;
             if (arg.Contains("-v"))
               flags.ProtectListViews = true;
+            if (arg.Contains("-r"))
+            {
+              flags.RestrictActions = true;
+              flags.UseDefaultActionsFile = true;
+            }
+            if (arg.Contains("-R"))
+            {
+              flags.RestrictActions = true;
+              //flags.UseDefaultActionsFile = false; //this should default to false...
+            }
           }
           else
           {
@@ -103,6 +126,11 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
           return;
         }
       }
+      else if (args.Length == 1 && args[0].Contains("-c"))
+      {
+        CreateNewActionConfig("default.mvcmap");
+        return;
+      }
       else //assume one param is form name
       {
         //this fixes a bug where user was unable to create a non abstract controller
@@ -115,7 +143,7 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
 
       string outputAssemblyName = String.Format("{0}_{1}.dll", className, DateTime.Now.Ticks);
 
-      //we currently assume thesrs is one param and that is the name of the class
+      //we currently assume this is one param and that is the name of the class
       //we also assume the files will be named in a standard C# naming convention.
       //i.e. MainForm -> MainForm.Designer.cs
       if (ControllerCreationEngine.Compile(className, outputAssemblyName))
@@ -128,6 +156,19 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
         Console.WriteLine("Error! The file could not be generated.");
         return;
       }
+    }
+
+    /// <summary>
+    /// Exprimental
+    /// </summary>
+    private static void CreateNewActionConfig(string name)
+    {
+      var path = System.IO.Path.Combine(System.Environment.CurrentDirectory, name);
+
+      var config = new ViewActionMap(true);
+
+      //save the config
+      ViewActionMap.Save(config, path, true);
     }
   }
 }
