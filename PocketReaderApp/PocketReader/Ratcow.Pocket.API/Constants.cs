@@ -38,5 +38,19 @@ namespace RatCow.Pocket.API
     public static string Stats = StatsBase + LoginCredentials;
     public static string StatsXml = StatsBase + LoginCredentials + FormatXml;
     public static string StatsJson = Stats; //as this is essentially the same
+
+    public static string AddBase = APIBase + "add?";
+    public static string AddInfill = "&url={0}&title={1}";
+    public static string Add = AddBase + LoginCredentials;
+    public static string AddFull = AddBase + LoginCredentials + "&url={3}&title={4}";
+
+    public static string GetBase = APIBase + "get?";
+    public static string Get = GetBase + LoginCredentials;
+    public static string GetRead = GetBase + LoginCredentials + "&state=read";
+    public static string GetUnread = GetBase + LoginCredentials + "&state=unread";
+    public static string GetSinceInfill = "&since={0}";
+    public static string GetCountInfill = "&count={0}";
+    public static string GetTagsInfill = "&tags={0}"; //1 or 0
+    public static string GetForThisAppInfill = "&myAppOnly={0}"; //1 or 0
   }
 }
