@@ -138,5 +138,67 @@ namespace RatCow.Pocket.API.Tests
 
       Assert.IsNotNull(result);
     }
+
+    [TestMethod]
+    public void TestAddRaw()
+    {
+      var api = new Client();
+      var credentials = new Credentials() { UserName = "mytestaccount", Password = "MySuperPassword123", APIKey = "bz9Tfz7fgc950lfI97d126evp1p1GyP2" };
+
+      var result = api.AddRaw(credentials, "http://getpocket.com/api/docs", "Add api test");
+
+      Assert.IsNotNull(result);
+      Assert.IsTrue(result.WasCalled);
+      Assert.AreEqual(result.StatusCode, 200);
+    }
+
+    [TestMethod]
+    public void TestAddRaw2()
+    {
+      var api = new Client();
+      var credentials = new Credentials() { UserName = "mytestaccount", Password = "MySuperPassword123", APIKey = "bz9Tfz7fgc950lfI97d126evp1p1GyP2" };
+
+      var result = api.AddRaw(credentials, "http://www.osnews.com/story/26112/Hands-on_or_hands-off_", "OSNews : hands-on/hands-off");
+
+      Assert.IsNotNull(result);
+      Assert.IsTrue(result.WasCalled);
+      Assert.AreEqual(result.StatusCode, 200);
+
+      result = api.AddRaw(credentials, "http://ayende.com/blog/4351/nhibernate-vs-entity-framework-4-0", "NHibernate vs Entity FW");
+
+      Assert.IsNotNull(result);
+      Assert.IsTrue(result.WasCalled);
+      Assert.AreEqual(result.StatusCode, 200);
+
+      result = api.AddRaw(credentials, "https://www.grc.com/haystack.htm", "Password haystack");
+
+      Assert.IsNotNull(result);
+      Assert.IsTrue(result.WasCalled);
+      Assert.AreEqual(result.StatusCode, 200);
+    }
+
+    [TestMethod]
+    public void TestGetRaw()
+    {
+      var api = new Client();
+      var credentials = new Credentials() { UserName = "mytestaccount", Password = "MySuperPassword123", APIKey = "bz9Tfz7fgc950lfI97d126evp1p1GyP2" };
+
+      var result = api.GetRaw(credentials, StateRequest.All, 0, 0, true, false, false);
+
+      Assert.IsNotNull(result);
+      Assert.IsTrue(result.WasCalled);
+      Assert.AreEqual(result.StatusCode, 200);
+    }
+
+    [TestMethod]
+    public void TestGetBasic()
+    {
+      var api = new Client();
+      var credentials = new Credentials() { UserName = "mytestaccount", Password = "MySuperPassword123", APIKey = "bz9Tfz7fgc950lfI97d126evp1p1GyP2" };
+
+      var result = api.GetBasic(credentials, 0);
+
+      Assert.IsNotNull(result);
+    }
   }
 }

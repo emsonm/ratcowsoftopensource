@@ -108,5 +108,87 @@ namespace RatCow.Pocket.API
         return null;
       }
     }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public Response AddRaw(Credentials credentials, string url, string title)
+    {
+      return DirectCall(Constants.Add + String.Format(Constants.AddInfill, url, title), credentials);
+    }
+
+    /// <summary>
+    /// This is probably too simplistic?
+    /// </summary>
+    public bool Add(Credentials credentials, string url, string title)
+    {
+      var result = AddRaw(credentials, url, title);
+
+      return result.StatusCode == 200;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public Response GetRaw(Credentials credentials, StateRequest state, Int32 since, Int32 count, bool tags, bool thisAppOnly, bool asXml)
+    {
+      var list = new StringBuilder(Constants.Get);
+
+      //Filter by state
+      switch (state)
+      {
+        case StateRequest.Read:
+          list.Append(Constants.GetRead);
+          break;
+
+        case StateRequest.Unread:
+          list.Append(Constants.GetUnread);
+          break;
+
+        case StateRequest.All:
+        default:
+          break;
+      }
+
+      //use the "since" API call
+      if (since > 0)
+      {
+        list.AppendFormat(Constants.GetSinceInfill, since);
+      }
+
+      //Limit the results, 0 here means all
+      if (count > 0)
+      {
+        list.AppendFormat(Constants.GetCountInfill, count);
+      }
+
+      //Get the tags?
+      list.AppendFormat(Constants.GetTagsInfill, tags ? "1" : "0");
+
+      //Just stuff this API key added
+      list.AppendFormat(Constants.GetForThisAppInfill, thisAppOnly ? "1" : "0");
+
+      //XML or JSON
+      if (asXml) list.Append(Constants.FormatXml);
+
+      return DirectCall(list.ToString(), credentials);
+    }
+
+    public GetResponse GetBasic(Credentials credentials, int since)
+    {
+      var result = GetRaw(credentials, StateRequest.All, since, 0, true, false, false);
+
+      //deserialise the response
+      try
+      {
+        var resultInstance = JsonConvert.DeserializeObject<GetResponse>(result.ReturnedValue);
+
+        return resultInstance;
+      }
+      catch //todo: pad this out
+      {
+        return null;
+      }
+    }
   }
 }

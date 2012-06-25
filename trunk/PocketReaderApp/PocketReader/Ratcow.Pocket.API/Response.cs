@@ -44,4 +44,6 @@ namespace RatCow.Pocket.API
   }
 
   public enum AuthenticationResponses : int { OK = 200, InvalidRequest = 400, BadCredentials = 401, RateLimitExceeded = 403, ServerDown = 503, UnknownError = 0 }
+
+  public enum StateRequest : byte { All, Read, Unread }
 }
