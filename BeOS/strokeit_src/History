@@ -2,8 +2,8 @@ History
 
 TODO: 
 UNDER WAY (1) clean up the interface and make stuff private or protected. 
-(2) bug - hiding stroke window by clicking tab losed the window...
-(3) the size check needs to be indipendant of the classes. Make both places thet do the if/else
+(2) bug - hiding stroke window by clicking tab loses the window...
+(3) the size check needs to be independent of the classes. Make both places that do the if/else
      check, use the same routine...
 (4) Add in a floating hint to show the matched char.
 (5) Add a 'new file' to the pref.
@@ -22,7 +22,7 @@ o Got pref app to select the file we are using and signal the app with that file
    gives a ComboBox style selection.
 Pref 1.02
 o Got pref to accept strokes and save them to the active file (boy was that "fun".)
-o Added more stuff to pref and broke it up into seperate files.
+o Added more stuff to pref and broke it up into separate files.
 Pref 1.03
 o As an aside... ported the previous version to PPC when laptop psu was accidentally left at
    work ;-)
@@ -31,7 +31,7 @@ o Added scale slider to pref. still needs s little work as Be's slider needs to 
    all functionality to work (as in the update of the position's text.. pain!!)
 Pref 1.05
 o After a false lead (reading and believing Be's docs...) I wasted most of the time today messing
-   with slider control descendednts.... just didn't work as they claimed because the routing we are
+   with slider control descendents.... just didn't work as they claimed because the routing we are
    meant to override is a const.. DOH! I'm sure if I invested another couple of hours I could research
    the solution, but I really can't be arsed. Instead I've just altered the label (which I thought is what the 
    routine I was overriding was meant to be doing anyway, just aligning right instead) and wrote a 
@@ -45,9 +45,9 @@ o Started the pref app and got it to signal a reload.
 
 1.08 20040307
 o Added settings file using a Be penned class called 'SettingsFile'. I looked at Marcone's Pref class
-   (which is basically the exact same idea, but with a server), but decided to not use proprietry, 
+   (which is basically the exact same idea, but with a server), but decided to not use proprietary, 
   sourceless classes. Saves the scale and the help status.
-o Scaling is now implemented including resizeing reletive to the current scale. All seems fone so far,
+o Scaling is now implemented including resizing relative to the current scale. All seems fine so far,
    though the implementation needs a little clean up (two places use cut/paste of same if/else 
    statement.. bad design!!)
 
@@ -59,7 +59,7 @@ o About box now shows nicely.
 
 1.06 20040305
 o Struggled with the dubugger, but seem to have cracked the deletion lock up bug for the windows.
-   dont seem to hang app anymore.
+   don't seem to hang app anymore.
 o Got the about box to appear.
 
 1.05 20040304
@@ -83,7 +83,7 @@ o Added a popup menu.
 o Added a 'quit' item to the popup menu.
 o Added a 'snap' popup menu item to snap the stroke window to the home position. 
 o Added code to force the Stroke window to a 'home' position (right most edge of screen, directly 
-   abobe the summon window..)
+   above the summon window..)
        
 1.02 : 20040229 / 20040301
 Revised the source layout so that everything is not in a single file (it was a big hack originally....!)
