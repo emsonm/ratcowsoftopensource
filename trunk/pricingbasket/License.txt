@@ -1,7 +1,7 @@
  All Software in this sub directory is licensed as follows, even when not stated as such: 
 
  *
- * Copyright 2011 Rat Cow Software and Matt Emson. All rights reserved.
+ * Copyright 2011-2012 Rat Cow Software and Matt Emson. All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
