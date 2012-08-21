@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{57BE2409-50EC-43F6-97B0-FEEDE1FEBD2E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Drawing.Html.Renderer</RootNamespace>
+    <AssemblyName>System.Drawing.Html.Renderer</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Css\AnonymousBlockBox.cs" />
+    <Compile Include="Css\AnonymousBox.cs" />
+    <Compile Include="Css\Block.cs" />
+    <Compile Include="Css\Box.cs" />
+    <Compile Include="Css\BoxWord.cs" />
+    <Compile Include="Css\BoxWordSplitter.cs" />
+    <Compile Include="Css\Constants.cs" />
+    <Compile Include="Css\Defaults.cs" />
+    <Compile Include="Css\DrawingHelper.cs" />
+    <Compile Include="Css\LayoutEngine.cs" />
+    <Compile Include="Css\Length.cs" />
+    <Compile Include="Css\LineBox.cs" />
+    <Compile Include="Css\PropertyAttribute.cs" />
+    <Compile Include="Css\PropertyInheritedAttribute.cs" />
+    <Compile Include="Css\Rectangle.cs" />
+    <Compile Include="Css\Table.cs" />
+    <Compile Include="Css\Value.cs" />
+    <Compile Include="HtmlConstants.cs" />
+    <Compile Include="HtmlRenderer.cs" />
+    <Compile Include="HtmlTag.cs" />
+    <Compile Include="IGraphics.cs" />
+    <Compile Include="InitialContainer.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
