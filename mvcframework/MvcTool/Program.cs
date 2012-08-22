@@ -64,6 +64,8 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
         Console.WriteLine(" -C : create a new action config file with view name passed (this can't be used with any other params)");
         Console.WriteLine(" -r : use the default mvcmap when creating actions");
         Console.WriteLine(" -R : use the mvcmap with the same name as the form passed when creating actions");
+        Console.WriteLine(" -d : append the .Designer tag to the file name (e.g. Form1.Designer.cs)");
+        Console.WriteLine(" -D : same as -d, but also creates a stub file if one doesn't exist.");
         Console.WriteLine();
         return;
       }
@@ -96,6 +98,15 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
             {
               flags.RestrictActions = true;
               flags.UseDefaultActionsFile = true;
+            }
+            if (arg.Contains("-d"))
+            {
+              flags.AppendDesignedToFilename = true;
+            }
+            if (arg.Contains("-D"))
+            {
+              flags.AppendDesignedToFilename = true;
+              flags.CreateEmptyNonDesignedFile = true;
             }
             if (arg.Contains("-R"))
             {
