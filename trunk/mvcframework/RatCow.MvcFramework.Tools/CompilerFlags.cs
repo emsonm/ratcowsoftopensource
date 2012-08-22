@@ -13,5 +13,7 @@ namespace RatCow.MvcFramework.Tools
     public bool ProtectListViews = false;
     public bool RestrictActions = false;
     public bool UseDefaultActionsFile = false;
+    public bool AppendDesignedToFilename = false;
+    public bool CreateEmptyNonDesignedFile = false;
   }
 }
