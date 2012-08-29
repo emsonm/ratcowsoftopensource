@@ -174,6 +174,22 @@ namespace RatCow.MvcFramework
       return result;
     }
 
+    /// <summary>
+    /// This is a "nice to have" rather than anything really useful.
+    /// </summary>
+    /// <returns></returns>
+    public Data GetSelectedItemOrDefault()
+    {
+      int itemIndex = GetSelectedIndex();
+
+      if (itemIndex > -1 && itemIndex < fdata.Count)
+      {
+        return fdata[itemIndex];
+      }
+      else
+        return default(Data);
+    }
+
     #region fdata access
 
     //added to make the helper allow us to access the internal data without a reference to original instance
