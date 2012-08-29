@@ -19,6 +19,10 @@ namespace testapp2
 		{
 		}
 
+		partial void statusStrip1Click(EventArgs e);
+		partial void toolStripStatusLabel1Click(EventArgs e);
+		partial void toolStripStatusLabel2Click(EventArgs e);
+		partial void toolStripProgressBar1Click(EventArgs e);
 		partial void panel1Click(EventArgs e);
 		partial void textBox3Click(EventArgs e);
 		partial void textBox3TextChanged(EventArgs e);
@@ -76,6 +80,42 @@ namespace testapp2
 
 	partial class Form1Controller
 	{
+		[Outlet("statusStrip1")]
+		public StatusStrip statusStrip1 { get; set; }
+		[Action("statusStrip1", "Click")]
+		public void FstatusStrip1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			statusStrip1Click(e);
+		}
+
+		[Outlet("toolStripStatusLabel1")]
+		public ToolStripStatusLabel toolStripStatusLabel1 { get; set; }
+		[Action("toolStripStatusLabel1", "Click")]
+		public void FtoolStripStatusLabel1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			toolStripStatusLabel1Click(e);
+		}
+
+		[Outlet("toolStripStatusLabel2")]
+		public ToolStripStatusLabel toolStripStatusLabel2 { get; set; }
+		[Action("toolStripStatusLabel2", "Click")]
+		public void FtoolStripStatusLabel2_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			toolStripStatusLabel2Click(e);
+		}
+
+		[Outlet("toolStripProgressBar1")]
+		public ToolStripProgressBar toolStripProgressBar1 { get; set; }
+		[Action("toolStripProgressBar1", "Click")]
+		public void FtoolStripProgressBar1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			toolStripProgressBar1Click(e);
+		}
+
 		[Outlet("panel1")]
 		public Panel panel1 { get; set; }
 		[Action("panel1", "Click")]
@@ -294,6 +334,8 @@ namespace testapp2
 			checkBox1CheckedChanged(e);
 		}
 
+		[Outlet("timer1")]
+		public Timer timer1 { get; set; }
 		protected void SetData<T>(ListViewHelper<T> helper, List<T> data) where T : class
 		{
 			//Auto generated call

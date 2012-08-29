@@ -1,18 +1,18 @@
 ﻿/*
  * Copyright 2010 Rat Cow Software and Matt Emson. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this list of
  *    conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list
  *    of conditions and the following disclaimer in the documentation and/or other materials
  *    provided with the distribution.
- * 3. Neither the name of the Rat Cow Software nor the names of its contributors may be used 
- *    to endorse or promote products derived from this software without specific prior written 
+ * 3. Neither the name of the Rat Cow Software nor the names of its contributors may be used
+ *    to endorse or promote products derived from this software without specific prior written
  *    permission.
- *    
+ *
  * THIS SOFTWARE IS PROVIDED BY RAT COW SOFTWARE "AS IS" AND ANY EXPRESS OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> OR
@@ -26,14 +26,18 @@
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of Rat Cow Software and Matt Emson.
- * 
+ *
  */
 
 using System;
 using System.Collections.Generic;
+
 #if !CF_20
+
 using System.Linq;
+
 #endif
+
 using System.Text;
 
 using System.Reflection;
@@ -41,7 +45,7 @@ using System.Windows.Forms;
 
 namespace RatCow.MvcFramework
 {
-  public class BaseController<T>
+  public class BaseController<T> : IDisposable
   {
     protected T target;
 
@@ -49,7 +53,7 @@ namespace RatCow.MvcFramework
     /// required internally
     /// </summary>
     /// <returns></returns>
-    static Type GetTargetType()
+    private static Type GetTargetType()
     {
       Type t = typeof(T);
       return t;
@@ -95,7 +99,7 @@ namespace RatCow.MvcFramework
         foreach (var outlet in outlets)
         {
           //do something
-          FieldInfo fi = t.GetField(outlet.Name, bindingFlags); 
+          FieldInfo fi = t.GetField(outlet.Name, bindingFlags);
 
           if (fi != null)
           {
@@ -127,20 +131,19 @@ namespace RatCow.MvcFramework
                     Delegate temp = Delegate.CreateDelegate(evt, this, mi); //, false); <--CF doesn't like the 4th param
                     ei.AddEventHandler(value, temp);
 #else
-                    //I might want to 
+                    //I might want to
                     //EventHandler temp = new EventHandler(new EventHandlerProxy(mi, this).ProxyEventMethod);
                     Type evt = (action.EventType == null ? ei.EventHandlerType : action.EventType);
                     //EventHandler temp = delegate(object sender, EventArgs e)
                     //{
                     //  //GenericEventHandlerProxyFactory.Create(evt, mi, this)
-                    //  mi.Invoke(this, new object[] { sender, e }); //new EventHandler(new GenericEventHandlerProxy<typeof(evt)>(mi, this).ProxyEventMethod); 
+                    //  mi.Invoke(this, new object[] { sender, e }); //new EventHandler(new GenericEventHandlerProxy<typeof(evt)>(mi, this).ProxyEventMethod);
                     //};
                     Delegate temp = GenericEventHandlerProxyFactory.Create(evt, mi, this);
 
                     ei.AddEventHandler(value, temp);
 #endif
 #endif
-
                   }
                 }
               }
@@ -154,15 +157,26 @@ namespace RatCow.MvcFramework
     /// Creates event handlers for the view
     /// </summary>
     /// <param name="?"></param>
-    void FixUpView()
+    private void FixUpView()
     {
       Form view = (Form)((object)target);
 
       view.Load += new EventHandler(View_Load);
+      view.FormClosed += new FormClosedEventHandler(View_FormClosed);
+      view.FormClosing += new FormClosingEventHandler(View_FormClosing);
+      view.Disposed += new EventHandler(View_Disposed);
     }
 
     //handeler to override
     protected virtual void ViewLoad()
+    {
+    }
+
+    protected virtual void ViewClosing(FormClosingEventArgs e)
+    {
+    }
+
+    protected virtual void ViewClosed(FormClosedEventArgs e)
     {
     }
 
@@ -176,10 +190,31 @@ namespace RatCow.MvcFramework
       ViewLoad();
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    private void View_FormClosing(object sender, FormClosingEventArgs e)
+    {
+      ViewClosing(e);
+    }
 
+    /// <summary>
+    ///
+    /// </summary>
+    private void View_FormClosed(object sender, FormClosedEventArgs e)
+    {
+      ViewClosed(e);
+    }
+
+    /// <summary>
+    /// Note the subtle difference....
+    /// </summary>
+    private void View_Disposed(object sender, EventArgs e)
+    {
+      Dispose();
+    }
 
     #region CompactFramework 2.0 Delegate suport
-
 
 #if USE_COMPACTFRAMEWORK && CF_20
 
@@ -201,21 +236,18 @@ namespace RatCow.MvcFramework
       }
     }
 
-
-
 #endif
 
-    #endregion
-
+    #endregion CompactFramework 2.0 Delegate suport
 
     public T View { get { return target; } }
 
-
-    //the view can own subviews - we generally have two types: 
+    //the view can own subviews - we generally have two types:
     // 1) Modal dialogs
     // 2) Floating forms
-    //At the moment, only Modal dialogs are being catered for... 
+    //At the moment, only Modal dialogs are being catered for...
     protected Dictionary<string, IModalSubFormContainer> fModalSubControllers = new Dictionary<string, IModalSubFormContainer>();
+
     public void AddModalSubController(string name, IModalSubFormContainer controller)
     {
       fModalSubControllers.Add(name, controller);
@@ -256,12 +288,17 @@ namespace RatCow.MvcFramework
       return result;
     }
 
+    #region IDisposable Members
 
+    public virtual void Dispose()
+    {
+    }
+
+    #endregion IDisposable Members
   }
 
-
   //This is required for CF 2.0 support as Delegate.CreateDelegate does not exist
-  internal class GenericEventHandlerProxy<E, EA>: IEventHandlerProxy
+  internal class GenericEventHandlerProxy<E, EA> : IEventHandlerProxy
   {
     MethodInfo fmi = null;
     object ftarget = null;
@@ -301,6 +338,7 @@ if(parameterlessCtor != null) instance = parameterlessCtor.Invoke(null);
   interface IEventHandlerProxy
   {
     void SetHooks(MethodInfo mi, object target);
+
     Delegate GetEventHook();
   }
 
@@ -313,9 +351,9 @@ if(parameterlessCtor != null) instance = parameterlessCtor.Invoke(null);
    }
    */
 
-  class GenericEventHandlerProxyFactory
+  internal class GenericEventHandlerProxyFactory
   {
-    //new EventHandler(new GenericEventHandlerProxy<typeof(evt)>(mi, this).ProxyEventMethod); 
+    //new EventHandler(new GenericEventHandlerProxy<typeof(evt)>(mi, this).ProxyEventMethod);
 
     private static Type[] GetDelegateParameterTypes(Type d)
     {
@@ -335,7 +373,6 @@ if(parameterlessCtor != null) instance = parameterlessCtor.Invoke(null);
       return typeParameters;
     }
 
-
     public static Delegate Create(Type eventType, MethodInfo mi, object target)
     {
       Delegate result = null;
@@ -350,10 +387,8 @@ if(parameterlessCtor != null) instance = parameterlessCtor.Invoke(null);
       //Type proxyType = temp.MakeGenericType(new Type[] { eventType });
       object proxy = Activator.CreateInstance(proxyType);
       ((IEventHandlerProxy)proxy).SetHooks(mi, target);
-      
+
       //result = ((IEventHandlerProxy)proxy).GetEventHook();
-
-
 
       return result;
     }

@@ -180,7 +180,7 @@ namespace RatCow.MvcFramework.Tools
       //then use the Activator to access the contents later on. We *have* to call "InitializeComponents()"
       //otherwise, the form is in an uninitialized state and we will not have access to the parts we
       //actually *want*.
-      string code = "{ public " + className + "(): base() { InitializeComponent();} } /*class*/ } /*namespace*/";
+      string code = "{ public " + className + "(): base() { InitializeComponent();} public System.ComponentModel.IContainer ComponentsAccess {get { return components; } } } /*class*/   } /*namespace*/";
       string dummy = String.Format("namespace {2} {3} partial class {0} : System.Windows.Forms.Form {1}", className, code, namespaceName, "{");
 
       //The files to compile
@@ -253,10 +253,71 @@ namespace RatCow.MvcFramework.Tools
           //}
 
           IterateTree(form, tree, className);
+
+          //add in the components that are non visual and in the container on the form
+          IterateComponents(form, tree, className);
         }
       }
       return trees.ToArray();
     }
+
+    /// <summary>
+    /// Hack around the fact we don't have any access to the stuff in container on the form.
+    ///
+    /// Here's the issue: Winforms have a private components collection. This contains a reference
+    /// to all the components on the form. It's trivial to get access to this - to be honest, I went
+    /// for the simple hack, but it would probably have worked with the right BindingFlags params
+    /// no matter what. But here's the thing - Components don't have a name....
+    ///
+    /// So how can we pull through the name? Well, I could completely refactor all of the code to
+    /// look at the fields of the form and pull out all of the controls and components, but to be honest,
+    /// that seems like a faff. So what I instead did was this - we know the field is a reference, and the
+    /// same reference is in the components collection. Only the stuff we want is ref'd in the components
+    /// collection. So, if we iterate through the components collection, get the ref and then cross
+    /// ref that reference with the fields on the folrm (using a bit of Linq to reduce the list by type)
+    /// we can then do the look-up cross ref and get the fields name.
+    ///
+    /// I'm not sure if there's an easier way, but this works for now.
+    /// </summary>
+    private static void IterateComponents(System.Windows.Forms.Form form, ControlTree tree, string className)
+    {
+      //the componments are in a private list (so we need hackery to access it)
+      //when we compiled the class, we added in a public accessor called "ContainerAccess"
+
+      //This of course doesn't work very well.... but it does give us a handle on the component
+      //types we should be looking for...
+      Type formType = form.GetType();
+      var accessor = formType.GetProperty("ComponentsAccess");
+      if (accessor != null)
+      {
+        var payload = accessor.GetValue(form, null);
+        System.ComponentModel.IContainer container = (System.ComponentModel.IContainer)payload;
+
+        foreach (System.ComponentModel.Component component in container.Components)
+        {
+          //we must now look for component in the fields with in the form, to look up the name
+          Type fieldType = component.GetType(); //we use this to match types
+          FieldInfo[] fia = formType.GetFields(BindingFlags.Default | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.Instance);
+
+          //limit to just the same calss type
+          var fiar = from field in fia
+                     where field.FieldType == fieldType
+                     select field;
+
+          //iterate the resultset, hoping we find at least one value and can match it.
+          foreach (var fi in fiar)
+          {
+            var instance = fi.GetValue(form);
+            if (instance == component)
+            {
+              tree.AddControl(fi.Name, fieldType);
+            }
+          }
+        }
+      }
+    }
+
+    static int unnamed = 0;
 
     /// <summary>
     /// This fixes the subcontrol issues
@@ -267,10 +328,26 @@ namespace RatCow.MvcFramework.Tools
 
       foreach (System.Windows.Forms.Control control in targetControl.Controls)
       {
-        tree.AddControl(control.Name, control.GetType());
+        //this works around the fact that the toolStrip does weird stuff with named controls
+        if (control.Name != null && control.Name != String.Empty)
+          tree.AddControl(control.Name, control.GetType());
+
         if (control.Controls.Count > 0)
         {
           IterateTree(control, tree, String.Format("{0}_{1}", path, control.Name)); //recurse....
+        }
+
+        //special case - controlstrip holds its own components
+        if (control is System.Windows.Forms.StatusStrip)
+        {
+          foreach (System.Windows.Forms.ToolStripItem item in (control as System.Windows.Forms.StatusStrip).Items)
+          {
+            if (item is System.Windows.Forms.ToolStripItem)
+            {
+              var name = (item as System.Windows.Forms.ToolStripItem).Name;
+              tree.AddControl((name == null || name == String.Empty ? "Blah" : name), item.GetType());
+            }
+          }
         }
       }
     }
