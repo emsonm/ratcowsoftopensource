@@ -293,6 +293,8 @@ namespace RatCow.MvcFramework.Tools
         var payload = accessor.GetValue(form, null);
         System.ComponentModel.IContainer container = (System.ComponentModel.IContainer)payload;
 
+        if (container == null) return;
+
         foreach (System.ComponentModel.Component component in container.Components)
         {
           //we must now look for component in the fields with in the form, to look up the name
@@ -303,6 +305,8 @@ namespace RatCow.MvcFramework.Tools
           var fiar = from field in fia
                      where field.FieldType == fieldType
                      select field;
+
+          if (fiar == null) continue; //this is no ideal
 
           //iterate the resultset, hoping we find at least one value and can match it.
           foreach (var fi in fiar)

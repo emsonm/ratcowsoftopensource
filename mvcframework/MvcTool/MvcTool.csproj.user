@@ -1,5 +1,5 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <StartArguments>-R -p -v -D Form1</StartArguments>
+    <StartArguments>-R -p -v -D MasterEntityDetailForm</StartArguments>
   </PropertyGroup>
 </Project>
