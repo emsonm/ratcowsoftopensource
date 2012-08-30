@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCFrameworkCF2003", "MvcFr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFTest2003", "CFTest2003\CFTest2003.csproj", "{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.MvcFramework.Mapping", "RatCow.MvcFramework.Mapping\RatCow.MvcFramework.Mapping.csproj", "{F1884DCF-58BB-4558-AACA-317E5F098FC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testapp3", "testapp3\testapp3.csproj", "{612AB34F-DC63-494B-B332-F86F7FCE4383}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,14 @@ Global
 		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F1884DCF-58BB-4558-AACA-317E5F098FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1884DCF-58BB-4558-AACA-317E5F098FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1884DCF-58BB-4558-AACA-317E5F098FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1884DCF-58BB-4558-AACA-317E5F098FC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{612AB34F-DC63-494B-B332-F86F7FCE4383}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{612AB34F-DC63-494B-B332-F86F7FCE4383}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{612AB34F-DC63-494B-B332-F86F7FCE4383}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{612AB34F-DC63-494B-B332-F86F7FCE4383}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

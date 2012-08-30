@@ -31,38 +31,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
-using System.Xml;
-using System.Xml.Serialization;
-
-namespace RatCow.MvcFramework.Tools
+namespace testapp3
 {
-  public class ViewAction
+  public partial class Form1 : Form
   {
-    public ViewAction()
+    public Form1()
     {
+      InitializeComponent();
     }
-
-    public string EventName { get; set; }
-
-    public string EventHandlerName { get; set; }
-
-    public string EventArgsName { get; set; }
-  }
-
-  public class ViewControlAction
-  {
-    public ViewControlAction()
-    {
-      ControlActions = new ViewActions();
-    }
-
-    public string ControlType { get; set; }
-
-    [XmlArray("ControlActions")]
-    [XmlArrayItem("ViewAction")]
-    public ViewActions ControlActions { get; set; }
   }
 }
