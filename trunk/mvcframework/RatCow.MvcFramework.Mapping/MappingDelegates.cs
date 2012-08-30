@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2010 - 2012 Rat Cow Software and Matt Emson. All rights reserved.
+ * Copyright 2007 - 2012 Rat Cow Software and Matt Emson. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -33,36 +33,62 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
-using System.Xml;
-using System.Xml.Serialization;
-
-namespace RatCow.MvcFramework.Tools
+namespace RatCow.MvcFramework.Mapping
 {
-  public class ViewAction
+  public delegate void DataModificationDelegate(object sender, DataModificationArgs e);
+
+  public delegate void BeforeDataModificationDelegate(object sender, BeforeDataModification e);
+
+  public class BeforeDataModification : EventArgs
   {
-    public ViewAction()
+    Control fModifiedControl = null;
+
+    public Control ModifiedControl
     {
+      get { return fModifiedControl; }
     }
 
-    public string EventName { get; set; }
+    bool fAllowChange = true;
 
-    public string EventHandlerName { get; set; }
+    public bool AllowChange
+    {
+      get { return fAllowChange; }
+      set { fAllowChange = value; }
+    }
 
-    public string EventArgsName { get; set; }
+    public BeforeDataModification(Control aModifiedControl)
+    {
+      fModifiedControl = aModifiedControl;
+    }
   }
 
-  public class ViewControlAction
+  public class DataModificationArgs : EventArgs
   {
-    public ViewControlAction()
+    bool fBinding = false;
+
+    public bool Binding
     {
-      ControlActions = new ViewActions();
+      get { return fBinding; }
     }
 
-    public string ControlType { get; set; }
+    bool fAllowChange = true;
 
-    [XmlArray("ControlActions")]
-    [XmlArrayItem("ViewAction")]
-    public ViewActions ControlActions { get; set; }
+    public bool AllowChange
+    {
+      get { return fAllowChange; }
+      set { fAllowChange = value; }
+    }
+
+    public DataModificationArgs()
+      : this(false)
+    {
+    }
+
+    public DataModificationArgs(bool aIsBinding)
+    {
+      fBinding = aIsBinding;
+    }
   }
 }

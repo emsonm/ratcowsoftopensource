@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2010 - 2012 Rat Cow Software and Matt Emson. All rights reserved.
+ * Copyright 2007 - 2012 Rat Cow Software and Matt Emson. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -34,35 +34,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using System.Xml;
-using System.Xml.Serialization;
-
-namespace RatCow.MvcFramework.Tools
+namespace RatCow.MvcFramework.Mapping
 {
-  public class ViewAction
+  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+  public class MappedValueAttribute : Attribute
   {
-    public ViewAction()
+    public MappedValueAttribute(string usage, string destinationControlName)
+    {
+      Usage = usage;
+      //DataSourceName = dataSourceName;
+      DestinationControlName = destinationControlName;
+    }
+
+    public MappedValueAttribute(string destinationControlName)
+      : this(String.Empty, destinationControlName)
     {
     }
 
-    public string EventName { get; set; }
+    //the specific use of the attibute (to support multiple attributes per data item)
+    public string Usage { get; set; }
 
-    public string EventHandlerName { get; set; }
-
-    public string EventArgsName { get; set; }
-  }
-
-  public class ViewControlAction
-  {
-    public ViewControlAction()
-    {
-      ControlActions = new ViewActions();
-    }
-
-    public string ControlType { get; set; }
-
-    [XmlArray("ControlActions")]
-    [XmlArrayItem("ViewAction")]
-    public ViewActions ControlActions { get; set; }
+    //the name of the control we place it in
+    public string DestinationControlName { get; set; }
   }
 }
