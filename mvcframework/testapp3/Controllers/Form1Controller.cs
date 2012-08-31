@@ -46,7 +46,7 @@ namespace testapp3
 {
   using RatCow.MvcFramework.Mapping;
 
-  internal partial class Form1Controller
+  internal partial class Form1Controller : BaseController<Form1>
   {
     Data data = new Data();
     DataProxy deo = new DataProxy();

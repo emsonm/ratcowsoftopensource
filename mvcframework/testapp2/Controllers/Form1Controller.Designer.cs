@@ -13,7 +13,7 @@ using RatCow.MvcFramework;
 
 namespace testapp2
 {
-	internal partial class Form1Controller: BaseController<Form1>
+	internal partial class Form1Controller
 	{
 		public Form1Controller() : base()
 		{

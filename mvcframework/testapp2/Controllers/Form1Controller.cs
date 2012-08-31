@@ -9,7 +9,7 @@ using RatCow.MvcFramework;
 
 namespace testapp2
 {
-  partial class Form1Controller
+  partial class Form1Controller : BaseController<Form1>
   {
     partial void button1Click(EventArgs e)
     {
