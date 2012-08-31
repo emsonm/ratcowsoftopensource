@@ -19,6 +19,13 @@ namespace testapp3
 		{
 		}
 
+		partial void listBox1Click(EventArgs e);
+		partial void comboBox3Click(EventArgs e);
+		partial void comboBox2Click(EventArgs e);
+		partial void comboBox1Click(EventArgs e);
+		partial void dateTimePicker1Click(EventArgs e);
+		partial void checkBox1Click(EventArgs e);
+		partial void checkBox1CheckedChanged(EventArgs e);
 		partial void button1Click(EventArgs e);
 		partial void label1Click(EventArgs e);
 		partial void textBox1Click(EventArgs e);
@@ -30,6 +37,67 @@ namespace testapp3
 
 	partial class Form1Controller
 	{
+		[Outlet("listBox1")]
+		public ListBox listBox1 { get; set; }
+		[Action("listBox1", "Click")]
+		public void FlistBox1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			listBox1Click(e);
+		}
+
+		[Outlet("comboBox3")]
+		public ComboBox comboBox3 { get; set; }
+		[Action("comboBox3", "Click")]
+		public void FcomboBox3_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			comboBox3Click(e);
+		}
+
+		[Outlet("comboBox2")]
+		public ComboBox comboBox2 { get; set; }
+		[Action("comboBox2", "Click")]
+		public void FcomboBox2_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			comboBox2Click(e);
+		}
+
+		[Outlet("comboBox1")]
+		public ComboBox comboBox1 { get; set; }
+		[Action("comboBox1", "Click")]
+		public void FcomboBox1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			comboBox1Click(e);
+		}
+
+		[Outlet("dateTimePicker1")]
+		public DateTimePicker dateTimePicker1 { get; set; }
+		[Action("dateTimePicker1", "Click")]
+		public void FdateTimePicker1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			dateTimePicker1Click(e);
+		}
+
+		[Outlet("checkBox1")]
+		public CheckBox checkBox1 { get; set; }
+		[Action("checkBox1", "Click")]
+		public void FcheckBox1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			checkBox1Click(e);
+		}
+
+		[Action("checkBox1", "CheckedChanged")]
+		public void FcheckBox1_CheckedChanged(object sender, EventArgs e)
+		{
+			//Auto generated call
+			checkBox1CheckedChanged(e);
+		}
+
 		[Outlet("button1")]
 		public Button button1 { get; set; }
 		[Action("button1", "Click")]

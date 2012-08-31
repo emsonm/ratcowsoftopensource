@@ -52,6 +52,7 @@
     <Compile Include="Controllers\Form1Controller.Designer.cs">
       <DependentUpon>Form1Controller.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataProxy.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="Views\Form1.cs">
       <SubType>Form</SubType>
@@ -77,6 +78,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Views\form1.mvcmap" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>

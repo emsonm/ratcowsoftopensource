@@ -39,98 +39,139 @@ using System.Windows.Forms;
 
 namespace RatCow.MvcFramework.Mapping
 {
-  public interface IBaseMappingObject
-  {
-    void Pull();
-
-    void Pull(bool binding);
-
-    void Revert();
-
-    void Subscribe(Control aSubject);
-
-    bool Modified { get; }
-
-    void Snapshot();
-
-    bool IsMultiValueItem { get; set; }
-
-    Control LinkedControl { get; set; }
-  }
-
-  public interface IMappingObject<T> : IBaseMappingObject
-  {
-    T CurrentValue { get; set; }
-
-    T OriginalValue { get; }
-
-    void Init(T aValue);
-
-    void CustomizedSubscribe(MappingUpdateSubscriber<T> aSubscription);
-  }
-
-  public interface IMappingObject : IBaseMappingObject
-  {
-    object CurrentObject { get; set; }
-
-    object OriginalObject { get; }
-
-    void InitWithObject(object data, string propertyName);
-  }
-
+  /// <summary>
+  /// The MappingObject is creater dynamically by the mapping proxy, one per mapping.
+  ///
+  /// This is old code. It used to support more complex mappings, but I have removed
+  /// most of that code, as it was crufty. I think a newer "plug in" approach will be
+  /// used instead... maybe using class helpers or something like that?
+  ///
+  /// Oh yeah - none of this is thread safe, so seriously, just don't try it in a
+  /// multireader/singlewriter scenario!!
+  /// </summary>
   public class MappingObject<T> : IMappingObject, IMappingObject<T>
   {
+    /// <summary>
+    /// This would be the standard point of entry.
+    /// </summary>
     public MappingObject()
     {
-      fIsNumeric = ConversionHelper.IsNumericType(typeof(T));
+      LinkedControl = null;
+      OriginalValue = default(T);
+      Modified = false;
+      ValueModificationQuery = null;
+      ValidationError = null;
+      BeforeValueModified = null;
+
+      isNumeric = ConversionHelper.IsNumericType(typeof(T));
     }
 
+    /// <summary>
+    /// This does the same as calling Init(...)
+    /// </summary>
     public MappingObject(T aValue)
       : this()
     {
-      fOriginalValue = aValue;
-      CurrentValue = fOriginalValue;
-      fLastUpdated = DateTime.Now;
+      OriginalValue = aValue;
+      CurrentValue = OriginalValue;
+      lastUpdated = DateTime.Now;
     }
 
+    /// <summary>
+    /// Causes the initial value to be something specific... if we call this, we BLAT the
+    /// value we Pull()'d
+    /// </summary>
     public void Init(T aValue)
     {
-      fOriginalValue = aValue;
-      CurrentValue = fOriginalValue;
-      fLastUpdated = DateTime.Now;
+      OriginalValue = aValue;
+      CurrentValue = OriginalValue;
+      lastUpdated = DateTime.Now;
     }
 
+    /// <summary>
+    /// We use this to initialise the value. we cache the propertyinfo to make updates simpler. we
+    /// cache the data to make updates, um, possible!
+    /// </summary>
     public void InitWithObject(object data, string propertyName)
     {
-      dataInstance = data;
-      Type dataInstanceType = dataInstance.GetType();
-      dataInstanceProperty = dataInstanceType.GetProperty(propertyName);
+      //in the original code, this was much more complicated, as we had to may some random database value to the storage. Now
+      //we know they match, as we enforce that contract in the creation, so we get this dead easy version.
 
-      if (dataInstanceProperty == null) throw new NotSupportedException("The property mapping was now found");
+      dataInstance = data; //the data we are referring to
+      Type dataInstanceType = dataInstance.GetType(); //the data's type, so we can get the PropertyInfo
+      dataInstanceProperty = dataInstanceType.GetProperty(propertyName); //The propertyInfo we will use to pull/push updates
 
-      fOriginalValue = (T)dataInstanceProperty.GetValue(dataInstance, null); //this is now a direct load, like for like.
-      fLastUpdated = DateTime.Now;
+      if (dataInstanceProperty == null) throw new NotSupportedException("The property mapping was now found"); //exit, we have bad info passed
+
+      //set up the storage:
+      OriginalValue = (T)dataInstanceProperty.GetValue(dataInstance, null); //this is now a direct load, like for like.
+      lastUpdated = DateTime.Now;
+
+      //NB. we now wrap the propertInfo directly, so CurrentValue will read and write to the underlying data.
     }
 
     ////////////////////////////////////////////////
 
-    public event DataModificationDelegate ValueModified = null;
+    //user can do something with the value and block modification if they like,
+    //but as the original code surfaced these, and this code doesn't, the usefulness
+    //is pretty debateable..
+    public event DataModificationDelegate ValueModificationQuery = null;
+
+    //this happens *after* modification
+    public event System.EventHandler ValueWasModified = null;
+
+    //added this to get around the fact that we won't ever really use inheritence here
+    public event ValidationErrorDelegate ValidationError = null;
+
+    //I couldn't remember why this was here, but it seems that the subscription uses it to relay the before modification event!
     public event BeforeDataModificationDelegate BeforeValueModified = null;
 
     ////////////////////////////////////////////////
 
     #region Fields
 
-    protected Control fLinkedControl = null;
-    protected T fOriginalValue = default(T);
-    //protected T fCurrentValue = default(T);
-    protected DateTime fLastUpdated;
+    //the linked control
+    public Control LinkedControl { get; set; } //init to null
 
-    internal bool fModified = false;
-    internal bool fIsNumeric = false;
+    //the value we read at startup, or value we last saved
+    public T OriginalValue { get; protected set; } //init to default(T)
 
+    protected DateTime lastUpdated;
+
+    //set to true when value is modified
+    public bool Modified { get; internal set; } //init to false
+
+    //this, IIRC, simplifies some of the discovery code.
+    internal bool isNumeric = false;
+
+    //we cache these so we don't need to pull this data on each iteration of the data manipulation
     internal object dataInstance = null;
     internal PropertyInfo dataInstanceProperty = null;
+
+    /// <summary>
+    /// Not to be confused with IsMultiValueItem - this represents a value where more than
+    /// one item can be selected in a single field...
+    /// </summary>
+    protected bool isMultiList = false;
+
+    /// <summary>
+    /// This represents an item that points to another dataset.
+    /// If this is set, we only store the fact - other code will need to load the data
+    /// if we are multivalues, the value we hold is the ID of ourself, this is required to
+    /// do the lookup.
+    /// </summary>
+    public bool IsMultiValueItem { get; set; }
+
+    /// <summary>
+    /// Subscriptions go here...
+    /// </summary>
+    protected internal MappingUpdateSubscriber<T> subscription = null;
+
+    #endregion Fields
+
+    ////////////////////////////////////////////////
+
+    #region Properties
 
     //helper
     internal void SetDataInstancePropertyObjectValue(object newValue)
@@ -150,41 +191,8 @@ namespace RatCow.MvcFramework.Mapping
       return (T)GetDataInstancePropertyObjectValue();
     }
 
-    /// <summary>
-    /// Not to be confused with IsMultiValueItem - this represents a value where more than
-    /// one item can be selected in a single field...
-    /// </summary>
-    protected bool fIsMultiList = false;
-
-    /// <summary>
-    /// This represents an item that points to another dataset.
-    /// If this is set, we only store the fact - other code will need to load the data
-    /// if we are multivalues, the value we hold is the ID of ourself, this is required to
-    /// do the lookup.
-    /// </summary>
-    protected bool fIsMultiValueItem = false;
-
-    /// <summary>
-    /// Subscriptions go here...
-    /// </summary>
-    protected internal MappingUpdateSubscriber<T> fSubscription = null;
-
-    #endregion Fields
-
-    ////////////////////////////////////////////////
-
-    #region Properties
-
-    public Control LinkedControl
-    {
-      get { return fLinkedControl; }
-      set { fLinkedControl = value; }
-    }
-
     public T CurrentValue
     {
-      //get { return fCurrentValue; }
-      //set { SetCurrentValue(value); }
       get { return GetDataInstancePropertyValue(); }
       set { SetDataInstancePropertyObjectValue((object)value); }
     }
@@ -195,25 +203,9 @@ namespace RatCow.MvcFramework.Mapping
       set { SetCurrentValueFromObject(value); }
     }
 
-    public T OriginalValue
-    {
-      get { return fOriginalValue; }
-    }
-
     public object OriginalObject
     {
-      get { return (object)fOriginalValue; }
-    }
-
-    public bool Modified
-    {
-      get { return fModified; }
-    }
-
-    public bool IsMultiValueItem
-    {
-      get { return fIsMultiValueItem; }
-      set { fIsMultiValueItem = value; }
+      get { return (object)OriginalValue; }
     }
 
     #endregion Properties
@@ -231,10 +223,10 @@ namespace RatCow.MvcFramework.Mapping
         return false;
 
       bool result = true;
-      if (ValueModified != null)
+      if (ValueModificationQuery != null)
       {
         DataModificationArgs e = new DataModificationArgs(__BINDING__);
-        ValueModified(this, e);
+        ValueModificationQuery(this, e);
         result = e.AllowChange;
       }
 
@@ -242,9 +234,15 @@ namespace RatCow.MvcFramework.Mapping
     }
 
     /// <summary>
-    ///
+    /// This really only helps with UI updates
     /// </summary>
-    /// <returns></returns>
+    private void DataModificationNotification()
+    {
+      if (ValueWasModified != null)
+        ValueWasModified(this, new EventArgs());
+    }
+
+    //Well, I'd forgotten this bit - the subsription uses this to relay the event.. neat?!
     internal BeforeDataModificationDelegate GetBeforeValueModified()
     {
       return BeforeValueModified;
@@ -259,8 +257,12 @@ namespace RatCow.MvcFramework.Mapping
       if (CanModifyData())
       {
         CurrentValue = aValue;
-        fLastUpdated = DateTime.Now;
-        if (!__BINDING__) fModified = true;
+        lastUpdated = DateTime.Now;
+        if (!__BINDING__)
+        {
+          Modified = true;
+          DataModificationNotification();
+        }
       }
     }
 
@@ -275,7 +277,7 @@ namespace RatCow.MvcFramework.Mapping
 
       try
       {
-        if (fIsNumeric && (newValue == null || newValue.ToString() == String.Empty))
+        if (isNumeric && (newValue == null || newValue.ToString() == String.Empty))
           newValue = 0; //hmmm will this break more than it fixes?
 
         T newValueT = (T)Convert.ChangeType(newValue, CurrentValue.GetType());
@@ -286,11 +288,15 @@ namespace RatCow.MvcFramework.Mapping
     }
 
     /// <summary>
-    /// Override this if you want something to happen
+    ///
     /// </summary>
     /// <param name="aMessage"></param>
-    protected virtual void ValidationFailed(string aMessage)
+    protected void ValidationFailed(string message)
     {
+      if (ValidationError != null)
+      {
+        ValidationError(this, message);
+      }
     }
 
     /// <summary>
@@ -298,7 +304,7 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     public void Snapshot()
     {
-      fOriginalValue = CurrentValue;
+      OriginalValue = CurrentValue;
     }
 
     /////////////////////////////////////////////////////
@@ -306,14 +312,29 @@ namespace RatCow.MvcFramework.Mapping
     //subscription mechanism
     public void Subscribe(Control aSubject)
     {
-      fSubscription = new MappingUpdateSubscriber<T>(this, aSubject);
+      Subscribe(aSubject, false, ListControlMapping.Value);
+    }
+
+    public void Subscribe(Control aSubject, ListControlMapping aListMapping)
+    {
+      Subscribe(aSubject, false, aListMapping);
+    }
+
+    public void Subscribe(Control aSubject, bool aAllowNulls)
+    {
+      Subscribe(aSubject, aAllowNulls, ListControlMapping.Value);
+    }
+
+    public void Subscribe(Control aSubject, bool aAllowNulls, ListControlMapping aListMapping)
+    {
+      subscription = new MappingUpdateSubscriber<T>(this, aSubject, aAllowNulls, aListMapping);
     }
 
     //subscription mechanism
     public void CustomizedSubscribe(MappingUpdateSubscriber<T> aSubscription)
     {
-      fSubscription = aSubscription;
-      fSubscription.AttachTo(this);
+      subscription = aSubscription;
+      subscription.AttachTo(this);
     }
 
     /// <summary>
@@ -334,7 +355,7 @@ namespace RatCow.MvcFramework.Mapping
       __BINDING__ = binding;
       try
       {
-        fSubscription.Pull();
+        subscription.Pull();
       }
       finally
       {
@@ -347,7 +368,7 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     public void Revert()
     {
-      fSubscription.Revert();
+      subscription.Revert();
     }
 
     //////////////////////////////////////////////////////
@@ -355,9 +376,12 @@ namespace RatCow.MvcFramework.Mapping
     /// <summary>
     /// This is only really needed for lists or complex objects that don't
     /// need to match the other instances that they are related to.
+    ///
+    /// I'm fairly sure this is no longer needed, and so I'll revisit it later.
     /// </summary>
     /// <param name="aInstance"></param>
     /// <returns></returns>
+    [Obsolete]
     protected virtual object CloneInstance(object aInstance)
     {
       Type t = aInstance.GetType();
@@ -465,6 +489,8 @@ namespace RatCow.MvcFramework.Mapping
     //////////////////////////////////////////////////////
 
     #region Update lock
+
+    //Oh, my.... this is SOOOO unthread safe!!
 
     bool __IN_UPDATE__ = false;
 
