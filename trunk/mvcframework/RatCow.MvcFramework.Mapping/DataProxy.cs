@@ -105,6 +105,7 @@ namespace RatCow.MvcFramework.Mapping
                 else
                   mo.Subscribe(controlToHook); //subscribe to updates
 
+                mo.LinkedControl = controlToHook;
                 mo.Pull(true); //pull the current data through to the mapped control
                 mo.ValueModificationQuery += new DataModificationDelegate(mo_ValueModified);
                 mo.ValueWasModified += new EventHandler(mo_ValueWasModified);
