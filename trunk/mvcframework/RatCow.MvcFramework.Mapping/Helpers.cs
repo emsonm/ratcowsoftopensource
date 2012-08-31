@@ -525,29 +525,39 @@ namespace RatCow.MvcFramework.Mapping
     // usage: given a wish to create an instance of MyType<int> dynamically,
     //        basicGenericType would be : var basicGenericType = typeof(MyType<>);
     //        typeToUse would be        : var typeToUse = typeof(int);
-    public static object CreateGenericInstance(Type basicGenericType, Type typeToUse)
+    private static object InternalCreateGenericInstance(Type basicGenericType, Type typeToUse, object[] args)
     {
       Type got = GetGenericType(basicGenericType, typeToUse);
-      object result = Activator.CreateInstance(got);
+      object result = Activator.CreateInstance(got, args);
       return result;
     }
 
-    public static object CreateGenericInstance(Type basicGenericType, Type[] typeArgs)
+    private static object InternalCreateGenericInstance(Type basicGenericType, Type[] typeArgs, object[] args)
     {
       Type got = GetGenericType(basicGenericType, typeArgs);
-      object result = Activator.CreateInstance(got);
+      object result = Activator.CreateInstance(got, args);
       return result;
+    }
+
+    private static object CreateGenericInstance(Type basicGenericType, Type typeToUse, params object[] args)
+    {
+      return InternalCreateGenericInstance(basicGenericType, typeToUse, args);
+    }
+
+    public static object CreateGenericInstance(Type basicGenericType, Type[] typeArgs, params object[] args)
+    {
+      return InternalCreateGenericInstance(basicGenericType, typeArgs, args);
     }
 
     //this seems like a contradiction, but if you have an interface defined, this cleans the code up nicely
-    public static T CreateGenericInstance<T>(Type basicGenericType, Type typeToUse)
+    public static T CreateGenericInstance<T>(Type basicGenericType, Type typeToUse, params object[] args)
     {
-      return (T)CreateGenericInstance(basicGenericType, typeToUse);
+      return (T)InternalCreateGenericInstance(basicGenericType, typeToUse, args);
     }
 
-    public static T CreateGenericInstance<T>(Type basicGenericType, Type[] typeArgs)
+    public static T CreateGenericInstance<T>(Type basicGenericType, Type[] typeArgs, params object[] args)
     {
-      return (T)CreateGenericInstance(basicGenericType, typeArgs);
+      return (T)InternalCreateGenericInstance(basicGenericType, typeArgs, args);
     }
   }
 }

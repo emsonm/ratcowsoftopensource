@@ -56,5 +56,9 @@ namespace RatCow.MvcFramework.Mapping
 
     //the name of the control we place it in
     public string DestinationControlName { get; set; }
+
+    public bool ListMappedByIndex { get; set; }
+
+    public bool ListMappedByText { get; set; }
   }
 }

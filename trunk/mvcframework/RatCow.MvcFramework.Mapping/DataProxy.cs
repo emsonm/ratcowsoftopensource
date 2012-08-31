@@ -41,9 +41,9 @@ namespace RatCow.MvcFramework.Mapping
   /// <summary>
   /// This class sits as a proxy between two objects, the MappingObject and a source of the data
   /// </summary>
-  public class DataEnabledObject
+  public partial class DataProxy
   {
-    public DataEnabledObject()
+    public DataProxy()
     {
       MappingList = new List<IMappingObject>();
     }
@@ -56,6 +56,12 @@ namespace RatCow.MvcFramework.Mapping
     public List<IMappingObject> MappingList { get; private set; }
 
     //maps the dynamic data links
+    /// <summary>
+    /// Believe it or not, this is all new code! Yeah, I know..
+    ///
+    /// The old version used the MappedObjects as part of the DataObject, but that doesn't work/scale well if we
+    /// start throwing Linq and code first database stuff with EF4.3.
+    /// </summary>
     public void MapControlToData(string usage, System.Windows.Forms.Control control, object data)
     {
       //set up what we define as "default"
@@ -80,15 +86,30 @@ namespace RatCow.MvcFramework.Mapping
               controlToDataMap.Add(pi.Name, ma.DestinationControlName);
 
               //create the control mapping
-              IMappingObject mo = GenericsHelper.CreateGenericInstance<IMappingObject>(typeof(MappingObject<>), pi.PropertyType);
-              mo.InitWithObject(data, pi.Name);
+              IMappingObject mo;
 
               //we now need to find the mapped control
               Control controlToHook = null;
               if (ControlHelper.FindControl(control, ma.DestinationControlName, ref controlToHook))
               {
-                mo.Subscribe(controlToHook); //subscribe to updates
-                mo.Pull(true);
+                var isListcontrol = (controlToHook is ListControl);
+
+                mo = GenericsHelper.CreateGenericInstance<IMappingObject>(typeof(MappingObject<>), pi.PropertyType);
+
+                mo.InitWithObject(data, pi.Name);
+
+                if (isListcontrol && ma.ListMappedByIndex)
+                  mo.Subscribe(controlToHook, ListControlMapping.Index);
+                else if (isListcontrol && ma.ListMappedByText)
+                  mo.Subscribe(controlToHook, ListControlMapping.Text);
+                else
+                  mo.Subscribe(controlToHook); //subscribe to updates
+
+                mo.Pull(true); //pull the current data through to the mapped control
+                mo.ValueModificationQuery += new DataModificationDelegate(mo_ValueModified);
+                mo.ValueWasModified += new EventHandler(mo_ValueWasModified);
+                mo.ValidationError += new ValidationErrorDelegate(mo_ValidationError);
+                mo.BeforeValueModified += new BeforeDataModificationDelegate(mo_BeforeValueModified);
                 MappingList.Add(mo); //add the now working mapping
               }
               else throw new NotImplementedException("The control was not found and cannot be hooked");
@@ -97,5 +118,45 @@ namespace RatCow.MvcFramework.Mapping
         }
       }
     }
+
+    #region This code defines 4 virtual methods that pass the events fired by the various MappingObjects
+
+    private void mo_BeforeValueModified(object sender, BeforeDataModification e)
+    {
+      BeforeValueModified(sender, e);
+    }
+
+    protected virtual void BeforeValueModified(object sender, BeforeDataModification e)
+    {
+    }
+
+    private void mo_ValidationError(object sender, string message)
+    {
+      ValidationError(sender, message);
+    }
+
+    protected virtual void ValidationError(object sender, string message)
+    {
+    }
+
+    private void mo_ValueModified(object sender, DataModificationArgs e)
+    {
+      ValueModifiedQuery(sender, e);
+    }
+
+    protected virtual void ValueModifiedQuery(object sender, DataModificationArgs e)
+    {
+    }
+
+    private void mo_ValueWasModified(object sender, EventArgs e)
+    {
+      ValueWasModified(sender, e);
+    }
+
+    public virtual void ValueWasModified(object sender, EventArgs e)
+    {
+    }
+
+    #endregion This code defines 4 virtual methods that pass the events fired by the various MappingObjects
   }
 }

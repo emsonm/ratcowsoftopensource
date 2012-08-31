@@ -49,20 +49,60 @@ namespace testapp3
   internal partial class Form1Controller
   {
     Data data = new Data();
-    DataEnabledObject deo = new DataEnabledObject();
+    DataProxy deo = new DataProxy();
+    List<ListData> combo3List = new List<ListData>();
+
+    private class ListData
+    {
+      public string Displayed { get; set; }
+
+      public int Value { get; set; }
+    }
 
     protected override void ViewLoad()
     {
       base.ViewLoad();
 
+      combo3List.Add(new ListData() { Displayed = "First", Value = 1 });
+      combo3List.Add(new ListData() { Displayed = "Second", Value = 2 });
+      combo3List.Add(new ListData() { Displayed = "Third", Value = 3 });
+      combo3List.Add(new ListData() { Displayed = "Fourth", Value = 4 });
+
+      comboBox3.DataSource = combo3List;
+      comboBox3.DisplayMember = "Displayed";
+      comboBox3.ValueMember = "Value";
+
       data.SomeText = "hello";
+      data.ADateValue = DateTime.Parse("01 April 1976");
+      data.SomeBooleanValue = true;
+      data.ComboByIndex = 3;
+      data.ComboByText = "E";
+      data.ComboByValue = 3;
+      data.ListBoxByIndex = 2;
 
       deo.MapControlToData("", this.View, data);
+      deo.DataChanged += new EventHandler(deo_DataChanged);
+    }
+
+    private void deo_DataChanged(object sender, EventArgs e)
+    {
+      UpdateUI();
     }
 
     partial void button1Click(EventArgs e)
     {
-      label1.Text = data.SomeText;
+      UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+      label1.Text = data.SomeText + "\r\n" +
+        data.ADateValue.ToShortDateString() + "\r\n" +
+        data.SomeBooleanValue.ToString() + "\r\n" +
+        data.ComboByIndex.ToString() + "\r\n" +
+        data.ComboByText + "\r\n" +
+        data.ComboByValue.ToString() + "\r\n" +
+        data.ListBoxByIndex.ToString();
     }
   }
 }

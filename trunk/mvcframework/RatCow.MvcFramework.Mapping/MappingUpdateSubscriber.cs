@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright 2010 - 2012 Rat Cow Software and Matt Emson. All rights reserved.
+ * Copyright 2007 - 2012 Rat Cow Software and Matt Emson. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are
  * permitted provided that the following conditions are met:
@@ -37,33 +37,43 @@ using System.Windows.Forms;
 
 namespace RatCow.MvcFramework.Mapping
 {
+  public enum ListControlMapping { Value, Index, Text }
+
   public class MappingUpdateSubscriber<T>
   {
-    MappingObject<T> fTarget = null;
-    Control fSubject = null;
-    bool fAllowNulls;
+    MappingObject<T> target = null;
+    Control subject = null;
+    bool allowsNulls = false;
+    ListControlMapping listControlMapping; //maps int values to the index
 
     public Control Subject
     {
-      get { return fSubject; }
+      get { return subject; }
     }
 
     internal MappingUpdateSubscriber(MappingObject<T> aTarget, Control aSubject)
-      : this(aTarget, aSubject, false)
+      : this(aTarget, aSubject, false, ListControlMapping.Index)
     {
     }
 
     internal MappingUpdateSubscriber(MappingObject<T> aTarget, Control aSubject, bool aAllowNulls)
+      : this(aTarget, aSubject, aAllowNulls, ListControlMapping.Index)
     {
-      fTarget = aTarget;
+    }
+
+    internal MappingUpdateSubscriber(MappingObject<T> aTarget, Control aSubject, bool aAllowNulls, ListControlMapping aListControlMapping)
+    {
+      target = aTarget;
 
       //we add a fake control if aSubject is null.
       if (aSubject == null)
-        fSubject = new Control();
+        subject = new Control(); //this was legacy.. it was used to map values we didn't need to show, but might need to manipulate
       else
-        fSubject = aSubject;
+        subject = aSubject;
 
-      fAllowNulls = aAllowNulls;
+      allowsNulls = aAllowNulls;
+
+      listControlMapping = aListControlMapping;
 
       HookControl();
     }
@@ -75,8 +85,8 @@ namespace RatCow.MvcFramework.Mapping
     /// <param name="aAllowNulls"></param>
     public MappingUpdateSubscriber(Control aSubject, bool aAllowNulls)
     {
-      fSubject = aSubject;
-      fAllowNulls = aAllowNulls;
+      subject = aSubject;
+      allowsNulls = aAllowNulls;
     }
 
     /// <summary>
@@ -85,40 +95,40 @@ namespace RatCow.MvcFramework.Mapping
     protected virtual void HookControl()
     {
       //listboxes and comboboxes need a special bit of co-ercing
-      if (fSubject is CheckedListBox)
+      if (subject is CheckedListBox)
       {
-        CheckedListBox tempCLB = (CheckedListBox)fSubject;
+        CheckedListBox tempCLB = (CheckedListBox)subject;
         tempCLB.ItemCheck += new ItemCheckEventHandler(tempCLB_ItemCheck);
       }
-      else if (fSubject is ListControl)
+      else if (subject is ListControl)
       {
-        ListControl tempLC = (ListControl)fSubject;
-        tempLC.SelectedValueChanged += new EventHandler(fSubject_SelectedValueChanged);
+        ListControl tempLC = (ListControl)subject;
+        tempLC.SelectedValueChanged += new EventHandler(subject_SelectedValueChanged);
       }
-      else if (fSubject is CheckBox)
+      else if (subject is CheckBox)
       {
-        CheckBox tempCB = (CheckBox)fSubject;
-        tempCB.CheckedChanged += new EventHandler(fSubject_CheckedChanged);
+        CheckBox tempCB = (CheckBox)subject;
+        tempCB.CheckedChanged += new EventHandler(subject_CheckedChanged);
       }
-      else if (fSubject is NumericUpDown)
+      else if (subject is NumericUpDown)
       {
-        NumericUpDown tempNUD = (NumericUpDown)fSubject;
-        tempNUD.ValueChanged += new EventHandler(fSubject_NumericValueChanged);
+        NumericUpDown tempNUD = (NumericUpDown)subject;
+        tempNUD.ValueChanged += new EventHandler(subject_NumericValueChanged);
       }
-      else if (fSubject is DateTimePicker)
+      else if (subject is DateTimePicker)
       {
-        DateTimePicker tempDTP = (DateTimePicker)fSubject;
-        tempDTP.ValueChanged += new EventHandler(fSubject_DateValueChanged);
+        DateTimePicker tempDTP = (DateTimePicker)subject;
+        tempDTP.ValueChanged += new EventHandler(subject_DateValueChanged);
       }
       else
-        fSubject.TextChanged += new EventHandler(fSubject_TextChanged); //default
+        subject.TextChanged += new EventHandler(subject_TextChanged); //default
     }
 
     #region Revert the Modified flag callback
 
     private void CALLBACK__RevertModifiedFlag()
     {
-      fTarget.fModified = false; //because we reverted... this is absolute, we have reverted to the original value
+      target.Modified = false; //because we reverted... this is absolute, we have reverted to the original value
     }
 
     delegate void Callback();
@@ -126,15 +136,15 @@ namespace RatCow.MvcFramework.Mapping
     /// <summary>
     /// used to update lists
     /// </summary>
-    internal void fTarget_ResetModifiedFlag()
+    internal void target_ResetModifiedFlag()
     {
       Application.DoEvents();
 
       //only call BeginInvoke if there is a Handle, else the call fails
-      if (fSubject.IsHandleCreated)
-        fSubject.BeginInvoke(new Callback(CALLBACK__RevertModifiedFlag));
+      if (subject.IsHandleCreated)
+        subject.BeginInvoke(new Callback(CALLBACK__RevertModifiedFlag));
       else
-        fTarget.fModified = false;
+        target.Modified = false;
     }
 
     #endregion Revert the Modified flag callback
@@ -144,11 +154,11 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     public virtual void Revert()
     {
-      fTarget.CurrentValue = fTarget.OriginalValue;
+      target.CurrentValue = target.OriginalValue;
 
       Pull();
 
-      fTarget_ResetModifiedFlag();
+      target_ResetModifiedFlag();
     }
 
     /// <summary>
@@ -157,25 +167,41 @@ namespace RatCow.MvcFramework.Mapping
     public virtual void Pull()
     {
       //if we are not attached to a control (for what ever reason - usually because
-      //of "fake" contollery,  we'll fail here unless we bail. If the fSubject is null
+      //of "fake" contollery,  we'll fail here unless we bail. If the subject is null
       //we assume this to be the case.
-      if (fSubject == null) return;
+      if (subject == null) return;
 
       //listboxes and comboboxes need a special bit of co-ercing
-      if (fSubject is ListControl)
+      if (subject is ListControl)
       {
-        ListControl tempLC = (ListControl)fSubject;
-        tempLC.SelectedValue = fTarget.CurrentValue;
+        ListControl tempLC = (ListControl)subject;
+
+        switch (listControlMapping)
+        {
+          case ListControlMapping.Text:
+            tempLC.Text = target.CurrentValue.ToString();
+            break;
+
+          case ListControlMapping.Index:
+
+            tempLC.SelectedIndex = ConversionHelper.ToInt32(target.CurrentValue, -1);
+            break;
+
+          case ListControlMapping.Value:
+          default:
+            tempLC.SelectedValue = target.CurrentValue;
+            break;
+        }
       }
-      else if (fSubject is CheckBox)
+      else if (subject is CheckBox)
       {
-        CheckBox tempCB = (CheckBox)fSubject;
-        tempCB.Checked = Convert.ToBoolean(fTarget.CurrentValue);
+        CheckBox tempCB = (CheckBox)subject;
+        tempCB.Checked = Convert.ToBoolean(target.CurrentValue);
       }
-      else if (fSubject is NumericUpDown)
+      else if (subject is NumericUpDown)
       {
-        NumericUpDown tempNUD = (NumericUpDown)fSubject;
-        Decimal temp = Convert.ToDecimal(fTarget.CurrentValue);
+        NumericUpDown tempNUD = (NumericUpDown)subject;
+        Decimal temp = Convert.ToDecimal(target.CurrentValue);
 
         //handle overflows:
         if (temp > tempNUD.Maximum)
@@ -183,14 +209,14 @@ namespace RatCow.MvcFramework.Mapping
         else if (temp < tempNUD.Minimum)
           tempNUD.Value = tempNUD.Minimum;
         else
-          tempNUD.Value = Convert.ToDecimal(fTarget.CurrentValue);
+          tempNUD.Value = Convert.ToDecimal(target.CurrentValue);
       }
-      else if (fSubject is DateTimePicker)
+      else if (subject is DateTimePicker)
       {
-        DateTimePicker tempDTP = (DateTimePicker)fSubject;
+        DateTimePicker tempDTP = (DateTimePicker)subject;
         try
         {
-          tempDTP.Value = Convert.ToDateTime(fTarget.CurrentValue);
+          tempDTP.Value = Convert.ToDateTime(target.CurrentValue);
         }
         catch
         {
@@ -198,12 +224,12 @@ namespace RatCow.MvcFramework.Mapping
         }
       }
       else
-        fSubject.Text = Convert.ToString(fTarget.CurrentValue); //fSubject.TextChanged += new EventHandler(fSubject_TextChanged); //default
+        subject.Text = Convert.ToString(target.CurrentValue); //subject.TextChanged += new EventHandler(subject_TextChanged); //default
     }
 
     internal void AttachTo(MappingObject<T> aTarget)
     {
-      fTarget = aTarget;
+      target = aTarget;
       HookControl();
     }
 
@@ -212,12 +238,12 @@ namespace RatCow.MvcFramework.Mapping
     /// catch data modification.
     /// </summary>
     /// <returns></returns>
-    private bool fTarget_CanModifyData(Control aSubject)
+    private bool target_CanModifyData(Control aSubject)
     {
       bool result = true;
       //I love how you can get round most C# limitations with a second variable of the same
       //type pointing to the same reference.
-      BeforeDataModificationDelegate BeforeValueModified = fTarget.GetBeforeValueModified();
+      BeforeDataModificationDelegate BeforeValueModified = target.GetBeforeValueModified();
       if (BeforeValueModified != null)
       {
         BeforeDataModification e = new BeforeDataModification(aSubject);
@@ -235,11 +261,11 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void fSubject_NumericValueChanged(object sender, EventArgs e)
+    private void subject_NumericValueChanged(object sender, EventArgs e)
     {
-      if (fTarget_CanModifyData(fSubject))
+      if (target_CanModifyData(subject))
       {
-        fTarget.SetCurrentValueFromObject(((NumericUpDown)fSubject).Value);
+        target.SetCurrentValueFromObject(((NumericUpDown)subject).Value);
       }
     }
 
@@ -250,9 +276,9 @@ namespace RatCow.MvcFramework.Mapping
     /// <param name="e"></param>
     protected virtual void tempCLB_ItemCheck(object sender, ItemCheckEventArgs e)
     {
-      //if (fTarget_CanModifyData(fSubject))
+      //if (target_CanModifyData(subject))
       //{
-      //  fTarget.MultiItemUpdate();
+      //  target.MultiItemUpdate();
       //}
     }
 
@@ -261,11 +287,11 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void fSubject_DateValueChanged(object sender, EventArgs e)
+    private void subject_DateValueChanged(object sender, EventArgs e)
     {
-      if (fTarget_CanModifyData(fSubject))
+      if (target_CanModifyData(subject))
       {
-        fTarget.SetCurrentValueFromObject(((DateTimePicker)fSubject).Value);
+        target.SetCurrentValueFromObject(((DateTimePicker)subject).Value);
       }
     }
 
@@ -274,11 +300,11 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void fSubject_CheckedChanged(object sender, EventArgs e)
+    private void subject_CheckedChanged(object sender, EventArgs e)
     {
-      if (fTarget_CanModifyData(fSubject))
+      if (target_CanModifyData(subject))
       {
-        fTarget.SetCurrentValueFromObject(((CheckBox)fSubject).Checked);
+        target.SetCurrentValueFromObject(((CheckBox)subject).Checked);
       }
     }
 
@@ -286,11 +312,11 @@ namespace RatCow.MvcFramework.Mapping
     /// This is pretty generic
     /// </summary>
     /// <param name="e"></param>
-    private void fSubject_TextChanged(object sender, EventArgs e)
+    private void subject_TextChanged(object sender, EventArgs e)
     {
-      if (fTarget_CanModifyData(fSubject))
+      if (target_CanModifyData(subject))
       {
-        fTarget.SetCurrentValueFromObject(fSubject.Text);
+        target.SetCurrentValueFromObject(subject.Text);
       }
     }
 
@@ -299,17 +325,40 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void fSubject_SelectedValueChanged(object sender, EventArgs e)
+    private void subject_SelectedValueChanged(object sender, EventArgs e)
     {
-      if (fTarget_CanModifyData(fSubject))
+      if (target_CanModifyData(subject))
       {
-        object value = ((ListControl)fSubject).SelectedValue;
+        object value = null;
+        switch (listControlMapping)
+        {
+          case ListControlMapping.Text:
+            value = ((ListControl)subject).Text;
 
-        //                 it's null and we allow that,  or   it's not null
-        bool canContinue = ((fAllowNulls & value == null) | (value != null));
+            //we assume this will be a non zero number or -1
+            target.SetCurrentValueFromObject(value);
 
-        if (canContinue)
-          fTarget.SetCurrentValueFromObject(value);
+            break;
+
+          case ListControlMapping.Index:
+
+            value = ((ListControl)subject).SelectedIndex;
+
+            //we assume this will be a non zero number or -1
+            target.SetCurrentValueFromObject(value);
+            break;
+
+          case ListControlMapping.Value: //this is the legacy default
+          default:
+            value = ((ListControl)subject).SelectedValue;
+
+            //                 it's null and we allow that,  or   it's not null
+            bool canContinue = ((allowsNulls & value == null) | (value != null));
+
+            if (canContinue)
+              target.SetCurrentValueFromObject(value);
+            break;
+        }
       }
     }
   }

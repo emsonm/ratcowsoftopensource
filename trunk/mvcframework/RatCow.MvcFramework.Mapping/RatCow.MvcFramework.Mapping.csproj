@@ -46,8 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataEnabledObject.cs" />
+    <Compile Include="DataProxy.cs" />
     <Compile Include="Helpers.cs" />
+    <Compile Include="IMappingObject.cs" />
     <Compile Include="MappingAttributes.cs" />
     <Compile Include="MappingDelegates.cs" />
     <Compile Include="MappingObject.cs" />

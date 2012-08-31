@@ -37,6 +37,8 @@ using System.Windows.Forms;
 
 namespace RatCow.MvcFramework.Mapping
 {
+  public delegate void ValidationErrorDelegate(object sender, string message);
+
   public delegate void DataModificationDelegate(object sender, DataModificationArgs e);
 
   public delegate void BeforeDataModificationDelegate(object sender, BeforeDataModification e);
