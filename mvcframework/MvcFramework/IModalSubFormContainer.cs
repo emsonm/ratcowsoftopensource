@@ -54,5 +54,15 @@ namespace RatCow.MvcFramework
     /// <param name="data"></param>
     /// <returns></returns>
     bool PerformModalTask<T>(T data);
+
+    /// <summary>
+    /// This is new - it allows for a modal form to return some data of a specified type
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="R"></typeparam>
+    /// <param name="data"></param>
+    /// <param name="result"></param>
+    /// <returns></returns>
+    bool PerformModalTask<T, R>( T data, ref R result );
   }
 }

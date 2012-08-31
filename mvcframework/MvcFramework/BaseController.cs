@@ -288,6 +288,20 @@ namespace RatCow.MvcFramework
       return result;
     }
 
+    public bool ExecuteModalControllerWithData<D, R>( string name, D data, ref R resultData )
+    {
+      bool result = false;
+
+      IModalSubFormContainer controller = null;
+
+      if ( fModalSubControllers.TryGetValue( name, out controller ) )
+      {
+        result = controller.PerformModalTask<D, R>( data, ref resultData );
+      }
+
+      return result;
+    }
+
     #region IDisposable Members
 
     public virtual void Dispose()
