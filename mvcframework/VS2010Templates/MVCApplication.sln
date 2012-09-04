@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCAppPackage", "MVCAppPack
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCMapItem", "MVCMapItem\MVCMapItem.csproj", "{CC97F6DC-D4B0-466B-81CA-7402B73E64AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCFormController", "MVCFormController\MVCFormController.csproj", "{89BFB5D2-08C3-4CB3-81B7-9345314E42B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{CC97F6DC-D4B0-466B-81CA-7402B73E64AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC97F6DC-D4B0-466B-81CA-7402B73E64AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC97F6DC-D4B0-466B-81CA-7402B73E64AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89BFB5D2-08C3-4CB3-81B7-9345314E42B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89BFB5D2-08C3-4CB3-81B7-9345314E42B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89BFB5D2-08C3-4CB3-81B7-9345314E42B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89BFB5D2-08C3-4CB3-81B7-9345314E42B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
