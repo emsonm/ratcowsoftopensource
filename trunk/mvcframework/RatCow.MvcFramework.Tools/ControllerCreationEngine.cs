@@ -31,11 +31,15 @@
 
 using System;
 using System.CodeDom.Compiler;
+using System.Collections;
 using System.Collections.Generic;
+using System.Design;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
+using System.Resources.Tools;
 using System.Text;
 using Microsoft.CSharp;
 
@@ -133,18 +137,18 @@ namespace RatCow.MvcFramework.Tools
     {
       //we attempt to compile the file provided and then read info from it
       CSharpCodeProvider compiler = new CSharpCodeProvider();
-      CompilerParameters compParams = new CompilerParameters();
-      compParams.ReferencedAssemblies.Add("System.dll");
-      compParams.ReferencedAssemblies.Add("System.XML.dll");
-      compParams.ReferencedAssemblies.Add("System.Data.dll");
-      compParams.ReferencedAssemblies.Add("System.Windows.Forms.dll");
-      compParams.ReferencedAssemblies.Add("System.Drawing.dll");
+      CompilerParameters compilerParams = new CompilerParameters();
+      compilerParams.ReferencedAssemblies.Add("System.dll");
+      compilerParams.ReferencedAssemblies.Add("System.XML.dll");
+      compilerParams.ReferencedAssemblies.Add("System.Data.dll");
+      compilerParams.ReferencedAssemblies.Add("System.Windows.Forms.dll");
+      compilerParams.ReferencedAssemblies.Add("System.Drawing.dll");
 
       //we can add more in here from command line in future revision
 
-      compParams.GenerateExecutable = false;
-      compParams.CompilerOptions = "/t:library";
-      compParams.OutputAssembly = outputAssemblyName; // "./temp.dll";
+      compilerParams.GenerateExecutable = false;
+      compilerParams.CompilerOptions = "/t:library";
+      compilerParams.OutputAssembly = outputAssemblyName; // "./temp.dll";
 
       StringBuilder s = new StringBuilder();
 
@@ -183,14 +187,76 @@ namespace RatCow.MvcFramework.Tools
       string code = "{ public " + className + "(): base() { InitializeComponent();} public System.ComponentModel.IContainer ComponentsAccess {get { return components; } } } /*class*/   } /*namespace*/";
       string dummy = String.Format("namespace {2} {3} partial class {0} : System.Windows.Forms.Form {1}", className, code, namespaceName, "{");
 
+      //we need to look for a resource file
+      //var resx = String.Format("{0}.resx", className);
+
+      string rescode = null;
+
+      //if (File.Exists(resx))
+      //{
+      //  //we must now open the resource file and read the contents
+      //  var filename = String.Format("{0}.resources", className);
+      //  File.Delete(filename); //remove older version
+
+      //  IDictionary dictionary = null;
+
+      //  using (var stream = File.Open(resx, FileMode.Open, FileAccess.Read, FileShare.Read))
+      //  {
+      //    using (var rsxr = new ResXResourceReader(stream))
+      //    {
+      //      using (IResourceWriter writer = new ResourceWriter(filename))
+      //      {
+      //        // Iterate through the resources and add resources to the resource writer.
+      //        dictionary = new Dictionary<string, string>();
+      //        foreach (DictionaryEntry d in rsxr)
+      //        {
+      //          var k = d.Key.ToString();
+      //          var v = d.Value.ToString();
+
+      //          dictionary.Add(k, v);
+      //          writer.AddResource(k, v);
+      //        }
+      //        writer.Close();
+      //      }
+      //      rsxr.Close();
+      //    }
+
+      //    stream.Close();
+      //  }
+
+      //  compilerParams.EmbeddedResources.Add(filename);
+
+      //  string[] errors;
+      //  var provider = new CSharpCodeProvider(); // c#-code compiler
+      //  var cu = StronglyTypedResourceBuilder.Create(dictionary, className ?? string.Empty, "", provider, false, out errors);
+
+      //  var options = new CodeGeneratorOptions
+      //  {
+      //    BracingStyle = "C",
+      //    BlankLinesBetweenMembers = false,
+      //    IndentString = "\t"
+      //  };
+
+      //  var tw = new StringWriter();
+      //  provider.GenerateCodeFromCompileUnit(cu, tw, options);
+      //  rescode = tw.ToString();
+      //  tw.Close();
+      //}
+
       //The files to compile
-      string[] files = { dummy, s.ToString() };
+      string[] files;
+
+      if (rescode != null)
+        files = new string[] { dummy, s.ToString(), rescode };
+      else
+        files = new string[] { dummy, s.ToString() };
 
       CompilerResults res = null;
       try
       {
-        res = compiler.CompileAssemblyFromSource(compParams, files);
+        res = compiler.CompileAssemblyFromSource(compilerParams, files);
       }
+
       catch (BadImageFormatException ex)
       {
         System.Console.WriteLine(ex.Message);
