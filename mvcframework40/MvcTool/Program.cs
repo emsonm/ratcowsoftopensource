@@ -44,7 +44,7 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
   /// </summary>
   internal class Program
   {
-    private static void Main(string[] args)
+    private static void Main( string[] args )
     {
       //System.Diagnostics.Debugger.Break(); //Use this for force debugging
 
@@ -52,63 +52,64 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
 
       string className = null;
       //This is new - we try to interpret the compiler params
-      if (args.Length == 0)
+      if ( args.Length == 0 )
       {
-        Console.WriteLine("USAGE - mvctool [options] classname");
-        Console.WriteLine("\r\nOPTIONS:");
-        Console.WriteLine(" --abstract / -a : prefix controllers with \"Abstract\" prefix");
-        Console.WriteLine(" --partial-methods / -p : use partial methods (.Net 3.5+)");
-        Console.WriteLine(" -e : send the controller to event handlers");
-        Console.WriteLine(" -v : add pad code to protect list views");
-        Console.WriteLine(" -c : create a new action config file called \"default.mvcmap\" (this can't be used with any other params)");
-        Console.WriteLine(" -C : create a new action config file with view name passed (this can't be used with any other params)");
-        Console.WriteLine(" -r : use the default mvcmap when creating actions");
-        Console.WriteLine(" -R : use the mvcmap with the same name as the form passed when creating actions");
-        Console.WriteLine(" -d : append the .Designer tag to the file name (e.g. Form1.Designer.cs)");
-        Console.WriteLine(" -D : same as -d, but also creates a stub file if one doesn't exist.");
+        Console.WriteLine( "USAGE - mvctool [options] classname" );
+        Console.WriteLine( "\r\nOPTIONS:" );
+        Console.WriteLine( " --abstract / -a : prefix controllers with \"Abstract\" prefix" );
+        Console.WriteLine( " --partial-methods / -p : use partial methods (.Net 3.5+)" );
+        Console.WriteLine( " -e : send the controller to event handlers" );
+        Console.WriteLine( " -v : add pad code to protect list views" );
+        Console.WriteLine( " -c : create a new action config file called \"default.mvcmap\" (this can't be used with any other params)" );
+        Console.WriteLine( " -C : create a new action config file with view name passed (this can't be used with any other params)" );
+        Console.WriteLine( " -r : use the default mvcmap when creating actions" );
+        Console.WriteLine( " -R : use the mvcmap with the same name as the form passed when creating actions" );
+        Console.WriteLine( " -d : append the .Designer tag to the file name (e.g. Form1.Designer.cs)" );
+        Console.WriteLine( " -D : same as -d, but also creates a stub file if one doesn't exist." );
+        Console.WriteLine( " -i : ignore any RESX file in the same scope (do not link resources)" );
         Console.WriteLine();
         return;
       }
-      else if (args.Length > 1)
+      else if ( args.Length > 1 )
       {
         bool foundFormName = false;
 
-        if (args[0].Contains("-C"))
+        if ( args[ 0 ].Contains( "-C" ) )
         {
-          CreateNewActionConfig(String.Format("{0}.mvcmap", args[1]));
+          CreateNewActionConfig( String.Format( "{0}.mvcmap", args[ 1 ] ) );
           return;
         }
 
-        foreach (string arg in args)
+        foreach ( string arg in args )
         {
-          Console.WriteLine(arg);
+          Console.WriteLine( arg );
 
-          if (arg.StartsWith("-"))
+          if ( arg.StartsWith( "-" ) )
           {
             //assume it's a param
-            if (arg.Contains("-a"))
+            if ( arg.Contains( "-a" ) )
               flags.IsAbstract = true; //okay, this is a bit of a cheat
-            if (arg.Contains("-p"))
+            if ( arg.Contains( "-p" ) )
               flags.UsePartialMethods = true;
-            if (arg.Contains("-e"))
+            if ( arg.Contains( "-e" ) )
               flags.PassControllerToEvents = true;
-            if (arg.Contains("-v"))
+            if ( arg.Contains( "-v" ) )
               flags.ProtectListViews = true;
-            if (arg.Contains("-r"))
+            if ( arg.Contains( "-r" ) )
             {
               flags.RestrictActions = true;
               flags.UseDefaultActionsFile = true;
             }
-            if (arg.Contains("-d"))
+            if ( arg.Contains( "-d" ) )
             {
               flags.AppendDesignedToFilename = true;
             }
-            if (arg.Contains("-D"))
+            if ( arg.Contains( "-D" ) )
             {
               flags.AppendDesignedToFilename = true;
               flags.CreateEmptyNonDesignedFile = true;
             }
-            if (arg.Contains("-R"))
+            if ( arg.Contains( "-R" ) )
             {
               flags.RestrictActions = true;
               //flags.UseDefaultActionsFile = false; //this should default to false...
@@ -117,9 +118,9 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
           else
           {
             //assume it's the form name
-            if (foundFormName)
+            if ( foundFormName )
             {
-              Console.WriteLine(String.Format("Did not understand \"{0}\", already found \"{1}\", ignoring.", className, arg));
+              Console.WriteLine( String.Format( "Did not understand \"{0}\", already found \"{1}\", ignoring.", className, arg ) );
             }
             else
             {
@@ -129,17 +130,17 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
           }
         }
 
-        Console.WriteLine(flags);
+        Console.WriteLine( flags );
 
-        if (!foundFormName)
+        if ( !foundFormName )
         {
-          Console.WriteLine("Could not find the form name in the params! Aborted");
+          Console.WriteLine( "Could not find the form name in the params! Aborted" );
           return;
         }
       }
-      else if (args.Length == 1 && args[0].Contains("-c"))
+      else if ( args.Length == 1 && args[ 0 ].Contains( "-c" ) )
       {
-        CreateNewActionConfig("default.mvcmap");
+        CreateNewActionConfig( "default.mvcmap" );
         return;
       }
       else //assume one param is form name
@@ -149,22 +150,22 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
         flags.UsePartialMethods = false;
         flags.PassControllerToEvents = false;
         flags.ProtectListViews = false;
-        className = args[0];
+        className = args[ 0 ];
       }
 
-      string outputAssemblyName = String.Format("{0}_{1}.dll", className, DateTime.Now.Ticks);
+      string outputAssemblyName = String.Format( "{0}_{1}.dll", className, DateTime.Now.Ticks );
 
       //we currently assume this is one param and that is the name of the class
       //we also assume the files will be named in a standard C# naming convention.
       //i.e. MainForm -> MainForm.Designer.cs
-      if (ControllerCreationEngine.Compile(className, outputAssemblyName))
+      if ( ControllerCreationEngine.Compile( className, outputAssemblyName, flags ) )
       {
         //if we get here, we created the desired assembly above
-        ControllerCreationEngine.Generate(className, outputAssemblyName, flags);
+        ControllerCreationEngine.Generate( className, outputAssemblyName, flags );
       }
       else
       {
-        Console.WriteLine("Error! The file could not be generated.");
+        Console.WriteLine( "Error! The file could not be generated." );
         return;
       }
     }
@@ -172,14 +173,14 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
     /// <summary>
     /// Exprimental
     /// </summary>
-    private static void CreateNewActionConfig(string name)
+    private static void CreateNewActionConfig( string name )
     {
-      var path = System.IO.Path.Combine(System.Environment.CurrentDirectory, name);
+      var path = System.IO.Path.Combine( System.Environment.CurrentDirectory, name );
 
-      var config = new ViewActionMap(true);
+      var config = new ViewActionMap( true );
 
       //save the config
-      ViewActionMap.Save(config, path, true);
+      ViewActionMap.Save( config, path, true );
     }
   }
 }

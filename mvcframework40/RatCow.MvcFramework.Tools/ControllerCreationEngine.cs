@@ -133,7 +133,7 @@ namespace RatCow.MvcFramework.Tools
     /// </summary>
     /// <param name="className"></param>
     /// <returns></returns>
-    public static bool Compile( string className, string outputAssemblyName )
+    public static bool Compile( string className, string outputAssemblyName, CompilerFlags flags )
     {
       //we attempt to compile the file provided and then read info from it
       CSharpCodeProvider compiler = new CSharpCodeProvider();
@@ -188,68 +188,72 @@ namespace RatCow.MvcFramework.Tools
       string dummy = String.Format( "namespace {2} {3} partial class {0} : System.Windows.Forms.Form {1}", className, code, namespaceName, "{" );
 
       //we need to look for a resource file
-      //var resx = String.Format("{0}.resx", className);
+      var resx = String.Format( "{0}.resx", className );
 
-      string rescode = null;
+      //string rescode = null;
 
-      //if (File.Exists(resx))
-      //{
-      //  //we must now open the resource file and read the contents
-      //  var filename = String.Format("{0}.resources", className);
-      //  File.Delete(filename); //remove older version
+      var compiledResourceFilename = String.Format( "{0}.{1}.resources", namespaceName, className );
 
-      //  IDictionary dictionary = null;
 
-      //  using (var stream = File.Open(resx, FileMode.Open, FileAccess.Read, FileShare.Read))
-      //  {
-      //    using (var rsxr = new ResXResourceReader(stream))
-      //    {
-      //      using (IResourceWriter writer = new ResourceWriter(filename))
-      //      {
-      //        // Iterate through the resources and add resources to the resource writer.
-      //        dictionary = new Dictionary<string, string>();
-      //        foreach (DictionaryEntry d in rsxr)
-      //        {
-      //          var k = d.Key.ToString();
-      //          var v = d.Value.ToString();
+      //we should compile resource files by default!!
+      if ( !flags.IgnoreResourceFiles && File.Exists( resx ) )
+      {
+        //we must now open the resource file and read the contents
+        File.Delete( compiledResourceFilename ); //remove older version
 
-      //          dictionary.Add(k, v);
-      //          writer.AddResource(k, v);
-      //        }
-      //        writer.Close();
-      //      }
-      //      rsxr.Close();
-      //    }
+        //IDictionary dictionary = null;
 
-      //    stream.Close();
-      //  }
+        using ( var stream = File.Open( resx, FileMode.Open, FileAccess.Read, FileShare.Read ) )
+        {
+          using ( var rsxr = new ResXResourceReader( stream ) )
+          {
+            using ( IResourceWriter writer = new ResourceWriter( compiledResourceFilename ) )
+            {
+              // Iterate through the resources and add resources to the resource writer.
+              //dictionary = new Dictionary<string, string>();
+              foreach ( DictionaryEntry d in rsxr )
+              {
+                var k = d.Key.ToString();
+                var v = d.Value.ToString();
 
-      //  compilerParams.EmbeddedResources.Add(filename);
+                //dictionary.Add( k, v );
+                writer.AddResource( k, d.Value ); //code example I used had this line as (k, v) which embeds a string resource rather than the real resource!!!
+              }
+              writer.Close();
+            }
+            rsxr.Close();
+          }
 
-      //  string[] errors;
-      //  var provider = new CSharpCodeProvider(); // c#-code compiler
-      //  var cu = StronglyTypedResourceBuilder.Create(dictionary, className ?? string.Empty, "", provider, false, out errors);
+          stream.Close();
+        }
 
-      //  var options = new CodeGeneratorOptions
-      //  {
-      //    BracingStyle = "C",
-      //    BlankLinesBetweenMembers = false,
-      //    IndentString = "\t"
-      //  };
+        compilerParams.EmbeddedResources.Add( compiledResourceFilename );
 
-      //  var tw = new StringWriter();
-      //  provider.GenerateCodeFromCompileUnit(cu, tw, options);
-      //  rescode = tw.ToString();
-      //  tw.Close();
-      //}
+        //code example I used had this, but it seems to break the compilation if included
+        //string[] errors;
+        //var provider = new CSharpCodeProvider(); // c#-code compiler
+        //var cu = StronglyTypedResourceBuilder.Create( dictionary, className ?? string.Empty, "", provider, false, out errors );
+
+        //var options = new CodeGeneratorOptions
+        //{
+        //  BracingStyle = "C",
+        //  BlankLinesBetweenMembers = false,
+        //  IndentString = "\t"
+        //};
+
+        //var tw = new StringWriter();
+        //provider.GenerateCodeFromCompileUnit( cu, tw, options );
+        //rescode = tw.ToString();
+        //tw.Close();
+      }
 
       //The files to compile
-      string[] files;
+      string[] files = { dummy, s.ToString() };
 
-      if ( rescode != null )
-        files = new string[] { dummy, s.ToString(), rescode };
-      else
-        files = new string[] { dummy, s.ToString() };
+      //if ( rescode != null )
+      //  files = new string[] { dummy, s.ToString(), rescode };
+      //else
+      //  files = new string[] { dummy, s.ToString() };
 
       CompilerResults res = null;
       try
@@ -284,6 +288,14 @@ namespace RatCow.MvcFramework.Tools
         System.Console.WriteLine( sb.ToString() );
         return false;
       }
+
+      //make sure we delete the resourse we created
+      try
+      {
+        if ( File.Exists( compiledResourceFilename ) )
+          File.Delete( compiledResourceFilename );
+      }
+      catch { } //we don't care, we just don't want to throw an exception here if we compiled a successful assembly
 
       return true;
     }
@@ -324,9 +336,11 @@ namespace RatCow.MvcFramework.Tools
             //add in the components that are non visual and in the container on the form
             IterateComponents( form, tree, className );
           }
-          catch //todo: handle this better.
+          catch ( Exception ex ) //todo: handle this better.
           {
             //okay... we have failed big time, so we just bail
+            System.Diagnostics.Debug.WriteLine( ex.Message );
+            System.Diagnostics.Debug.WriteLine( ex.StackTrace );
             return null;
           }
 
