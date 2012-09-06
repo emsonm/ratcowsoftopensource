@@ -86,13 +86,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MvcFramework\MvcFramework.csproj">
-      <Project>{1736B130-6424-4F9D-BB98-1B2588BAFB4A}</Project>
-      <Name>MvcFramework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\RatCow.MvcFramework.Mapping\RatCow.MvcFramework.Mapping.csproj">
       <Project>{F1884DCF-58BB-4558-AACA-317E5F098FC4}</Project>
       <Name>RatCow.MvcFramework.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RatCow.MvcFramework\RatCow.MvcFramework.csproj">
+      <Project>{1736B130-6424-4F9D-BB98-1B2588BAFB4A}</Project>
+      <Name>RatCow.MvcFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
