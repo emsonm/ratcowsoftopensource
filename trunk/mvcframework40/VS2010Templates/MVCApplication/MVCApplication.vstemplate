@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+ <TemplateData>
+  <Name>MVCApplication</Name>
+  <Description>&lt;No description available&gt;</Description>
+  <Icon>MVCApplication.ico</Icon>
+  <ProjectType>CSharp</ProjectType>
+  <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+  <SortOrder>1000</SortOrder>
+  <TemplateID>0f3b63b9-62ba-47ae-84f1-c502b24b328f</TemplateID>
+  <CreateNewFolder>true</CreateNewFolder>
+  <DefaultName>MVCApplication</DefaultName>
+  <ProvideDefaultName>true</ProvideDefaultName>
+ </TemplateData>
+ <TemplateContent>
+  <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
+   <ProjectItem ReplaceParameters="true" TargetFileName="Properties\AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+   <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Resources.Designer.cs">Resources.Designer.cs</ProjectItem>
+   <ProjectItem ReplaceParameters="false" TargetFileName="Properties\Resources.resx">Resources.resx</ProjectItem>
+   <ProjectItem ReplaceParameters="true" TargetFileName="Properties\Settings.Designer.cs">Settings.Designer.cs</ProjectItem>
+   <ProjectItem ReplaceParameters="false" TargetFileName="Properties\Settings.settings">Settings.settings</ProjectItem>
+   <ProjectItem ReplaceParameters="true" TargetFileName="Program.cs">Program.cs</ProjectItem>
+   <Folder Name="Views" TargetFolderName="Views">
+    <ProjectItem ReplaceParameters="true" TargetFileName="Form1.cs">Form1.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="Form1.resx">Form1.resx</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="Form1.Designer.cs">Form1.Designer.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="Form1.mvcmap">Form1.mvcmap</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="compile.bat">compile.bat</ProjectItem>
+   </Folder>
+   <Folder Name="Controllers" TargetFolderName="Controllers">
+    <ProjectItem ReplaceParameters="true" TargetFileName="Form1Controller.cs">Form1Controller.cs</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="Form1Controller.Designer.cs">Form1Controller.Designer.cs</ProjectItem>
+   </Folder>
+   <Folder Name="Libraries" TargetFolderName="Libraries">
+    <ProjectItem ReplaceParameters="false" TargetFileName="RatCow.MvcFramework.dll">RatCow.MvcFramework.dll</ProjectItem>
+    <ProjectItem ReplaceParameters="false" TargetFileName="RatCow.MvcFramework.Mapping.dll">RatCow.MvcFramework.Mapping.dll</ProjectItem>
+   </Folder>
+   <Folder Name="Tools" TargetFolderName="Tools">
+    <ProjectItem ReplaceParameters="false" TargetFileName="mvctool.exe">mvctool.exe</ProjectItem>
+    <ProjectItem ReplaceParameters="false" TargetFileName="RatCow.MvcFramework.Tools.dll">RatCow.MvcFramework.Tools.dll</ProjectItem>
+   </Folder>
+  </Project>
+ </TemplateContent>
+</VSTemplate>
