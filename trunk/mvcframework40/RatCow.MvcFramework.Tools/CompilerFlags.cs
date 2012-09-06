@@ -46,5 +46,6 @@ namespace RatCow.MvcFramework.Tools
     public bool UseDefaultActionsFile = false;
     public bool AppendDesignedToFilename = false;
     public bool CreateEmptyNonDesignedFile = false;
+    public bool IgnoreResourceFiles = false;
   }
 }

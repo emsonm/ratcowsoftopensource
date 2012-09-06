@@ -132,6 +132,8 @@ namespace testapp3
 			textBox1TextChanged(e);
 		}
 
+		[Outlet("imageList1")]
+		public ImageList imageList1 { get; set; }
 		protected void SetData<T>(ListViewHelper<T> helper, List<T> data) where T : class
 		{
 			//Auto generated call
