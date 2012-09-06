@@ -1,0 +1,11 @@
+﻿If you have regenerated the code, try adding the following to the Form1Controller.button1Click()
+method:
+
+  void button1Click()
+  {
+    MessageBox.Show(textBox1.Text);
+    if (checkBox1.Checked)
+      label1.Text = textBox1.Text;
+  }
+  
+This method does exactly what the original example did.
