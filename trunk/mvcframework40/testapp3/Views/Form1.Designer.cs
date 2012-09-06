@@ -28,6 +28,8 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       this.textBox1 = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
       this.button1 = new System.Windows.Forms.Button();
@@ -37,6 +39,7 @@
       this.comboBox2 = new System.Windows.Forms.ComboBox();
       this.comboBox3 = new System.Windows.Forms.ComboBox();
       this.listBox1 = new System.Windows.Forms.ListBox();
+      this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.SuspendLayout();
       // 
       // textBox1
@@ -132,6 +135,15 @@
       this.listBox1.Size = new System.Drawing.Size(120, 69);
       this.listBox1.TabIndex = 8;
       // 
+      // imageList1
+      // 
+      this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+      this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+      this.imageList1.Images.SetKeyName(0, "Arrow.bmp");
+      this.imageList1.Images.SetKeyName(1, "Alert.bmp");
+      this.imageList1.Images.SetKeyName(2, "appwindow_database_16.bmp");
+      this.imageList1.Images.SetKeyName(3, "appwindow_info_annotation_16.bmp");
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,6 +176,7 @@
     private System.Windows.Forms.ComboBox comboBox2;
     private System.Windows.Forms.ComboBox comboBox3;
     private System.Windows.Forms.ListBox listBox1;
+    private System.Windows.Forms.ImageList imageList1;
   }
 }
 

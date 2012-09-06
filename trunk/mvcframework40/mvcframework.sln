@@ -1,21 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testapp", "testapp\testapp.csproj", "{8B9E0CCB-CFDD-465E-886D-20C944E52FD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ratcow.MvcFramework", "RatCow.MvcFramework\RatCow.MvcFramework.csproj", "{1736B130-6424-4F9D-BB98-1B2588BAFB4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.MvcFramework", "RatCow.MvcFramework\RatCow.MvcFramework.csproj", "{1736B130-6424-4F9D-BB98-1B2588BAFB4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcTool", "MvcTool\MvcTool.csproj", "{8CDC0107-0842-41A8-AD9C-E26FFB6B7F10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.MvcFramework.Tools", "RatCow.MvcFramework.Tools\RatCow.MvcFramework.Tools.csproj", "{AA53FC2C-ADE1-4FEF-84F3-FCB566517D55}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testapp2", "testapp2\testapp2.csproj", "{BFE9E0DE-77EE-405B-AB7C-D1BFEEF02EB4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCFrameworkCF", "RatCow.MvcFramework\MVCFrameworkCF.csproj", "{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCFrameworkCF2003", "RatCow.MvcFramework\MVCFrameworkCF2003.csproj", "{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CFTest2003", "CFTest2003\CFTest2003.csproj", "{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.MvcFramework.Mapping", "RatCow.MvcFramework.Mapping\RatCow.MvcFramework.Mapping.csproj", "{F1884DCF-58BB-4558-AACA-317E5F098FC4}"
 EndProject
@@ -47,16 +41,6 @@ Global
 		{BFE9E0DE-77EE-405B-AB7C-D1BFEEF02EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFE9E0DE-77EE-405B-AB7C-D1BFEEF02EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFE9E0DE-77EE-405B-AB7C-D1BFEEF02EB4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{615DD896-6ED7-4EF7-A3C6-8F2C4A5596EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFF50D13-7819-4529-AFDC-6A2C0A4CDFC2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{F1884DCF-58BB-4558-AACA-317E5F098FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1884DCF-58BB-4558-AACA-317E5F098FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1884DCF-58BB-4558-AACA-317E5F098FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
