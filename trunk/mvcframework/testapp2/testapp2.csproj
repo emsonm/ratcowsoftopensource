@@ -85,13 +85,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MvcFramework\MvcFramework.csproj">
-      <Project>{1736B130-6424-4F9D-BB98-1B2588BAFB4A}</Project>
-      <Name>MvcFramework</Name>
-    </ProjectReference>
+    <Content Include="Controllers\Form1ControllerExample.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Controllers\Form1ControllerExample.txt" />
+    <ProjectReference Include="..\RatCow.MvcFramework\RatCow.MvcFramework.csproj">
+      <Project>{1736B130-6424-4F9D-BB98-1B2588BAFB4A}</Project>
+      <Name>RatCow.MvcFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

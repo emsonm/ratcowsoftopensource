@@ -78,7 +78,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MvcFramework\MVCFrameworkCF2003.csproj">
+    <ProjectReference Include="..\RatCow.MvcFramework\MVCFrameworkCF2003.csproj">
       <Project>{AFAAAE3F-69F5-460D-A5DD-F3B935B7256F}</Project>
       <Name>MVCFrameworkCF2003</Name>
     </ProjectReference>

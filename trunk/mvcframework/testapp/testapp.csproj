@@ -80,9 +80,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MvcFramework\MvcFramework.csproj">
+    <ProjectReference Include="..\RatCow.MvcFramework\RatCow.MvcFramework.csproj">
       <Project>{1736B130-6424-4F9D-BB98-1B2588BAFB4A}</Project>
-      <Name>MvcFramework</Name>
+      <Name>RatCow.MvcFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
