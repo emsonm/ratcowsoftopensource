@@ -175,6 +175,25 @@ namespace RatCow.MvcFramework
     }
 
     /// <summary>
+    /// Experimental
+    /// </summary>
+    public bool SetSelectedIndex( int index )
+    {
+      try
+      {
+        fview.Items[ index ].Selected = true; //this should work
+        return true;
+      }
+      catch ( Exception ex )
+      {
+        System.Diagnostics.Debug.Write( ex.Message );
+        System.Diagnostics.Debug.Write( ex.StackTrace );
+        return false;
+      }
+
+    }
+
+    /// <summary>
     /// This is a "nice to have" rather than anything really useful.
     /// </summary>
     /// <returns></returns>
