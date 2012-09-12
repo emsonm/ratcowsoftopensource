@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCAppPackage", "VS2010Temp
 		{CC97F6DC-D4B0-466B-81CA-7402B73E64AB} = {CC97F6DC-D4B0-466B-81CA-7402B73E64AB}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.Utilities", "..\ratcowutilities\RatCow.Utilities\RatCow.Utilities.csproj", "{6861813E-22C1-4944-B9D6-DA6284741121}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{31DA3A2D-C6B3-45F0-B506-190FEB28F898}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31DA3A2D-C6B3-45F0-B506-190FEB28F898}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31DA3A2D-C6B3-45F0-B506-190FEB28F898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6861813E-22C1-4944-B9D6-DA6284741121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6861813E-22C1-4944-B9D6-DA6284741121}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6861813E-22C1-4944-B9D6-DA6284741121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6861813E-22C1-4944-B9D6-DA6284741121}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
