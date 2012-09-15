@@ -404,6 +404,13 @@ namespace RatCow.MvcFramework.Tools
             if ( instance == component )
             {
               tree.AddControl( fi.Name, fieldType );
+
+              if ( fieldType == typeof( System.Windows.Forms.ContextMenuStrip ) )
+              {
+                //get control instance
+                var control = (System.Windows.Forms.ContextMenuStrip)instance;
+                IterateToolStripItems( tree, control );
+              }
             }
           }
         }
@@ -441,6 +448,40 @@ namespace RatCow.MvcFramework.Tools
               tree.AddControl( ( name == null || name == String.Empty ? "Blah" : name ), item.GetType() );
             }
           }
+        }
+
+      }
+    }
+
+    private static void IterateToolStripItems( ControlTree tree, System.Windows.Forms.Control control )
+    {
+      foreach ( System.Windows.Forms.ToolStripItem item in ( control as System.Windows.Forms.ContextMenuStrip ).Items )
+      {
+        if ( item is System.Windows.Forms.ToolStripItem )
+        {
+          var name = ( item as System.Windows.Forms.ToolStripItem ).Name;
+          tree.AddControl( ( name == null || name == String.Empty ? "Blah" : name ), item.GetType() );
+
+          if ( item is System.Windows.Forms.ToolStripDropDownItem )
+          {
+            var item2 = (System.Windows.Forms.ToolStripDropDownItem)item;
+            IterateDropDownItems( tree, item2 );
+
+          }
+        }
+      }
+    }
+
+    private static void IterateDropDownItems( ControlTree tree, System.Windows.Forms.ToolStripDropDownItem item )
+    {
+      foreach ( var menuitem in item.DropDownItems )
+      {
+        var name = ( menuitem as System.Windows.Forms.ToolStripItem ).Name;
+        tree.AddControl( ( name == null || name == String.Empty ? "Blah" : name ), item.GetType() );
+
+        if ( menuitem is System.Windows.Forms.ToolStripDropDownItem )
+        {
+          IterateDropDownItems( tree, (System.Windows.Forms.ToolStripDropDownItem)menuitem );
         }
       }
     }

@@ -37,6 +37,8 @@ using System.Windows.Forms;
 
 namespace RatCow.MvcFramework.Mapping
 {
+  using Controls;
+
   public enum ListControlMapping { Value, Index, Text }
 
   public class MappingUpdateSubscriber<T>
@@ -115,6 +117,11 @@ namespace RatCow.MvcFramework.Mapping
         NumericUpDown tempNUD = (NumericUpDown)subject;
         tempNUD.ValueChanged += new EventHandler(subject_NumericValueChanged);
       }
+      else if ( subject is NullableDateTimePicker )
+      {
+        NullableDateTimePicker tempDTP = (NullableDateTimePicker)subject;
+        tempDTP.ValueChanged += new EventHandler( subject_NullDateValueChanged );
+      }
       else if (subject is DateTimePicker)
       {
         DateTimePicker tempDTP = (DateTimePicker)subject;
@@ -179,7 +186,7 @@ namespace RatCow.MvcFramework.Mapping
         switch (listControlMapping)
         {
           case ListControlMapping.Text:
-            tempLC.Text = target.CurrentValue.ToString();
+            tempLC.Text = ConversionHelper.ToString( target.CurrentValue, String.Empty );
             break;
 
           case ListControlMapping.Index:
@@ -210,6 +217,18 @@ namespace RatCow.MvcFramework.Mapping
           tempNUD.Value = tempNUD.Minimum;
         else
           tempNUD.Value = Convert.ToDecimal(target.CurrentValue);
+      }
+      else if ( subject is NullableDateTimePicker )
+      {
+        NullableDateTimePicker tempDTP = (NullableDateTimePicker)subject;
+        try
+        {
+          tempDTP.Value = Convert.ToDateTime( target.CurrentValue );
+        }
+        catch
+        {
+          tempDTP.Value = tempDTP.NullDate;
+        }
       }
       else if (subject is DateTimePicker)
       {
@@ -292,6 +311,14 @@ namespace RatCow.MvcFramework.Mapping
       if (target_CanModifyData(subject))
       {
         target.SetCurrentValueFromObject(((DateTimePicker)subject).Value);
+      }
+    }
+
+    private void subject_NullDateValueChanged( object sender, EventArgs e )
+    {
+      if ( target_CanModifyData( subject ) )
+      {
+        target.SetCurrentValueFromObject( ( (NullableDateTimePicker)subject ).Value );
       }
     }
 
