@@ -48,10 +48,6 @@ namespace RatCow.MvcFramework.Mapping
       MappingList = new List<IMappingObject>();
     }
 
-    //we have two maps - this is legacy, not sure we need them...
-    protected Dictionary<string, string> dataToControlMap = new Dictionary<string, string>();
-    protected Dictionary<string, string> controlToDataMap = new Dictionary<string, string>();
-
     //this retains all of out dynamicly mapped connections
     public List<IMappingObject> MappingList { get; private set; }
 
@@ -82,9 +78,6 @@ namespace RatCow.MvcFramework.Mapping
 
             if ((usage == ma.Usage) || (useDefaultMapping && isDefaultItem))
             {
-              dataToControlMap.Add(ma.DestinationControlName, pi.Name);
-              controlToDataMap.Add(pi.Name, ma.DestinationControlName);
-
               //create the control mapping
               IMappingObject mo;
 

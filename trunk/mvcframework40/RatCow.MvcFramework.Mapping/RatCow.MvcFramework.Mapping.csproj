@@ -68,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\NullableDateTimePicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DataProxy.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="IMappingObject.cs" />
