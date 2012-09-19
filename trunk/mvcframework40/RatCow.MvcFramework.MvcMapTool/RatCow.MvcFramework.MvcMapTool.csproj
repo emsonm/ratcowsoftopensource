@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{363E17D0-1CE8-422B-B49C-59990A982CC6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RatCow.MvcFramework.MvcMapTool</RootNamespace>
+    <AssemblyName>mvcmaptool</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="RatCow.MvcFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Libraries\RatCow.MvcFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="RatCow.MvcFramework.Mapping, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>Libraries\RatCow.MvcFramework.Mapping.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Libraries\RatCow.MvcFramework.dll">
+    </Content>
+    <Content Include="Libraries\RatCow.MvcFramework.Mapping.dll">
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AddControlEventsFormController.cs" />
+    <Compile Include="Controllers\AddControlEventsFormController.Designer.cs">
+      <DependentUpon>AddControlEventsFormController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AddControlFormController.cs" />
+    <Compile Include="Controllers\AddControlFormController.Designer.cs">
+      <DependentUpon>AddControlFormController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AddGeneralItemFormController.cs" />
+    <Compile Include="Controllers\AddGeneralItemFormController.Designer.cs">
+      <DependentUpon>AddGeneralItemFormController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\MainFormController.cs" />
+    <Compile Include="Controllers\MainFormController.Designer.cs">
+      <DependentUpon>MainFormController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileAndProgramAssoc\AssociationManager.cs" />
+    <Compile Include="FileAndProgramAssoc\FileAssociationInfo.cs" />
+    <Compile Include="FileAndProgramAssoc\ProgramAssociationInfo.cs" />
+    <Compile Include="FileAndProgramAssoc\ProgramIcon.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FileAndProgramAssoc\ProgramVerb.cs" />
+    <Compile Include="FileAndProgramAssoc\RegistryException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FileAndProgramAssoc\RegistryWrapper.cs" />
+    <Compile Include="FileAndProgramAssoc\ShellNotification.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\AddControlEventsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddControlEventsForm.Designer.cs">
+      <DependentUpon>AddControlEventsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddControlForm.Designer.cs">
+      <DependentUpon>AddControlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddGeneralItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddGeneralItemForm.Designer.cs">
+      <DependentUpon>AddGeneralItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AddControlEventsForm.resx">
+      <DependentUpon>AddControlEventsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AddControlForm.resx">
+      <DependentUpon>AddControlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AddGeneralItemForm.resx">
+      <DependentUpon>AddGeneralItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Views\AddControlEventsForm.mvcmap" />
+    <None Include="Views\AddControlForm.mvcmap" />
+    <None Include="Views\AddGeneralItemForm.mvcmap" />
+    <None Include="Views\mainform.mvcmap" />
+    <None Include="Views\compile.bat" />
+    <None Include="tools\mvctool.exe" />
+    <None Include="tools\RatCow.MvcFramework.Tools.dll" />
+    <None Include="Properties\Settings.Designer.cs" />
+    <None Include="Properties\Settings.settings" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RatCow.MvcFramework.Tools\RatCow.MvcFramework.Tools.csproj">
+      <Project>{AA53FC2C-ADE1-4FEF-84F3-FCB566517D55}</Project>
+      <Name>RatCow.MvcFramework.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+   cd "$(ProjectDir)\views"
+   "$(ProjectDir)\views\compile.bat"
+  </PreBuildEvent>
+  </PropertyGroup>
+</Project>
