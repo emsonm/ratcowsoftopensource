@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCAppPackage", "VS2010Temp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.Utilities", "..\ratcowutilities\RatCow.Utilities\RatCow.Utilities.csproj", "{6861813E-22C1-4944-B9D6-DA6284741121}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.MvcFramework.MvcMapTool", "RatCow.MvcFramework.MvcMapTool\RatCow.MvcFramework.MvcMapTool.csproj", "{363E17D0-1CE8-422B-B49C-59990A982CC6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{6861813E-22C1-4944-B9D6-DA6284741121}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6861813E-22C1-4944-B9D6-DA6284741121}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6861813E-22C1-4944-B9D6-DA6284741121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{363E17D0-1CE8-422B-B49C-59990A982CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{363E17D0-1CE8-422B-B49C-59990A982CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{363E17D0-1CE8-422B-B49C-59990A982CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{363E17D0-1CE8-422B-B49C-59990A982CC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
