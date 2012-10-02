@@ -48,9 +48,9 @@ namespace RatCow.MvcFramework
     /// This is to save referencing the underlying OS message boxes.
     /// </summary>
     /// <param name="message"></param>
-    public static void Alert(string message)
+    public static void Alert( string message )
     {
-      Alert(message, "Warning");
+      Alert( message, "Warning" );
     }
 
     /// <summary>
@@ -58,18 +58,18 @@ namespace RatCow.MvcFramework
     /// </summary>
     /// <param name="message"></param>
     /// <param name="title"></param>
-    public static void Alert(string message, string title)
+    public static void Alert( string message, string title )
     {
-      System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation, System.Windows.Forms.MessageBoxDefaultButton.Button2); //CF needs this
+      System.Windows.Forms.MessageBox.Show( message, title, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Exclamation, System.Windows.Forms.MessageBoxDefaultButton.Button2 ); //CF needs this
     }
 
     /// <summary>
     /// This is to save referencing the underlying OS message boxes.
     /// </summary>
     /// <param name="message"></param>
-    public static void Acknowledge(string message)
+    public static void Acknowledge( string message )
     {
-      Acknowledge(message, "Warning");
+      Acknowledge( message, "Warning" );
     }
 
     /// <summary>
@@ -77,9 +77,9 @@ namespace RatCow.MvcFramework
     /// </summary>
     /// <param name="message"></param>
     /// <param name="title"></param>
-    public static void Acknowledge(string message, string title)
+    public static void Acknowledge( string message, string title )
     {
-      System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information, System.Windows.Forms.MessageBoxDefaultButton.Button2); //CF needs this
+      System.Windows.Forms.MessageBox.Show( message, title, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information, System.Windows.Forms.MessageBoxDefaultButton.Button2 ); //CF needs this
     }
 
     /// <summary>
@@ -87,9 +87,9 @@ namespace RatCow.MvcFramework
     /// </summary>
     /// <param name="message"></param>
     /// <returns></returns>
-    public static bool BooleanDecision(string message)
+    public static bool BooleanDecision( string message )
     {
-      return BooleanDecision(message, "Please choose...");
+      return BooleanDecision( message, "Please choose..." );
     }
 
     /// <summary>
@@ -98,9 +98,9 @@ namespace RatCow.MvcFramework
     /// <param name="message"></param>
     /// <param name="title"></param>
     /// <returns></returns>
-    public static bool BooleanDecision(string message, string title)
+    public static bool BooleanDecision( string message, string title )
     {
-      return (System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes);
+      return ( System.Windows.Forms.MessageBox.Show( message, title, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, System.Windows.Forms.MessageBoxDefaultButton.Button1 ) == System.Windows.Forms.DialogResult.Yes );
     }
 
     public static void ProcessSystemMessages()
@@ -113,9 +113,9 @@ namespace RatCow.MvcFramework
   public class ListViewHelper<Data> : IDisposable
   {
     System.Windows.Forms.ListView fview = null;
-    List<Data> fdata = default(List<Data>);
+    List<Data> fdata = default( List<Data> );
 
-    public ListViewHelper(System.Windows.Forms.ListView view)
+    public ListViewHelper( System.Windows.Forms.ListView view )
     {
       fview = view;
       fview.VirtualMode = true;
@@ -134,7 +134,7 @@ namespace RatCow.MvcFramework
 
     public void EndUpdate()
     {
-      if (fdata != null)
+      if ( fdata != null )
       {
         fview.VirtualListSize = fdata.Count;
       }
@@ -142,9 +142,9 @@ namespace RatCow.MvcFramework
       fview.EndUpdate();
     }
 
-    public void SetData(List<Data> data)
+    public void SetData( List<Data> data )
     {
-      if (!Updating)
+      if ( !Updating )
         BeginUpdate();
       try
       {
@@ -152,7 +152,7 @@ namespace RatCow.MvcFramework
       }
       finally
       {
-        if (Updating)
+        if ( Updating )
           EndUpdate();
       }
     }
@@ -163,9 +163,9 @@ namespace RatCow.MvcFramework
     public int GetSelectedIndex()
     {
       int result = -1;
-      for (int i = 0; i < fview.Items.Count; i++)
+      for ( int i = 0 ; i < fview.Items.Count ; i++ )
       {
-        if (fview.Items[i].Selected)
+        if ( fview.Items[ i ].Selected )
         {
           result = i; //could just return here, but that's messy
           break;
@@ -201,21 +201,21 @@ namespace RatCow.MvcFramework
     {
       int itemIndex = GetSelectedIndex();
 
-      if (itemIndex > -1 && itemIndex < fdata.Count)
+      if ( itemIndex > -1 && itemIndex < fdata.Count )
       {
-        return fdata[itemIndex];
+        return fdata[ itemIndex ];
       }
       else
-        return default(Data);
+        return default( Data );
     }
 
     #region fdata access
 
     //added to make the helper allow us to access the internal data without a reference to original instance
 
-    public Data this[int index] { get { return (fdata == null ? default(Data) : fdata[index]); } }
+    public Data this[ int index ] { get { return ( fdata == null ? default( Data ) : fdata[ index ] ); } }
 
-    public int Count { get { return (fdata == null ? 0 : fdata.Count); } }
+    public int Count { get { return ( fdata == null ? 0 : fdata.Count ); } }
 
     #endregion fdata access
 
