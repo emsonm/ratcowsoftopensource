@@ -117,13 +117,12 @@ namespace RatCow.MvcFramework.Tools
 
       if (exists)
       {
-        if (overwrite) File.Delete(filename);
-        else return false;
+        if (!overwrite) return false;
       }
 
       XmlSerializer xmlSerializer = new XmlSerializer(typeof(ViewActionMap));
 
-      using (StreamWriter writer = System.IO.File.CreateText(filename))
+      using ( StreamWriter writer = ( exists ? new StreamWriter( System.IO.File.OpenWrite( filename ) ) : System.IO.File.CreateText( filename ) ) )
       {
         xmlSerializer.Serialize(writer, data);
       }
