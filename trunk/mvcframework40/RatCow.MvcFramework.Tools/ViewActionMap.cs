@@ -51,20 +51,20 @@ namespace RatCow.MvcFramework.Tools
     /// <summary>
     /// Simplify getting the defaults
     /// </summary>
-    public ViewActionMap(bool createDefaults)
+    public ViewActionMap( bool createDefaults )
       : this()
     {
-      if (createDefaults) InitDefaults();
+      if ( createDefaults ) InitDefaults();
     }
 
     //global action list
-    [XmlArray("GlobalMap")]
-    [XmlArrayItem("ViewAction")]
+    [XmlArray( "GlobalMap" )]
+    [XmlArrayItem( "ViewAction" )]
     public ViewActions GlobalMap { get; set; }
 
     //specific controls (this augments, never overrides)
-    [XmlArray("ControlActionMap")]
-    [XmlArrayItem("ViewControlAction")]
+    [XmlArray( "ControlActionMap" )]
+    [XmlArrayItem( "ViewControlAction" )]
     public ViewControlActions ControlActionMap { get; set; }
 
     /// <summary>
@@ -72,36 +72,36 @@ namespace RatCow.MvcFramework.Tools
     /// </summary>
     public virtual void InitDefaults()
     {
-      GlobalMap.Add(new ViewAction() { EventName = "Click", EventHandlerName = "EventHandler", EventArgsName = "EventArgs" });
+      GlobalMap.Add( new ViewAction() { EventName = "Click", EventHandlerName = "EventHandler", EventArgsName = "EventArgs" } );
 
       var textBoxAction = new ViewActions();
-      textBoxAction.Add(new ViewAction() { EventName = "TextChanged", EventHandlerName = "EventHandler", EventArgsName = "EventArgs" });
-      ControlActionMap.Add(new ViewControlAction() { ControlType = "TextBox", ControlActions = textBoxAction });
+      textBoxAction.Add( new ViewAction() { EventName = "TextChanged", EventHandlerName = "EventHandler", EventArgsName = "EventArgs" } );
+      ControlActionMap.Add( new ViewControlAction() { ControlType = "TextBox", ControlActions = textBoxAction } );
 
       var comboBoxAction = new ViewActions();
-      comboBoxAction.Add(new ViewAction() { EventName = "CheckedChanged", EventHandlerName = "EventHandler", EventArgsName = "EventArgs" });
-      ControlActionMap.Add(new ViewControlAction() { ControlType = "CheckBox", ControlActions = comboBoxAction });
+      comboBoxAction.Add( new ViewAction() { EventName = "CheckedChanged", EventHandlerName = "EventHandler", EventArgsName = "EventArgs" } );
+      ControlActionMap.Add( new ViewControlAction() { ControlType = "CheckBox", ControlActions = comboBoxAction } );
     }
 
     /// <summary>
     /// Utility function - this should be moved to a factory
     /// </summary>
-    public static ViewActionMap Load(string filename)
+    public static ViewActionMap Load( string filename )
     {
-      XmlSerializer xmlSerializer = new XmlSerializer(typeof(ViewActionMap));
+      XmlSerializer xmlSerializer = new XmlSerializer( typeof( ViewActionMap ) );
 
       ViewActionMap data = null;
 
       try
       {
-        using (var reader = new StreamReader(new FileStream(filename, FileMode.Open, FileAccess.Read)))
+        using ( var reader = new StreamReader( new FileStream( filename, FileMode.Open, FileAccess.Read ) ) )
         {
-          data = (ViewActionMap)xmlSerializer.Deserialize(reader);
+          data = (ViewActionMap)xmlSerializer.Deserialize( reader );
         }
       }
-      catch (Exception ex) //should specialise this.
+      catch ( Exception ex ) //should specialise this.
       {
-        System.Diagnostics.Debug.WriteLine(ex.Message);
+        System.Diagnostics.Debug.WriteLine( ex.Message );
         data = null; //just to be sure
       }
 
@@ -111,22 +111,40 @@ namespace RatCow.MvcFramework.Tools
     /// <summary>
     /// Utility function - this should be moved to a factory
     /// </summary>
-    public static bool Save(ViewActionMap data, string filename, bool overwrite)
+    public static bool Save( ViewActionMap data, string filename, bool overwrite )
     {
-      var exists = File.Exists(filename);
+      var path = Path.GetFullPath( filename ); //this *should* convert to a long path, except the file acces methods mess this up still...
 
-      if (exists)
+      if ( File.Exists( path ) )
       {
-        if (!overwrite) return false;
+        //we bail if we have the "don't overwrite" bit set
+        if ( !overwrite ) return false;
+        else
+        {
+          using ( var file = System.IO.File.OpenWrite( path ) )
+          {
+            file.SetLength( 0 ); //wipe out the file contents
+
+            var xmlSerializer = new XmlSerializer( typeof( ViewActionMap ) );
+
+            using ( StreamWriter writer = new StreamWriter( file ) )
+            {
+              xmlSerializer.Serialize( writer, data );
+            }
+
+            file.Close(); //avoid locking etc
+          }
+        }
       }
-
-      XmlSerializer xmlSerializer = new XmlSerializer(typeof(ViewActionMap));
-
-      using ( StreamWriter writer = ( exists ? new StreamWriter( System.IO.File.OpenWrite( filename ) ) : System.IO.File.CreateText( filename ) ) )
+      else
       {
-        xmlSerializer.Serialize(writer, data);
-      }
+        var xmlSerializer = new XmlSerializer( typeof( ViewActionMap ) );
 
+        using ( StreamWriter writer = System.IO.File.CreateText( filename ) )
+        {
+          xmlSerializer.Serialize( writer, data );
+        }
+      }
       return true;
     }
   }
