@@ -111,7 +111,7 @@ namespace RatCow.MvcFramework.MvcMapTool
             {
               if ( pi.ParameterType == typeof( EventArgs ) || pi.ParameterType.IsSubclassOf( typeof( EventArgs ) ) )
               {
-                eventarg = pi.ParameterType.Name;
+                eventarg = pi.ParameterType.FullName; //because we otherwise get a lot of issues building stuff when the class is not in the standard System.Windows.Forms namespace
 
                 //System.Console.WriteLine(ei.Name + " : " + ei.EventHandlerType + " :: " + "" + eventarg);
                 actions.Add( new Tools.ViewAction() { EventName = ei.Name, EventHandlerName = ei.EventHandlerType.FullName, EventArgsName = eventarg } );
