@@ -26,4 +26,8 @@
   <ProjectItem ReplaceParameters="true" TargetFileName="Controllers\$fileinputname$Controller.cs">ModalFormController.cs</ProjectItem>
   <ProjectItem ReplaceParameters="true" TargetFileName="Controllers\$fileinputname$Controller.Designer.cs">ModalFormController.Designer.cs</ProjectItem>
  </TemplateContent>
+ <WizardExtension>
+  <Assembly>RatCow.Templates, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1e62c5db267813ae</Assembly>
+  <FullClassName>RatCow.Templates.MVCFormControllerWizard</FullClassName>
+ </WizardExtension>
 </VSTemplate>
