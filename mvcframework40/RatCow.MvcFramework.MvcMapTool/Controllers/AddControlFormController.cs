@@ -46,8 +46,12 @@ namespace RatCow.MvcFramework.MvcMapTool
           //register the type...
           try
           {
-            if ( registeredTypes.Where( x => x.ClassName == t.FullName ).Count() <= 0 )
-              registeredTypes.Add( new Store() { ClassName = t.Name, ClassType = t } );
+            //added extra stuff to cover class creation
+            if ( registeredTypes.Where( x => x.ClassName == t.Name || x.ClassName == t.FullName ).Count() <= 0 )
+            {
+              var classname = ( t.FullName.Replace( t.Name, String.Empty ) == "System.Windows.Forms." ? t.Name : t.FullName );
+              registeredTypes.Add( new Store() { ClassName = classname, ClassType = t } ); //try to only store the fullname if we need to
+            }
           }
           catch ( Exception ex )
           {
@@ -66,7 +70,7 @@ namespace RatCow.MvcFramework.MvcMapTool
       if ( View.ShowDialog() == DialogResult.OK )
       {
         //get the selected item
-        var rdata = (Store)(controlCombo.SelectedItem);
+        var rdata = (Store)( controlCombo.SelectedItem );
 
         var selected = new Tools.ViewControlAction() { ControlType = rdata.ClassType.Name }; //TODO: use FullName here, it's safer.
 

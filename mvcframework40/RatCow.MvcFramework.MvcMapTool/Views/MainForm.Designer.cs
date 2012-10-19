@@ -29,15 +29,15 @@
     private void InitializeComponent()
     {
       this.globalEventsListView = new System.Windows.Forms.ListView();
-      this.controlsListView = new System.Windows.Forms.ListView();
-      this.controlDetailListView = new System.Windows.Forms.ListView();
       this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.controlsListView = new System.Windows.Forms.ListView();
+      this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.controlDetailListView = new System.Windows.Forms.ListView();
       this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-      this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.addGeneralButton = new System.Windows.Forms.Button();
       this.removeGeneralButton = new System.Windows.Forms.Button();
       this.removeEvent = new System.Windows.Forms.Button();
@@ -63,6 +63,21 @@
       this.globalEventsListView.UseCompatibleStateImageBehavior = false;
       this.globalEventsListView.View = System.Windows.Forms.View.Details;
       // 
+      // columnHeader1
+      // 
+      this.columnHeader1.Text = "Event name";
+      this.columnHeader1.Width = 150;
+      // 
+      // columnHeader2
+      // 
+      this.columnHeader2.Text = "EventType";
+      this.columnHeader2.Width = 150;
+      // 
+      // columnHeader3
+      // 
+      this.columnHeader3.Text = "EventArg";
+      this.columnHeader3.Width = 150;
+      // 
       // controlsListView
       // 
       this.controlsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -75,6 +90,11 @@
       this.controlsListView.TabIndex = 1;
       this.controlsListView.UseCompatibleStateImageBehavior = false;
       this.controlsListView.View = System.Windows.Forms.View.Details;
+      // 
+      // columnHeader7
+      // 
+      this.columnHeader7.Text = "Control";
+      this.columnHeader7.Width = 120;
       // 
       // controlDetailListView
       // 
@@ -91,21 +111,6 @@
       this.controlDetailListView.UseCompatibleStateImageBehavior = false;
       this.controlDetailListView.View = System.Windows.Forms.View.Details;
       // 
-      // columnHeader1
-      // 
-      this.columnHeader1.Text = "Event name";
-      this.columnHeader1.Width = 150;
-      // 
-      // columnHeader2
-      // 
-      this.columnHeader2.Text = "EventType";
-      this.columnHeader2.Width = 150;
-      // 
-      // columnHeader3
-      // 
-      this.columnHeader3.Text = "EventArg";
-      this.columnHeader3.Width = 150;
-      // 
       // columnHeader4
       // 
       this.columnHeader4.Text = "Event name";
@@ -120,11 +125,6 @@
       // 
       this.columnHeader6.Text = "EventArg";
       this.columnHeader6.Width = 110;
-      // 
-      // columnHeader7
-      // 
-      this.columnHeader7.Text = "Control";
-      this.columnHeader7.Width = 120;
       // 
       // addGeneralButton
       // 
@@ -216,6 +216,7 @@
       this.Controls.Add(this.controlsListView);
       this.Controls.Add(this.globalEventsListView);
       this.Name = "MainForm";
+      this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Quick MVCMAP editor";
       this.ResumeLayout(false);
 
