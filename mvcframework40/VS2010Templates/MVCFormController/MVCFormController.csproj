@@ -53,7 +53,9 @@
     <None Include="Form.Designer.cs">
       <DependentUpon>Form.cs</DependentUpon>
     </None>
-    <None Include="form.mvcmap" />
+    <None Include="form.mvcmap">
+      <DependentUpon>Form.cs</DependentUpon>
+    </None>
     <None Include="Form.resx">
       <DependentUpon>Form.cs</DependentUpon>
     </None>
@@ -70,6 +72,12 @@
     <VSTemplate Include="MVCFormController.vstemplate">
       <SubType>Designer</SubType>
     </VSTemplate>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RatCow.Templates\RatCow.Templates.csproj">
+      <Project>{48BCA6DE-A6AB-4BF4-BEBA-064E902CC271}</Project>
+      <Name>RatCow.Templates</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\VSSDK\Microsoft.VsSDK.targets" />

@@ -102,6 +102,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Views\compile.bat" />
     <None Include="Views\form1.mvcmap" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
