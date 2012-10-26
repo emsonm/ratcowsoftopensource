@@ -19,6 +19,7 @@ namespace testapp3
 		{
 		}
 
+		partial void menuStrip1Click(EventArgs e);
 		partial void listBox1Click(EventArgs e);
 		partial void comboBox3Click(EventArgs e);
 		partial void comboBox2Click(EventArgs e);
@@ -37,6 +38,15 @@ namespace testapp3
 
 	partial class Form1Controller
 	{
+		[Outlet("menuStrip1")]
+		public MenuStrip menuStrip1 { get; set; }
+		[Action("menuStrip1", "Click")]
+		public void FmenuStrip1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			menuStrip1Click(e);
+		}
+
 		[Outlet("listBox1")]
 		public ListBox listBox1 { get; set; }
 		[Action("listBox1", "Click")]
