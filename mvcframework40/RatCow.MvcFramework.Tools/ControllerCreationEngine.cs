@@ -318,7 +318,7 @@ namespace RatCow.MvcFramework.Tools
           trees.Add( tree ); //just to get it sorted..
 
           //essentially, we only support "Winforms" so we assume it is a form or descends from one
-          //I might be able to alter this to "component" I gues...
+          //I might be able to alter this to "component" I guess...
           try
           {
             System.Windows.Forms.Form form = ( Activator.CreateInstance( t ) as System.Windows.Forms.Form );
@@ -409,7 +409,14 @@ namespace RatCow.MvcFramework.Tools
               {
                 //get control instance
                 var control = (System.Windows.Forms.ContextMenuStrip)instance;
-                IterateToolStripItems( tree, control );
+                ContextMenuStrip_IterateToolStripItems( tree, control );
+              }
+
+              if ( fieldType == typeof( System.Windows.Forms.MenuStrip ) )
+              {
+                //get control instance
+                var control = (System.Windows.Forms.MenuStrip)instance;
+                ContextMenuStrip_IterateToolStripItems( tree, control );
               }
             }
           }
@@ -450,10 +457,45 @@ namespace RatCow.MvcFramework.Tools
           }
         }
 
+        //special case - controlstrip holds its own components
+        if ( control is System.Windows.Forms.MenuStrip )
+        {
+          MenuStrip_IterateToolStripItems(tree, control);
+
+          //foreach ( System.Windows.Forms.ToolStripItem item in ( control as System.Windows.Forms.MenuStrip ).Items )
+          //{
+          //  if ( item is System.Windows.Forms.ToolStripItem )
+          //  {
+          //    var name = ( item as System.Windows.Forms.ToolStripItem ).Name;
+          //    tree.AddControl( ( name == null || name == String.Empty ? "Blah" : name ), item.GetType() );
+          //    MenuStrip_IterateToolStripItems(
+
+          //  }
+          //}
+        }
       }
     }
 
-    private static void IterateToolStripItems( ControlTree tree, System.Windows.Forms.Control control )
+    private static void MenuStrip_IterateToolStripItems( ControlTree tree, System.Windows.Forms.Control control )
+    {
+      foreach ( System.Windows.Forms.ToolStripItem item in ( control as System.Windows.Forms.MenuStrip ).Items )
+      {
+        if ( item is System.Windows.Forms.ToolStripItem )
+        {
+          var name = ( item as System.Windows.Forms.ToolStripItem ).Name;
+          tree.AddControl( ( name == null || name == String.Empty ? "Blah" : name ), item.GetType() );
+
+          if ( item is System.Windows.Forms.ToolStripDropDownItem )
+          {
+            var item2 = (System.Windows.Forms.ToolStripDropDownItem)item;
+            IterateDropDownItems( tree, item2 );
+
+          }
+        }
+      }
+    }
+
+    private static void ContextMenuStrip_IterateToolStripItems( ControlTree tree, System.Windows.Forms.Control control )
     {
       foreach ( System.Windows.Forms.ToolStripItem item in ( control as System.Windows.Forms.ContextMenuStrip ).Items )
       {

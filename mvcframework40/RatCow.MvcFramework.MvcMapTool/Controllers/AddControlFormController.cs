@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.ComponentModel;
 
 //3rd Party
 using RatCow.MvcFramework;
@@ -41,7 +42,7 @@ namespace RatCow.MvcFramework.MvcMapTool
           if ( !t.IsClass || !t.IsPublic ) continue;
 
           //skip non controls
-          if ( !( t == typeof( Control ) || t.IsSubclassOf( typeof( Control ) ) ) ) continue;
+          if ( !( t == typeof( Control ) || t.IsSubclassOf( typeof( Control ) ) ) && !( t == typeof( Component ) || t.IsSubclassOf( typeof( Component ) ) ) ) continue;
 
           //register the type...
           try
