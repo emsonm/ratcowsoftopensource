@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace RatCow.MvcFramework.Mapping
 {
@@ -53,22 +54,24 @@ namespace RatCow.MvcFramework.Mapping
       get { return subject; }
     }
 
-    internal MappingUpdateSubscriber(MappingObject<T> aTarget, Control aSubject)
-      : this(aTarget, aSubject, false, ListControlMapping.Index)
+    public Type SubscriberType { get { return typeof( T ); } }
+
+    internal MappingUpdateSubscriber( MappingObject<T> aTarget, Control aSubject )
+      : this( aTarget, aSubject, false, ListControlMapping.Index )
     {
     }
 
-    internal MappingUpdateSubscriber(MappingObject<T> aTarget, Control aSubject, bool aAllowNulls)
-      : this(aTarget, aSubject, aAllowNulls, ListControlMapping.Index)
+    internal MappingUpdateSubscriber( MappingObject<T> aTarget, Control aSubject, bool aAllowNulls )
+      : this( aTarget, aSubject, aAllowNulls, ListControlMapping.Index )
     {
     }
 
-    internal MappingUpdateSubscriber(MappingObject<T> aTarget, Control aSubject, bool aAllowNulls, ListControlMapping aListControlMapping)
+    internal MappingUpdateSubscriber( MappingObject<T> aTarget, Control aSubject, bool aAllowNulls, ListControlMapping aListControlMapping )
     {
       target = aTarget;
 
       //we add a fake control if aSubject is null.
-      if (aSubject == null)
+      if ( aSubject == null )
         subject = new Control(); //this was legacy.. it was used to map values we didn't need to show, but might need to manipulate
       else
         subject = aSubject;
@@ -85,7 +88,7 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="aSubject"></param>
     /// <param name="aAllowNulls"></param>
-    public MappingUpdateSubscriber(Control aSubject, bool aAllowNulls)
+    public MappingUpdateSubscriber( Control aSubject, bool aAllowNulls )
     {
       subject = aSubject;
       allowsNulls = aAllowNulls;
@@ -97,38 +100,40 @@ namespace RatCow.MvcFramework.Mapping
     protected virtual void HookControl()
     {
       //listboxes and comboboxes need a special bit of co-ercing
-      if (subject is CheckedListBox)
+      if ( subject is CheckedListBox )
       {
         CheckedListBox tempCLB = (CheckedListBox)subject;
-        tempCLB.ItemCheck += new ItemCheckEventHandler(tempCLB_ItemCheck);
+        tempCLB.ItemCheck += new ItemCheckEventHandler( tempCLB_ItemCheck );
       }
-      else if (subject is ListControl)
+      else if ( subject is ListControl )
       {
         ListControl tempLC = (ListControl)subject;
-        tempLC.SelectedValueChanged += new EventHandler(subject_SelectedValueChanged);
+        tempLC.SelectedValueChanged += new EventHandler( subject_SelectedValueChanged );
       }
-      else if (subject is CheckBox)
+      else if ( subject is CheckBox )
       {
         CheckBox tempCB = (CheckBox)subject;
-        tempCB.CheckedChanged += new EventHandler(subject_CheckedChanged);
+        tempCB.CheckedChanged += new EventHandler( subject_CheckedChanged );
       }
-      else if (subject is NumericUpDown)
+      else if ( subject is NumericUpDown )
       {
         NumericUpDown tempNUD = (NumericUpDown)subject;
-        tempNUD.ValueChanged += new EventHandler(subject_NumericValueChanged);
+        tempNUD.ValueChanged += new EventHandler( subject_NumericValueChanged );
       }
       else if ( subject is NullableDateTimePicker )
       {
         NullableDateTimePicker tempDTP = (NullableDateTimePicker)subject;
         tempDTP.ValueChanged += new EventHandler( subject_NullDateValueChanged );
+        tempDTP.CloseUp += new EventHandler( subject_NullDateValueCloseUp );
       }
-      else if (subject is DateTimePicker)
+      else if ( subject is DateTimePicker )
       {
         DateTimePicker tempDTP = (DateTimePicker)subject;
-        tempDTP.ValueChanged += new EventHandler(subject_DateValueChanged);
+        tempDTP.ValueChanged += new EventHandler( subject_DateValueChanged );
+        tempDTP.CloseUp += new EventHandler( subject_DateValueCloseUp );
       }
       else
-        subject.TextChanged += new EventHandler(subject_TextChanged); //default
+        subject.TextChanged += new EventHandler( subject_TextChanged ); //default
     }
 
     #region Revert the Modified flag callback
@@ -148,8 +153,8 @@ namespace RatCow.MvcFramework.Mapping
       Application.DoEvents();
 
       //only call BeginInvoke if there is a Handle, else the call fails
-      if (subject.IsHandleCreated)
-        subject.BeginInvoke(new Callback(CALLBACK__RevertModifiedFlag));
+      if ( subject.IsHandleCreated )
+        subject.BeginInvoke( new Callback( CALLBACK__RevertModifiedFlag ) );
       else
         target.Modified = false;
     }
@@ -176,14 +181,14 @@ namespace RatCow.MvcFramework.Mapping
       //if we are not attached to a control (for what ever reason - usually because
       //of "fake" contollery,  we'll fail here unless we bail. If the subject is null
       //we assume this to be the case.
-      if (subject == null) return;
+      if ( subject == null ) return;
 
       //listboxes and comboboxes need a special bit of co-ercing
-      if (subject is ListControl)
+      if ( subject is ListControl )
       {
         ListControl tempLC = (ListControl)subject;
 
-        switch (listControlMapping)
+        switch ( listControlMapping )
         {
           case ListControlMapping.Text:
             tempLC.Text = ConversionHelper.ToString( target.CurrentValue, String.Empty );
@@ -191,7 +196,7 @@ namespace RatCow.MvcFramework.Mapping
 
           case ListControlMapping.Index:
 
-            tempLC.SelectedIndex = ConversionHelper.ToInt32(target.CurrentValue, -1);
+            tempLC.SelectedIndex = ConversionHelper.ToInt32( target.CurrentValue, -1 );
             break;
 
           case ListControlMapping.Value:
@@ -200,42 +205,49 @@ namespace RatCow.MvcFramework.Mapping
             break;
         }
       }
-      else if (subject is CheckBox)
+      else if ( subject is CheckBox )
       {
         CheckBox tempCB = (CheckBox)subject;
-        tempCB.Checked = Convert.ToBoolean(target.CurrentValue);
+        tempCB.Checked = Convert.ToBoolean( target.CurrentValue );
       }
-      else if (subject is NumericUpDown)
+      else if ( subject is NumericUpDown )
       {
         NumericUpDown tempNUD = (NumericUpDown)subject;
-        Decimal temp = Convert.ToDecimal(target.CurrentValue);
+        Decimal temp = Convert.ToDecimal( target.CurrentValue );
 
         //handle overflows:
-        if (temp > tempNUD.Maximum)
+        if ( temp > tempNUD.Maximum )
           tempNUD.Value = tempNUD.Maximum;
-        else if (temp < tempNUD.Minimum)
+        else if ( temp < tempNUD.Minimum )
           tempNUD.Value = tempNUD.Minimum;
         else
-          tempNUD.Value = Convert.ToDecimal(target.CurrentValue);
+          tempNUD.Value = Convert.ToDecimal( target.CurrentValue );
       }
       else if ( subject is NullableDateTimePicker )
       {
         NullableDateTimePicker tempDTP = (NullableDateTimePicker)subject;
         try
         {
-          tempDTP.Value = Convert.ToDateTime( target.CurrentValue );
+          if ( target.CurrentValue == null )
+          {
+            tempDTP.Value = tempDTP.NullDate;
+          }
+          else
+          {
+            tempDTP.Value = Convert.ToDateTime( target.CurrentValue );
+          }
         }
         catch
         {
           tempDTP.Value = tempDTP.NullDate;
         }
       }
-      else if (subject is DateTimePicker)
+      else if ( subject is DateTimePicker )
       {
         DateTimePicker tempDTP = (DateTimePicker)subject;
         try
         {
-          tempDTP.Value = Convert.ToDateTime(target.CurrentValue);
+          tempDTP.Value = Convert.ToDateTime( target.CurrentValue );
         }
         catch
         {
@@ -243,10 +255,10 @@ namespace RatCow.MvcFramework.Mapping
         }
       }
       else
-        subject.Text = Convert.ToString(target.CurrentValue); //subject.TextChanged += new EventHandler(subject_TextChanged); //default
+        subject.Text = Convert.ToString( target.CurrentValue ); //subject.TextChanged += new EventHandler(subject_TextChanged); //default
     }
 
-    internal void AttachTo(MappingObject<T> aTarget)
+    internal void AttachTo( MappingObject<T> aTarget )
     {
       target = aTarget;
       HookControl();
@@ -257,20 +269,20 @@ namespace RatCow.MvcFramework.Mapping
     /// catch data modification.
     /// </summary>
     /// <returns></returns>
-    private bool target_CanModifyData(Control aSubject)
+    private bool target_CanModifyData( Control aSubject )
     {
       bool result = true;
       //I love how you can get round most C# limitations with a second variable of the same
       //type pointing to the same reference.
       BeforeDataModificationDelegate BeforeValueModified = target.GetBeforeValueModified();
-      if (BeforeValueModified != null)
+      if ( BeforeValueModified != null )
       {
-        BeforeDataModification e = new BeforeDataModification(aSubject);
-        BeforeValueModified(this, e);
+        BeforeDataModification e = new BeforeDataModification( aSubject );
+        BeforeValueModified( this, e );
         result = e.AllowChange;
       }
 
-      if (!result) Revert();  //go back to what we had before (this will probably screw up the modified state..)
+      if ( !result ) Revert();  //go back to what we had before (this will probably screw up the modified state..)
 
       return result;
     }
@@ -280,11 +292,11 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void subject_NumericValueChanged(object sender, EventArgs e)
+    private void subject_NumericValueChanged( object sender, EventArgs e )
     {
-      if (target_CanModifyData(subject))
+      if ( target_CanModifyData( subject ) )
       {
-        target.SetCurrentValueFromObject(((NumericUpDown)subject).Value);
+        target.SetCurrentValueFromObject( ( (NumericUpDown)subject ).Value );
       }
     }
 
@@ -293,7 +305,7 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected virtual void tempCLB_ItemCheck(object sender, ItemCheckEventArgs e)
+    protected virtual void tempCLB_ItemCheck( object sender, ItemCheckEventArgs e )
     {
       //if (target_CanModifyData(subject))
       //{
@@ -306,20 +318,76 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void subject_DateValueChanged(object sender, EventArgs e)
-    {
-      if (target_CanModifyData(subject))
-      {
-        target.SetCurrentValueFromObject(((DateTimePicker)subject).Value);
-      }
-    }
-
-    private void subject_NullDateValueChanged( object sender, EventArgs e )
+    private void subject_DateValueChanged( object sender, EventArgs e )
     {
       if ( target_CanModifyData( subject ) )
       {
-        target.SetCurrentValueFromObject( ( (NullableDateTimePicker)subject ).Value );
+        target.SetCurrentValueFromObject( ( (DateTimePicker)subject ).Value );
       }
+    }
+
+    private void subject_DateValueCloseUp( object sender, EventArgs e )
+    {
+      if ( target_CanModifyData( subject ) )
+      {
+        target.SetCurrentValueFromObject( ( (DateTimePicker)subject ).Value );
+      }
+    }
+
+    /// <summary>
+    /// Handles a bug in the NullableDateTimePicker that one day I will "fix"
+    /// </summary>
+    PropertyInfo rawValueHelper = typeof( NullableDateTimePicker ).GetProperty( "RawValue", BindingFlags.Instance | BindingFlags.NonPublic );
+
+
+    private void subject_NullDateValueChanged( object sender, EventArgs e )
+    {
+      var dc = (NullableDateTimePicker)subject;
+
+      if ( target_CanModifyData( subject ) )
+      {
+        if ( target.MappingType == typeof( DateTime? ) )
+        {
+          //there's a bug here.. if the current value is null and a new value is set, we lose that
+          //change, so we do this check:
+          if ( target.CurrentValue == null && dc.NullableValue == null && dc.Value == dc.NullDate )
+          {
+            var value = rawValueHelper.GetValue( dc, null );
+
+            target.SetCurrentValueFromObject( value );
+          }
+          else
+            target.SetCurrentValueFromObject( dc.NullableValue );
+        }
+        else
+          target.SetCurrentValueFromObject( dc.Value );
+      }
+    }
+
+   
+    private void subject_NullDateValueCloseUp( object sender, EventArgs e )
+    {
+      var dc = (NullableDateTimePicker)subject;
+
+      if ( target_CanModifyData( subject ) )
+      {
+        if ( target.MappingType == typeof( DateTime? ) )
+        {
+          //there's a bug here.. if the current value is null and a new value is set, we lose that
+          //change, so we do this check:
+          if ( target.CurrentValue == null && dc.NullableValue == null && dc.Value == dc.NullDate )
+          {
+            var value = rawValueHelper.GetValue( dc, null );
+
+            target.SetCurrentValueFromObject( value );
+          }
+          else
+            target.SetCurrentValueFromObject( dc.NullableValue );
+        }
+        else
+          target.SetCurrentValueFromObject( dc.Value );
+      }
+
     }
 
     /// <summary>
@@ -327,11 +395,11 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void subject_CheckedChanged(object sender, EventArgs e)
+    private void subject_CheckedChanged( object sender, EventArgs e )
     {
-      if (target_CanModifyData(subject))
+      if ( target_CanModifyData( subject ) )
       {
-        target.SetCurrentValueFromObject(((CheckBox)subject).Checked);
+        target.SetCurrentValueFromObject( ( (CheckBox)subject ).Checked );
       }
     }
 
@@ -339,11 +407,11 @@ namespace RatCow.MvcFramework.Mapping
     /// This is pretty generic
     /// </summary>
     /// <param name="e"></param>
-    private void subject_TextChanged(object sender, EventArgs e)
+    private void subject_TextChanged( object sender, EventArgs e )
     {
-      if (target_CanModifyData(subject))
+      if ( target_CanModifyData( subject ) )
       {
-        target.SetCurrentValueFromObject(subject.Text);
+        target.SetCurrentValueFromObject( subject.Text );
       }
     }
 
@@ -352,38 +420,38 @@ namespace RatCow.MvcFramework.Mapping
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void subject_SelectedValueChanged(object sender, EventArgs e)
+    private void subject_SelectedValueChanged( object sender, EventArgs e )
     {
-      if (target_CanModifyData(subject))
+      if ( target_CanModifyData( subject ) )
       {
         object value = null;
-        switch (listControlMapping)
+        switch ( listControlMapping )
         {
           case ListControlMapping.Text:
-            value = ((ListControl)subject).Text;
+            value = ( (ListControl)subject ).Text;
 
             //we assume this will be a non zero number or -1
-            target.SetCurrentValueFromObject(value);
+            target.SetCurrentValueFromObject( value );
 
             break;
 
           case ListControlMapping.Index:
 
-            value = ((ListControl)subject).SelectedIndex;
+            value = ( (ListControl)subject ).SelectedIndex;
 
             //we assume this will be a non zero number or -1
-            target.SetCurrentValueFromObject(value);
+            target.SetCurrentValueFromObject( value );
             break;
 
           case ListControlMapping.Value: //this is the legacy default
           default:
-            value = ((ListControl)subject).SelectedValue;
+            value = ( (ListControl)subject ).SelectedValue;
 
             //                 it's null and we allow that,  or   it's not null
-            bool canContinue = ((allowsNulls & value == null) | (value != null));
+            bool canContinue = ( ( allowsNulls & value == null ) | ( value != null ) );
 
-            if (canContinue)
-              target.SetCurrentValueFromObject(value);
+            if ( canContinue )
+              target.SetCurrentValueFromObject( value );
             break;
         }
       }

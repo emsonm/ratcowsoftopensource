@@ -136,6 +136,9 @@ namespace RatCow.MvcFramework.Mapping
     //the value we read at startup, or value we last saved
     public T OriginalValue { get; protected set; } //init to default(T)
 
+    //mapped type
+    public Type MappingType { get { return typeof( T ); } }
+
     protected DateTime lastUpdated;
 
     //set to true when value is modified

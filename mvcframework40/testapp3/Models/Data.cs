@@ -60,5 +60,8 @@ namespace testapp3
 
     [MappedValue("listBox1", ListMappedByIndex = true)]
     public int ListBoxByIndex { get; set; }
+
+    [MappedValue( "nullableDateTimePicker1" )]
+    public DateTime? NullableDateTime {get; set;}
   }
 }

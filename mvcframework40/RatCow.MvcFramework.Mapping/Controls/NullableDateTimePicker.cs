@@ -94,6 +94,12 @@ namespace RatCow.MvcFramework.Mapping.Controls
       }
     }
 
+    protected DateTime RawValue
+    {
+      get { return base.Value; }
+    }
+
+
     public new DateTime Value
     {
       get

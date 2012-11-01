@@ -79,6 +79,7 @@ namespace testapp3
       data.ComboByText = "E";
       data.ComboByValue = 3;
       data.ListBoxByIndex = 2;
+      data.NullableDateTime = null;
 
       deo.MapControlToData("", this.View, data);
       deo.DataChanged += new EventHandler(deo_DataChanged);
