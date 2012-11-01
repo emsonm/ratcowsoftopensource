@@ -508,7 +508,6 @@ namespace RatCow.MvcFramework.Tools
           {
             var item2 = (System.Windows.Forms.ToolStripDropDownItem)item;
             IterateDropDownItems( tree, item2 );
-
           }
         }
       }

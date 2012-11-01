@@ -45,6 +45,7 @@
       this.aSubMenuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.aSubMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.aMenuItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.nullableDateTimePicker1 = new RatCow.MvcFramework.Mapping.Controls.NullableDateTimePicker();
       this.menuStrip1.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -189,11 +190,22 @@
       this.aMenuItemToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
       this.aMenuItemToolStripMenuItem.Text = "a menu item";
       // 
+      // nullableDateTimePicker1
+      // 
+      this.nullableDateTimePicker1.Location = new System.Drawing.Point(193, 255);
+      this.nullableDateTimePicker1.Name = "nullableDateTimePicker1";
+      this.nullableDateTimePicker1.NullableValue = new System.DateTime(2012, 11, 1, 14, 44, 21, 248);
+      this.nullableDateTimePicker1.NullDate = new System.DateTime(1899, 12, 30, 0, 0, 0, 0);
+      this.nullableDateTimePicker1.Size = new System.Drawing.Size(134, 20);
+      this.nullableDateTimePicker1.TabIndex = 11;
+      this.nullableDateTimePicker1.Value = new System.DateTime(2012, 11, 1, 14, 44, 21, 248);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(360, 315);
+      this.ClientSize = new System.Drawing.Size(360, 385);
+      this.Controls.Add(this.nullableDateTimePicker1);
       this.Controls.Add(this.menuStrip1);
       this.Controls.Add(this.listBox1);
       this.Controls.Add(this.comboBox3);
@@ -230,6 +242,7 @@
     private System.Windows.Forms.ToolStripMenuItem aSubMenuToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem aSubMenuItemToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem aMenuItemToolStripMenuItem;
+    private RatCow.MvcFramework.Mapping.Controls.NullableDateTimePicker nullableDateTimePicker1;
   }
 }
 
