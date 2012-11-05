@@ -283,7 +283,10 @@ namespace RatCow.MvcFramework.Mapping
         if (isNumeric && (newValue == null || newValue.ToString() == String.Empty))
           newValue = 0; //hmmm will this break more than it fixes?
 
-        T newValueT = (T)Convert.ChangeType(newValue, dataInstanceProperty.PropertyType); //bug, if currentvalue was null, failed here
+        var underlyingType = Nullable.GetUnderlyingType( dataInstanceProperty.PropertyType )
+                 ?? dataInstanceProperty.PropertyType;
+
+        T newValueT = ( newValue == null ) ? (T)(object)null : (T)Convert.ChangeType( newValue, underlyingType ); //bug, if currentvalue was null, failed here
 
         SetCurrentValue(newValueT);
       }
