@@ -133,7 +133,7 @@ namespace RatCow.MvcFramework.Tools
     /// </summary>
     /// <param name="className"></param>
     /// <returns></returns>
-    public static bool Compile( string className, string outputAssemblyName, CompilerFlags flags )
+    public static bool Compile( string className, string outputAssemblyName, CompilerFlags flags, List<String> extraAssemblies )
     {
       //we attempt to compile the file provided and then read info from it
       CSharpCodeProvider compiler = new CSharpCodeProvider();
@@ -143,6 +143,11 @@ namespace RatCow.MvcFramework.Tools
       compilerParams.ReferencedAssemblies.Add( "System.Data.dll" );
       compilerParams.ReferencedAssemblies.Add( "System.Windows.Forms.dll" );
       compilerParams.ReferencedAssemblies.Add( "System.Drawing.dll" );
+
+      foreach ( var extraAssembly in extraAssemblies )
+      {
+        compilerParams.ReferencedAssemblies.Add( extraAssembly );  //this takes the physical location
+      }
 
       //we can add more in here from command line in future revision
 
@@ -460,7 +465,7 @@ namespace RatCow.MvcFramework.Tools
         //special case - controlstrip holds its own components
         if ( control is System.Windows.Forms.MenuStrip )
         {
-          MenuStrip_IterateToolStripItems(tree, control);
+          MenuStrip_IterateToolStripItems( tree, control );
 
           //foreach ( System.Windows.Forms.ToolStripItem item in ( control as System.Windows.Forms.MenuStrip ).Items )
           //{

@@ -50,6 +50,9 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
 
       CompilerFlags flags = new CompilerFlags();
 
+      //generate a list of assemblies in the associated mvcmap
+      var assemblies = new List<String>();
+
       string className = null;
       //This is new - we try to interpret the compiler params
       if ( args.Length == 0 )
@@ -66,7 +69,7 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
         Console.WriteLine( " -R : use the mvcmap with the same name as the form passed when creating actions" );
         Console.WriteLine( " -d : append the .Designer tag to the file name (e.g. Form1.Designer.cs)" );
         Console.WriteLine( " -D : same as -d, but also creates a stub file if one doesn't exist." );
-        Console.WriteLine( " -i : ignore any RESX file in the same scope (do not link resources)" );
+        //Console.WriteLine( " -i : ignore any RESX file in the same scope (do not link resources)" );
         Console.WriteLine();
         return;
       }
@@ -79,6 +82,8 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
           CreateNewActionConfig( String.Format( "{0}.mvcmap", args[ 1 ] ) );
           return;
         }
+
+
 
         foreach ( string arg in args )
         {
@@ -113,6 +118,11 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
             {
               flags.RestrictActions = true;
               //flags.UseDefaultActionsFile = false; //this should default to false...
+            }
+            if ( arg.StartsWith( "-i=" ) )
+            {
+              string[] list = new StringBuilder( arg ).Replace( "-i=", String.Empty ).Replace( "\"", String.Empty ).ToString().Split( ',' );
+              assemblies.AddRange( list );
             }
           }
           else
@@ -155,10 +165,13 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
 
       string outputAssemblyName = String.Format( "{0}_{1}.dll", className, DateTime.Now.Ticks );
 
+
+
+
       //we currently assume this is one param and that is the name of the class
       //we also assume the files will be named in a standard C# naming convention.
       //i.e. MainForm -> MainForm.Designer.cs
-      if ( ControllerCreationEngine.Compile( className, outputAssemblyName, flags ) )
+      if ( ControllerCreationEngine.Compile( className, outputAssemblyName, flags, assemblies ) )
       {
         //if we get here, we created the desired assembly above
         ControllerCreationEngine.Generate( className, outputAssemblyName, flags );
