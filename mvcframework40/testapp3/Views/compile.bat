@@ -35,7 +35,7 @@ goto:eof
  @echo %localControllerDesignerPath%
 
  rem compile the files
- ..\..\MvcTool\bin\debug\mvctool -R -p -v -D %file%
+ ..\..\MvcTool\bin\debug\mvctool -R -p -v -D %file% -i="System.Xaml.dll,..\bin\Debug\RatCow.MvcFrameWork.Mapping.dll,..\bin\Debug\RatCow.MvcFrameWork.dll"
 
  if not exist %controllerPath% copy %localControllerPath% ..\Controllers
  copy %localControllerDesignerPath% ..\Controllers
