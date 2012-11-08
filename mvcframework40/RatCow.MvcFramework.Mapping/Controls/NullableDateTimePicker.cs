@@ -57,7 +57,7 @@ namespace RatCow.MvcFramework.Mapping.Controls
   {
     private DateTimePickerFormat _oldFormat = DateTimePickerFormat.Long;
     private string _oldCustomFormat;
-    private bool _dateIsNull;
+    public bool DateIsNull { get; set; }
 
     private DateTime _nullDate = DateTime.FromOADate( 0 ); //DateTime.MinValue is an alternative
     public DateTime NullDate { get { return _nullDate; } set { _nullDate = value; } }
@@ -66,16 +66,47 @@ namespace RatCow.MvcFramework.Mapping.Controls
     private bool _isInternalValueChanging;
     public bool IsInternalValueChanging { get { return _isInternalValueChanging; } }
 
+
+    bool _SettinUnderlyingDate = false;
+
+    /// <summary>
+    /// This method sets the initial underlying date that the popup will use... it does not change the nullable value
+    /// </summary>
+    /// <param name="date"></param>
+    public void SetUnderlyingDate( DateTime date, bool forceNull )
+    {
+      try
+      {
+        _SettinUnderlyingDate = true;
+
+        base.Value = date;
+
+        if ( forceNull )
+          DateIsNull = true;   //make sure the date is marked null
+
+        Application.DoEvents();  //this will hopefully make sure pending events are all processed
+      }
+      finally
+      {
+        _SettinUnderlyingDate = false;
+      }
+    }
+
     public NullableDateTimePicker()
       : base()
     {
+    }
+
+    protected override void OnValueChanged( EventArgs eventargs )
+    {
+      if ( !_SettinUnderlyingDate ) base.OnValueChanged( eventargs );
     }
 
     public DateTime? NullableValue
     {
       get
       {
-        if ( _dateIsNull )
+        if ( DateIsNull )
         {
           return null;
         }
@@ -94,17 +125,11 @@ namespace RatCow.MvcFramework.Mapping.Controls
       }
     }
 
-    protected DateTime RawValue
-    {
-      get { return base.Value; }
-    }
-
-
     public new DateTime Value
     {
       get
       {
-        if ( _dateIsNull )
+        if ( DateIsNull )
           return _nullDate;
         else
           return base.Value;
@@ -114,11 +139,11 @@ namespace RatCow.MvcFramework.Mapping.Controls
 
         if ( value == _nullDate )
         {
-          if ( !_dateIsNull )
+          if ( !DateIsNull )
           {
             _oldFormat = this.Format;
             _oldCustomFormat = this.CustomFormat;
-            _dateIsNull = true;
+            DateIsNull = true;
           }
 
           this.Format = DateTimePickerFormat.Custom;
@@ -127,11 +152,11 @@ namespace RatCow.MvcFramework.Mapping.Controls
         }
         else
         {
-          if ( _dateIsNull )
+          if ( DateIsNull )
           {
             this.Format = _oldFormat;
             this.CustomFormat = _oldCustomFormat;
-            _dateIsNull = false;
+            DateIsNull = false;
           }
 
           if ( value < this.MaxDate && value > this.MinDate )
@@ -152,21 +177,21 @@ namespace RatCow.MvcFramework.Mapping.Controls
 
     protected override void OnCloseUp( EventArgs eventargs )
     {
-      base.OnCloseUp( eventargs );
-
       if ( Control.MouseButtons == MouseButtons.None )
       {
-        if ( _dateIsNull )
+        if ( DateIsNull )
         {
           _isInternalValueChanging = true;
 
           this.Format = _oldFormat;
           this.CustomFormat = _oldCustomFormat;
-          _dateIsNull = false;
+          DateIsNull = false;
 
           _isInternalValueChanging = false;
         }
       }
+
+      base.OnCloseUp( eventargs ); //or the above happens too late in the process, and the calling routine gets wrong/bogus info
     }
 
     protected override void OnKeyDown( KeyEventArgs e )
@@ -175,8 +200,9 @@ namespace RatCow.MvcFramework.Mapping.Controls
       if ( e.KeyCode == Keys.Delete )
       {
         this.Value = _nullDate;
+        DateIsNull = true;
       }
-      else if ( _dateIsNull )
+      else if ( DateIsNull )
       {
         _isInternalValueChanging = true;
         if ( e.KeyCode == Keys.Space || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || e.KeyCode == Keys.Right || e.KeyCode == Keys.Left )
@@ -205,7 +231,7 @@ namespace RatCow.MvcFramework.Mapping.Controls
     protected override void OnGotFocus( EventArgs e )
     {
       base.OnGotFocus( e );
-      if ( _dateIsNull )
+      if ( DateIsNull )
       {
         CustomFormat = "|"; // Show the user that the NullableDateTimePicker has the Focus by simulating a cursor.
       }
@@ -213,7 +239,7 @@ namespace RatCow.MvcFramework.Mapping.Controls
 
     protected override void OnLostFocus( EventArgs e )
     {
-      if ( _dateIsNull )
+      if ( DateIsNull )
       {
         CustomFormat = " ";
       }
