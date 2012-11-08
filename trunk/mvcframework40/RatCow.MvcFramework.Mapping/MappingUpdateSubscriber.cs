@@ -231,6 +231,7 @@ namespace RatCow.MvcFramework.Mapping
           if ( target.CurrentValue == null )
           {
             tempDTP.Value = tempDTP.NullDate;
+            tempDTP.DateIsNull = true;
           }
           else
           {
@@ -348,23 +349,14 @@ namespace RatCow.MvcFramework.Mapping
       {
         if ( target.MappingType == typeof( DateTime? ) )
         {
-          //there's a bug here.. if the current value is null and a new value is set, we lose that
-          //change, so we do this check:
-          if ( target.CurrentValue == null && dc.NullableValue == null && dc.Value == dc.NullDate )
-          {
-            var value = rawValueHelper.GetValue( dc, null );
-
-            target.SetCurrentValueFromObject( value );
-          }
-          else
-            target.SetCurrentValueFromObject( dc.NullableValue );
+          target.SetCurrentValueFromObject( dc.DateIsNull ? null : dc.NullableValue );  //this forces null then the flag is set
         }
         else
           target.SetCurrentValueFromObject( dc.Value );
       }
     }
 
-   
+
     private void subject_NullDateValueCloseUp( object sender, EventArgs e )
     {
       var dc = (NullableDateTimePicker)subject;
@@ -373,16 +365,8 @@ namespace RatCow.MvcFramework.Mapping
       {
         if ( target.MappingType == typeof( DateTime? ) )
         {
-          //there's a bug here.. if the current value is null and a new value is set, we lose that
-          //change, so we do this check:
-          if ( target.CurrentValue == null && dc.NullableValue == null && dc.Value == dc.NullDate )
-          {
-            var value = rawValueHelper.GetValue( dc, null );
-
-            target.SetCurrentValueFromObject( value );
-          }
-          else
-            target.SetCurrentValueFromObject( dc.NullableValue );
+          //target.SetCurrentValueFromObject( dc.NullableValue );
+          target.SetCurrentValueFromObject( dc.DateIsNull ? null : dc.NullableValue );  //this forces null then the flag is set... is this overkill here?
         }
         else
           target.SetCurrentValueFromObject( dc.Value );
