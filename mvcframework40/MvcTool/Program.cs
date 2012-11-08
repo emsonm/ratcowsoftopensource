@@ -174,7 +174,7 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
       if ( ControllerCreationEngine.Compile( className, outputAssemblyName, flags, assemblies ) )
       {
         //if we get here, we created the desired assembly above
-        ControllerCreationEngine.Generate( className, outputAssemblyName, flags );
+        ControllerCreationEngine.Generate( className, outputAssemblyName, flags, assemblies );
       }
       else
       {

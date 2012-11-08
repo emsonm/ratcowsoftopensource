@@ -56,12 +56,12 @@ namespace RatCow.MvcFramework.Tools
     /// Split this up in to sections so I can more easliy re-use it in the future.
     /// </summary>
     /// <param name="className"></param>
-    public static void Generate( string className, string outputAssemblyName, CompilerFlags flags )
+    public static void Generate( string className, string outputAssemblyName, CompilerFlags flags, List<String> assemblies )
     {
       string prefix = ( flags.IsAbstract ? ABSTRACT_PREFIX : String.Empty );
 
       //this *can* generate more than one entry
-      ControlTree[] trees = GenerateTree( className, outputAssemblyName );
+      ControlTree[] trees = GenerateTree( className, outputAssemblyName, assemblies );
       if ( trees != null && trees.Length == 1 )
       {
         ControlTree tree = trees[ 0 ];
@@ -305,15 +305,86 @@ namespace RatCow.MvcFramework.Tools
       return true;
     }
 
+    public class AssemblyResolver
+    {
+      public List<String> AssemblyList { get; set; }
+      List<Assembly> externals = null;
+
+      public AssemblyResolver( IEnumerable<String> assemblyList )
+      {
+        AssemblyList = new List<string>();
+
+        externals = new List<Assembly>();
+
+        foreach ( var assembly in assemblyList )
+        {
+          AddAssembly( assembly );
+        }
+
+        AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler( CurrentDomain_AssemblyResolve );
+      }
+
+      public Assembly AddAssembly( string assembly )
+      {
+        Assembly result = null;
+
+        if ( AssemblyList.IndexOf( assembly ) <= 0 )
+        {
+
+          AssemblyList.Add( assembly );
+
+          try
+          {
+            result = Assembly.LoadFrom( assembly );
+            if ( result != null )
+              externals.Add( result );
+          }
+          catch //this is a quick hack
+          {
+            result = Assembly.LoadWithPartialName( assembly );
+            if ( result != null )
+              externals.Add( result );
+          }
+        }
+
+        return result;
+      }
+
+      public Assembly GetAssembly( string assemblyName )
+      {
+        Assembly result = externals.Where(x=> x.FullName.Contains(assemblyName) || x.FullName == assemblyName ).SingleOrDefault();
+        if ( result != null )
+          return result;
+        else
+          return null;
+      }
+
+      private Assembly CurrentDomain_AssemblyResolve( object sender, ResolveEventArgs args )
+      {       
+        var result = GetAssembly( args.Name );
+        if ( result == null )
+        {
+          AddAssembly( args.Name);
+        }
+
+        return result;
+      }
+
+      
+    }
+
     /// <summary>
     /// Builds a tree of control info
     /// </summary>
     /// <param name="className"></param>
-    public static ControlTree[] GenerateTree( string className, string outputAssemblyName )
+    public static ControlTree[] GenerateTree( string className, string outputAssemblyName, List<String> assemblies )
     {
       List<ControlTree> trees = new List<ControlTree>();
 
+      var resolver = new AssemblyResolver( assemblies ); //this *should* reslve the missing assemblies for us
+
       Assembly a = Assembly.LoadFrom( outputAssemblyName /*"temp.dll"*/); //we dictate this name
+
       Type[] ts = a.GetTypes();
       foreach ( Type t in ts )
       {
@@ -576,7 +647,7 @@ namespace RatCow.MvcFramework.Tools
         {
           //System.Console.WriteLine(" var {0} : {1} ", control.Name, control.GetType().Name);
           //add the declaration to code_s2
-          code_s2.AppendFormat( "\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.Value.Name, control.Key ); //add var
+          code_s2.AppendFormat( "\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.Value.FullName, control.Key ); //add var
           code_s2.AppendLine( "{ get; set; }" );
 
           //this should find all known event types
@@ -596,7 +667,7 @@ namespace RatCow.MvcFramework.Tools
         {
           //System.Console.WriteLine(" var {0} : {1} ", control.Name, control.GetType().Name);
           //add the declaration to code_s2
-          code_s2.AppendFormat( "\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.Value.Name, control.Key ); //add var
+          code_s2.AppendFormat( "\t\t[Outlet(\"{1}\")]\r\n\t\tpublic {0} {1} ", control.Value.FullName, control.Key ); //add var
           code_s2.AppendLine( "{ get; set; }" );
 
           //this should find all known event types
@@ -720,7 +791,7 @@ namespace RatCow.MvcFramework.Tools
 
       //IEnumerable<ViewControlAction> controlMapItems = map.ControlActionMap.F(ev => ev.ControlType == control.Value.Name);
       var controlMapItems = from item in map.ControlActionMap
-                            where ( item.ControlType == control.Value.Name )
+                            where ( item.ControlType == control.Value.Name || item.ControlType == control.Value.FullName )    //this seems like a good idea, probably a bug since we extended the controlmaps to use the full name for non System.Windows.Forms controls....?
                             select item;
 
       if ( controlMapItems == null ) return;
