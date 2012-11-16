@@ -40,6 +40,7 @@ using System.IO;
 //3rd Party
 using RatCow.MvcFramework;
 using RatCow.MvcFramework.Tools;
+using RatCow.PluginFramework;
 
 using BrendanGrant.Helpers.FileAssociation;
 
@@ -53,6 +54,7 @@ namespace RatCow.MvcFramework.MvcMapTool
     ListViewHelper<ViewAction> globalEvents = null;
     ListViewHelper<ViewControlAction> controls = null;
     ListViewHelper<ViewAction> controlEvents = null;
+    ListViewHelper<ViewAssembly> externalAssemblyHelper = null;
 
     const string GENERAL_DLG = "GeneralDialog";
     const string CONTROL_DLG = "ControlDialog";
@@ -91,7 +93,14 @@ namespace RatCow.MvcFramework.MvcMapTool
       controls.SetData( data.ControlActionMap );
 
       controlEvents = GetcontrolDetailListViewHelper<ViewAction>();
+
+      externalAssemblyHelper = GetexternalAssembliesHelper<ViewAssembly>();
+      externalAssemblyHelper.SetData( data.AssemblyDependencies );
+
+      LoadAssemblies();
     }
+
+
 
     /// <summary>
     /// 
@@ -143,6 +152,14 @@ namespace RatCow.MvcFramework.MvcMapTool
     }
 
     #region ListView stuff
+
+    partial void externalAssembliesGetItem( ref ListViewItem item, RetrieveVirtualItemEventArgs e )
+    {
+      if ( item == null )
+        item = new ListViewItem();
+
+      item.Text = data.AssemblyDependencies[ e.ItemIndex ].AssemblyName;
+    }
 
     /// <summary>
     /// 
@@ -242,7 +259,7 @@ namespace RatCow.MvcFramework.MvcMapTool
     partial void addControlClick( EventArgs e )
     {
       ViewControlAction newAction = null;
-      if ( ExecuteModalControllerWithData<int, ViewControlAction>( CONTROL_DLG, 0, ref newAction ) )
+      if ( ExecuteModalControllerWithData<List<Assembly>, ViewControlAction>( CONTROL_DLG, Externals, ref newAction ) )
       {
         if ( newAction != null )
         {
@@ -265,9 +282,9 @@ namespace RatCow.MvcFramework.MvcMapTool
     {
       var selectedControl = controls.GetSelectedItemOrDefault();
 
-      if ( selectedControl != null  )
+      if ( selectedControl != null )
       {
-        data.ControlActionMap.Remove(selectedControl);
+        data.ControlActionMap.Remove( selectedControl );
         controls.SetData( data.ControlActionMap );
       }
     }
@@ -282,7 +299,7 @@ namespace RatCow.MvcFramework.MvcMapTool
       var selectedControl = controls.GetSelectedItemOrDefault();
       if ( selectedControl != null )
       {
-        if ( ExecuteModalControllerWithData<string, ViewAction>( CONTROLEVENTS_DLG, selectedControl.ControlType, ref newAction ) )
+        if ( ExecuteModalControllerWithData<object[], ViewAction>( CONTROLEVENTS_DLG, new object[] { selectedControl.ControlType, Externals }, ref newAction ) )
         {
           if ( newAction != null )
           {
@@ -359,6 +376,75 @@ namespace RatCow.MvcFramework.MvcMapTool
     partial void closeButtonClick( EventArgs e )
     {
       View.Close();
+    }
+
+    List<Assembly> Externals = new List<Assembly>();
+
+    partial void addAssemblyClick( EventArgs e )
+    {
+      using ( var dlg = new OpenFileDialog() )
+      {
+        dlg.Filter = "*.dll|*.dll";
+        if ( dlg.ShowDialog() == DialogResult.OK )
+        {
+          //get the assembly
+          try
+          {
+            LoadAssemblyData( dlg.FileName, true );
+
+            modified = true;
+          }
+          catch ( Exception ex )
+          {
+            System.Diagnostics.Debug.WriteLine( ex.Message );
+          }
+        }
+      }
+    }
+
+    partial void removeAssemblyClick( EventArgs e )
+    {
+      var selected = externalAssemblyHelper.GetSelectedItemOrDefault();
+
+      if ( selected != null )
+      {
+        data.AssemblyDependencies.Remove( selected );
+        externalAssemblyHelper.SetData( data.AssemblyDependencies );
+        LoadAssemblies();
+      }
+    }
+
+    private void LoadAssemblyData( string fileName, bool add )
+    {
+      var assembly = AssemblyLoader.LoadAssemblyWithDependencies( fileName );
+      if ( assembly != null )
+      {
+        Externals.Add( assembly );
+
+        if ( add )
+        {
+          data.AssemblyDependencies.Add(
+            new ViewAssembly()
+            {
+              AssemblyName = Path.GetFileName( fileName ),
+              AssemblyFullName = assembly.FullName,
+              HintPath = Path.GetDirectoryName( assembly.Location )
+            }
+          );
+        }
+
+        externalAssemblyHelper.SetData( data.AssemblyDependencies );
+      }
+    }
+
+    private void LoadAssemblies()
+    {
+      Externals.Clear();
+
+      foreach ( var assembly in data.AssemblyDependencies )
+      {
+        LoadAssemblyData( Path.Combine( assembly.HintPath, assembly.AssemblyName ), true );
+      }
     }
   }
 }

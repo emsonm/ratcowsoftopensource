@@ -19,7 +19,13 @@ namespace testapp3
 		{
 		}
 
+		partial void nullableDateTimePicker2Click(EventArgs e);
+		partial void nullableDateTimePicker1Click(EventArgs e);
 		partial void menuStrip1Click(EventArgs e);
+		partial void aMenuToolStripMenuItemClick(EventArgs e);
+		partial void aSubMenuToolStripMenuItemClick(EventArgs e);
+		partial void aSubMenuItemToolStripMenuItemClick(EventArgs e);
+		partial void aMenuItemToolStripMenuItemClick(EventArgs e);
 		partial void listBox1Click(EventArgs e);
 		partial void comboBox3Click(EventArgs e);
 		partial void comboBox2Click(EventArgs e);
@@ -38,8 +44,26 @@ namespace testapp3
 
 	partial class Form1Controller
 	{
+		[Outlet("nullableDateTimePicker2")]
+		public RatCow.MvcFramework.Mapping.Controls.NullableDateTimePicker nullableDateTimePicker2 { get; set; }
+		[Action("nullableDateTimePicker2", "Click")]
+		public void FnullableDateTimePicker2_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			nullableDateTimePicker2Click(e);
+		}
+
+		[Outlet("nullableDateTimePicker1")]
+		public RatCow.MvcFramework.Mapping.Controls.NullableDateTimePicker nullableDateTimePicker1 { get; set; }
+		[Action("nullableDateTimePicker1", "Click")]
+		public void FnullableDateTimePicker1_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			nullableDateTimePicker1Click(e);
+		}
+
 		[Outlet("menuStrip1")]
-		public MenuStrip menuStrip1 { get; set; }
+		public System.Windows.Forms.MenuStrip menuStrip1 { get; set; }
 		[Action("menuStrip1", "Click")]
 		public void FmenuStrip1_Click(object sender, EventArgs e)
 		{
@@ -47,8 +71,44 @@ namespace testapp3
 			menuStrip1Click(e);
 		}
 
+		[Outlet("aMenuToolStripMenuItem")]
+		public System.Windows.Forms.ToolStripMenuItem aMenuToolStripMenuItem { get; set; }
+		[Action("aMenuToolStripMenuItem", "Click")]
+		public void FaMenuToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			aMenuToolStripMenuItemClick(e);
+		}
+
+		[Outlet("aSubMenuToolStripMenuItem")]
+		public System.Windows.Forms.ToolStripMenuItem aSubMenuToolStripMenuItem { get; set; }
+		[Action("aSubMenuToolStripMenuItem", "Click")]
+		public void FaSubMenuToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			aSubMenuToolStripMenuItemClick(e);
+		}
+
+		[Outlet("aSubMenuItemToolStripMenuItem")]
+		public System.Windows.Forms.ToolStripMenuItem aSubMenuItemToolStripMenuItem { get; set; }
+		[Action("aSubMenuItemToolStripMenuItem", "Click")]
+		public void FaSubMenuItemToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			aSubMenuItemToolStripMenuItemClick(e);
+		}
+
+		[Outlet("aMenuItemToolStripMenuItem")]
+		public System.Windows.Forms.ToolStripMenuItem aMenuItemToolStripMenuItem { get; set; }
+		[Action("aMenuItemToolStripMenuItem", "Click")]
+		public void FaMenuItemToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			aMenuItemToolStripMenuItemClick(e);
+		}
+
 		[Outlet("listBox1")]
-		public ListBox listBox1 { get; set; }
+		public System.Windows.Forms.ListBox listBox1 { get; set; }
 		[Action("listBox1", "Click")]
 		public void FlistBox1_Click(object sender, EventArgs e)
 		{
@@ -57,7 +117,7 @@ namespace testapp3
 		}
 
 		[Outlet("comboBox3")]
-		public ComboBox comboBox3 { get; set; }
+		public System.Windows.Forms.ComboBox comboBox3 { get; set; }
 		[Action("comboBox3", "Click")]
 		public void FcomboBox3_Click(object sender, EventArgs e)
 		{
@@ -66,7 +126,7 @@ namespace testapp3
 		}
 
 		[Outlet("comboBox2")]
-		public ComboBox comboBox2 { get; set; }
+		public System.Windows.Forms.ComboBox comboBox2 { get; set; }
 		[Action("comboBox2", "Click")]
 		public void FcomboBox2_Click(object sender, EventArgs e)
 		{
@@ -75,7 +135,7 @@ namespace testapp3
 		}
 
 		[Outlet("comboBox1")]
-		public ComboBox comboBox1 { get; set; }
+		public System.Windows.Forms.ComboBox comboBox1 { get; set; }
 		[Action("comboBox1", "Click")]
 		public void FcomboBox1_Click(object sender, EventArgs e)
 		{
@@ -84,7 +144,7 @@ namespace testapp3
 		}
 
 		[Outlet("dateTimePicker1")]
-		public DateTimePicker dateTimePicker1 { get; set; }
+		public System.Windows.Forms.DateTimePicker dateTimePicker1 { get; set; }
 		[Action("dateTimePicker1", "Click")]
 		public void FdateTimePicker1_Click(object sender, EventArgs e)
 		{
@@ -93,7 +153,7 @@ namespace testapp3
 		}
 
 		[Outlet("checkBox1")]
-		public CheckBox checkBox1 { get; set; }
+		public System.Windows.Forms.CheckBox checkBox1 { get; set; }
 		[Action("checkBox1", "Click")]
 		public void FcheckBox1_Click(object sender, EventArgs e)
 		{
@@ -109,7 +169,7 @@ namespace testapp3
 		}
 
 		[Outlet("button1")]
-		public Button button1 { get; set; }
+		public System.Windows.Forms.Button button1 { get; set; }
 		[Action("button1", "Click")]
 		public void Fbutton1_Click(object sender, EventArgs e)
 		{
@@ -118,7 +178,7 @@ namespace testapp3
 		}
 
 		[Outlet("label1")]
-		public Label label1 { get; set; }
+		public System.Windows.Forms.Label label1 { get; set; }
 		[Action("label1", "Click")]
 		public void Flabel1_Click(object sender, EventArgs e)
 		{
@@ -127,7 +187,7 @@ namespace testapp3
 		}
 
 		[Outlet("textBox1")]
-		public TextBox textBox1 { get; set; }
+		public System.Windows.Forms.TextBox textBox1 { get; set; }
 		[Action("textBox1", "Click")]
 		public void FtextBox1_Click(object sender, EventArgs e)
 		{
@@ -143,7 +203,7 @@ namespace testapp3
 		}
 
 		[Outlet("imageList1")]
-		public ImageList imageList1 { get; set; }
+		public System.Windows.Forms.ImageList imageList1 { get; set; }
 		protected void SetData<T>(ListViewHelper<T> helper, List<T> data) where T : class
 		{
 			//Auto generated call
