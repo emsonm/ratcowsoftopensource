@@ -19,6 +19,37 @@ namespace RatCow.MvcFramework.MvcMapTool
 		{
 		}
 
+		partial void externalAssembliesClick(EventArgs e);
+		partial void externalAssembliesDoubleClick(EventArgs e);
+		partial void externalAssembliesSelectedIndexChanged(EventArgs e);
+		protected virtual void externalAssembliesRetrieveVirtualItem(RetrieveVirtualItemEventArgs e)
+		{
+			/*we will first try to get an item from the partial method*/
+			ListViewItem item = null; //set to a known value
+			externalAssembliesGetItem(ref item, e); //try to get the value from partial implementation
+			if (item == null) //if, null, save ourselves from crashing 
+			{
+			/*default placeholder to avoid crashes*/
+			item = new ListViewItem();
+
+			/*we need to provide a value for each column*/
+			int count = (externalAssemblies.Columns.Count);
+			if (count > 1)
+			{
+				item.Text = "Temp value";
+				for (int i = 1; i < count; i++)
+				{
+					item.SubItems.Add("Temp Subitem");
+				}	
+			}
+		}
+
+			e.Item = item;
+		}
+
+		partial void externalAssembliesGetItem(ref ListViewItem item, RetrieveVirtualItemEventArgs e);
+		partial void removeAssemblyClick(EventArgs e);
+		partial void addAssemblyClick(EventArgs e);
 		partial void closeButtonClick(EventArgs e);
 		partial void saveButtonClick(EventArgs e);
 		partial void removeControlClick(EventArgs e);
@@ -121,6 +152,61 @@ namespace RatCow.MvcFramework.MvcMapTool
 
 	partial class MainFormController
 	{
+		[Outlet("externalAssemblies")]
+		public ListView externalAssemblies { get; set; }
+		[Action("externalAssemblies", "Click")]
+		public void FexternalAssemblies_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			externalAssembliesClick(e);
+		}
+
+		[Action("externalAssemblies", "DoubleClick")]
+		public void FexternalAssemblies_DoubleClick(object sender, EventArgs e)
+		{
+			//Auto generated call
+			externalAssembliesDoubleClick(e);
+		}
+
+		[Action("externalAssemblies", "SelectedIndexChanged")]
+		public void FexternalAssemblies_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//Auto generated call
+			externalAssembliesSelectedIndexChanged(e);
+		}
+
+		protected ListViewHelper<T> GetexternalAssembliesHelper<T>() where T : class
+		{
+			//Auto generated call
+			var lvh = new ListViewHelper<T>(externalAssemblies);
+			return lvh;
+		}
+
+		[Action("externalAssemblies", "RetrieveVirtualItem")]
+		public void FexternalAssemblies_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+		{
+			//Auto generated call
+			externalAssembliesRetrieveVirtualItem(e);
+		}
+
+		[Outlet("removeAssembly")]
+		public Button removeAssembly { get; set; }
+		[Action("removeAssembly", "Click")]
+		public void FremoveAssembly_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			removeAssemblyClick(e);
+		}
+
+		[Outlet("addAssembly")]
+		public Button addAssembly { get; set; }
+		[Action("addAssembly", "Click")]
+		public void FaddAssembly_Click(object sender, EventArgs e)
+		{
+			//Auto generated call
+			addAssemblyClick(e);
+		}
+
 		[Outlet("closeButton")]
 		public Button closeButton { get; set; }
 		[Action("closeButton", "Click")]

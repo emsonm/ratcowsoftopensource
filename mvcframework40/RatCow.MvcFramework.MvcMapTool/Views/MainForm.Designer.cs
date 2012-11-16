@@ -46,6 +46,10 @@
       this.addControl = new System.Windows.Forms.Button();
       this.saveButton = new System.Windows.Forms.Button();
       this.closeButton = new System.Windows.Forms.Button();
+      this.removeAssembly = new System.Windows.Forms.Button();
+      this.addAssembly = new System.Windows.Forms.Button();
+      this.externalAssemblies = new System.Windows.Forms.ListView();
+      this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.SuspendLayout();
       // 
       // globalEventsListView
@@ -182,7 +186,8 @@
       // 
       // saveButton
       // 
-      this.saveButton.Location = new System.Drawing.Point(415, 372);
+      this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.saveButton.Location = new System.Drawing.Point(413, 425);
       this.saveButton.Name = "saveButton";
       this.saveButton.Size = new System.Drawing.Size(75, 23);
       this.saveButton.TabIndex = 11;
@@ -191,19 +196,59 @@
       // 
       // closeButton
       // 
-      this.closeButton.Location = new System.Drawing.Point(496, 372);
+      this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.closeButton.Location = new System.Drawing.Point(494, 425);
       this.closeButton.Name = "closeButton";
       this.closeButton.Size = new System.Drawing.Size(75, 23);
       this.closeButton.TabIndex = 12;
       this.closeButton.Text = "Close";
       this.closeButton.UseVisualStyleBackColor = true;
       // 
+      // removeAssembly
+      // 
+      this.removeAssembly.Location = new System.Drawing.Point(265, 421);
+      this.removeAssembly.Name = "removeAssembly";
+      this.removeAssembly.Size = new System.Drawing.Size(66, 23);
+      this.removeAssembly.TabIndex = 15;
+      this.removeAssembly.Text = "Remove";
+      this.removeAssembly.UseVisualStyleBackColor = true;
+      // 
+      // addAssembly
+      // 
+      this.addAssembly.Location = new System.Drawing.Point(265, 392);
+      this.addAssembly.Name = "addAssembly";
+      this.addAssembly.Size = new System.Drawing.Size(66, 23);
+      this.addAssembly.TabIndex = 14;
+      this.addAssembly.Text = "Add";
+      this.addAssembly.UseVisualStyleBackColor = true;
+      // 
+      // externalAssemblies
+      // 
+      this.externalAssemblies.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader8});
+      this.externalAssemblies.FullRowSelect = true;
+      this.externalAssemblies.Location = new System.Drawing.Point(26, 372);
+      this.externalAssemblies.MultiSelect = false;
+      this.externalAssemblies.Name = "externalAssemblies";
+      this.externalAssemblies.Size = new System.Drawing.Size(233, 77);
+      this.externalAssemblies.TabIndex = 16;
+      this.externalAssemblies.UseCompatibleStateImageBehavior = false;
+      this.externalAssemblies.View = System.Windows.Forms.View.List;
+      // 
+      // columnHeader8
+      // 
+      this.columnHeader8.Text = "Control";
+      this.columnHeader8.Width = 225;
+      // 
       // MainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(584, 400);
+      this.ClientSize = new System.Drawing.Size(582, 458);
       this.ControlBox = false;
+      this.Controls.Add(this.externalAssemblies);
+      this.Controls.Add(this.removeAssembly);
+      this.Controls.Add(this.addAssembly);
       this.Controls.Add(this.closeButton);
       this.Controls.Add(this.saveButton);
       this.Controls.Add(this.removeControl);
@@ -242,5 +287,9 @@
     private System.Windows.Forms.Button addControl;
     private System.Windows.Forms.Button saveButton;
     private System.Windows.Forms.Button closeButton;
+    private System.Windows.Forms.Button removeAssembly;
+    private System.Windows.Forms.Button addAssembly;
+    private System.Windows.Forms.ListView externalAssemblies;
+    private System.Windows.Forms.ColumnHeader columnHeader8;
   }
 }

@@ -55,22 +55,22 @@ namespace RatCow.MvcFramework
     /// <returns></returns>
     private static Type GetTargetType()
     {
-      Type t = typeof(T);
+      Type t = typeof( T );
       return t;
     }
 
     public BaseController()
     {
       //Create new instance of T
-      Type t = typeof(T);
-      target = (T)Activator.CreateInstance(t);
+      Type t = typeof( T );
+      target = (T)Activator.CreateInstance( t );
 
       //attach the outlets and actions
       FixUp();
       FixUpView();
     }
 
-    public BaseController(T aTarget)
+    public BaseController( T aTarget )
     {
       target = aTarget;
 
@@ -84,47 +84,47 @@ namespace RatCow.MvcFramework
     /// </summary>
     protected virtual void FixUp()
     {
-      Type t = typeof(T);
+      Type t = typeof( T );
       Type self = this.GetType();
 
       //look for attributes
 
-      BindingFlags bindingFlags = (BindingFlags.Instance | BindingFlags.GetField | BindingFlags.GetProperty | BindingFlags.SetField | BindingFlags.SetProperty | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.FlattenHierarchy);
+      BindingFlags bindingFlags = ( BindingFlags.Instance | BindingFlags.GetField | BindingFlags.GetProperty | BindingFlags.SetField | BindingFlags.SetProperty | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField | BindingFlags.FlattenHierarchy );
 
       //search for all Outlets
       PropertyInfo[] pia = self.GetProperties();
-      foreach (var pi in pia)
+      foreach ( var pi in pia )
       {
-        OutletAttribute[] outlets = (OutletAttribute[])(pi.GetCustomAttributes(typeof(OutletAttribute), true));
-        foreach (var outlet in outlets)
+        OutletAttribute[] outlets = (OutletAttribute[])( pi.GetCustomAttributes( typeof( OutletAttribute ), true ) );
+        foreach ( var outlet in outlets )
         {
           //do something
-          FieldInfo fi = t.GetField(outlet.Name, bindingFlags);
+          FieldInfo fi = t.GetField( outlet.Name, bindingFlags );
 
-          if (fi != null)
+          if ( fi != null )
           {
-            object value = fi.GetValue(target); //this is the value pointing to the control to hook
+            object value = fi.GetValue( target ); //this is the value pointing to the control to hook
 
-            pi.SetValue(this, value, null);
+            pi.SetValue( this, value, null );
 
             //search for all Actions
             MethodInfo[] mia = self.GetMethods(); // might need to revisit binding flags?
-            foreach (var mi in mia)
+            foreach ( var mi in mia )
             {
-              ActionAttribute[] actions = (ActionAttribute[])(mi.GetCustomAttributes(typeof(ActionAttribute), true));
-              foreach (var action in actions)
+              ActionAttribute[] actions = (ActionAttribute[])( mi.GetCustomAttributes( typeof( ActionAttribute ), true ) );
+              foreach ( var action in actions )
               {
-                if (action.Name == outlet.Name)
+                if ( action.Name == outlet.Name )
                 {
                   Type ct = fi.FieldType;
                   //do something
-                  EventInfo ei = ct.GetEvent(action.Action, bindingFlags);
-                  if (ei != null)
+                  EventInfo ei = ct.GetEvent( action.Action, bindingFlags );
+                  if ( ei != null )
                   {
 #if !USE_COMPACTFRAMEWORK
-                    Type evt = (action.EventType == null ? ei.EventHandlerType : action.EventType);
-                    Delegate temp = Delegate.CreateDelegate(evt, this, mi, false);
-                    ei.AddEventHandler(value, temp);
+                    Type evt = ( action.EventType == null ? ei.EventHandlerType : action.EventType );
+                    Delegate temp = Delegate.CreateDelegate( evt, this, mi, false );
+                    ei.AddEventHandler( value, temp );
 #else
 #if CF_35
                     Type evt = (action.EventType == null ? ei.EventHandlerType : action.EventType);
@@ -159,12 +159,12 @@ namespace RatCow.MvcFramework
     /// <param name="?"></param>
     private void FixUpView()
     {
-      Form view = (Form)((object)target);
+      Form view = (Form)( (object)target );
 
-      view.Load += new EventHandler(View_Load);
-      view.FormClosed += new FormClosedEventHandler(View_FormClosed);
-      view.FormClosing += new FormClosingEventHandler(View_FormClosing);
-      view.Disposed += new EventHandler(View_Disposed);
+      view.Load += new EventHandler( View_Load );
+      view.FormClosed += new FormClosedEventHandler( View_FormClosed );
+      view.FormClosing += new FormClosingEventHandler( View_FormClosing );
+      view.Disposed += new EventHandler( View_Disposed );
     }
 
     //handeler to override
@@ -172,11 +172,11 @@ namespace RatCow.MvcFramework
     {
     }
 
-    protected virtual void ViewClosing(FormClosingEventArgs e)
+    protected virtual void ViewClosing( FormClosingEventArgs e )
     {
     }
 
-    protected virtual void ViewClosed(FormClosedEventArgs e)
+    protected virtual void ViewClosed( FormClosedEventArgs e )
     {
     }
 
@@ -185,7 +185,7 @@ namespace RatCow.MvcFramework
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void View_Load(object sender, EventArgs e)
+    private void View_Load( object sender, EventArgs e )
     {
       ViewLoad();
     }
@@ -193,23 +193,23 @@ namespace RatCow.MvcFramework
     /// <summary>
     ///
     /// </summary>
-    private void View_FormClosing(object sender, FormClosingEventArgs e)
+    private void View_FormClosing( object sender, FormClosingEventArgs e )
     {
-      ViewClosing(e);
+      ViewClosing( e );
     }
 
     /// <summary>
     ///
     /// </summary>
-    private void View_FormClosed(object sender, FormClosedEventArgs e)
+    private void View_FormClosed( object sender, FormClosedEventArgs e )
     {
-      ViewClosed(e);
+      ViewClosed( e );
     }
 
     /// <summary>
     /// Note the subtle difference....
     /// </summary>
-    private void View_Disposed(object sender, EventArgs e)
+    private void View_Disposed( object sender, EventArgs e )
     {
       Dispose();
     }
@@ -248,18 +248,19 @@ namespace RatCow.MvcFramework
     //At the moment, only Modal dialogs are being catered for...
     protected Dictionary<string, IModalSubFormContainer> fModalSubControllers = new Dictionary<string, IModalSubFormContainer>();
 
-    public void AddModalSubController(string name, IModalSubFormContainer controller)
+    public void AddModalSubController( string name, IModalSubFormContainer controller )
     {
-      fModalSubControllers.Add(name, controller);
+      if ( !fModalSubControllers.ContainsKey( name ) )
+        fModalSubControllers.Add( name, controller );
     }
 
-    public bool ExecuteModalController(string name)
+    public bool ExecuteModalController( string name )
     {
       bool result = false;
 
       IModalSubFormContainer controller = null;
 
-      if (fModalSubControllers.TryGetValue(name, out controller))
+      if ( fModalSubControllers.TryGetValue( name, out controller ) )
       {
         result = controller.PerformModalTask();
       }
@@ -274,15 +275,15 @@ namespace RatCow.MvcFramework
     /// <param name="name"></param>
     /// <param name="data"></param>
     /// <returns></returns>
-    public bool ExecuteModalControllerWithData<D>(string name, D data)
+    public bool ExecuteModalControllerWithData<D>( string name, D data )
     {
       bool result = false;
 
       IModalSubFormContainer controller = null;
 
-      if (fModalSubControllers.TryGetValue(name, out controller))
+      if ( fModalSubControllers.TryGetValue( name, out controller ) )
       {
-        result = controller.PerformModalTask<D>(data);
+        result = controller.PerformModalTask<D>( data );
       }
 
       return result;
@@ -321,7 +322,7 @@ namespace RatCow.MvcFramework
     {
     }
 
-    public void SetHooks(MethodInfo mi, object target)
+    public void SetHooks( MethodInfo mi, object target )
     {
       fmi = mi;
       ftarget = target;
@@ -336,22 +337,22 @@ var parameterlessCtor = (from c in t.GetConstructors(
 if(parameterlessCtor != null) instance = parameterlessCtor.Invoke(null);
      * */
 
-    delegate void ProxyEventMethodDelegate(object sender, EA eventArgs);
+    delegate void ProxyEventMethodDelegate( object sender, EA eventArgs );
 
     public Delegate GetEventHook()
     {
       return (Delegate)null;
     }
 
-    public void ProxyEventMethod(object sender, EA e)
+    public void ProxyEventMethod( object sender, EA e )
     {
-      fmi.Invoke(ftarget, new object[] { sender, e });
+      fmi.Invoke( ftarget, new object[] { sender, e } );
     }
   }
 
   interface IEventHandlerProxy
   {
-    void SetHooks(MethodInfo mi, object target);
+    void SetHooks( MethodInfo mi, object target );
 
     Delegate GetEventHook();
   }
@@ -369,38 +370,38 @@ if(parameterlessCtor != null) instance = parameterlessCtor.Invoke(null);
   {
     //new EventHandler(new GenericEventHandlerProxy<typeof(evt)>(mi, this).ProxyEventMethod);
 
-    private static Type[] GetDelegateParameterTypes(Type d)
+    private static Type[] GetDelegateParameterTypes( Type d )
     {
-      if (d.BaseType != typeof(MulticastDelegate))
-        throw new ApplicationException("Not a delegate.");
+      if ( d.BaseType != typeof( MulticastDelegate ) )
+        throw new ApplicationException( "Not a delegate." );
 
-      MethodInfo invoke = d.GetMethod("Invoke");
-      if (invoke == null)
-        throw new ApplicationException("Not a delegate.");
+      MethodInfo invoke = d.GetMethod( "Invoke" );
+      if ( invoke == null )
+        throw new ApplicationException( "Not a delegate." );
 
       ParameterInfo[] parameters = invoke.GetParameters();
-      Type[] typeParameters = new Type[parameters.Length];
-      for (int i = 0; i < parameters.Length; i++)
+      Type[] typeParameters = new Type[ parameters.Length ];
+      for ( int i = 0 ; i < parameters.Length ; i++ )
       {
-        typeParameters[i] = parameters[i].ParameterType;
+        typeParameters[ i ] = parameters[ i ].ParameterType;
       }
       return typeParameters;
     }
 
-    public static Delegate Create(Type eventType, MethodInfo mi, object target)
+    public static Delegate Create( Type eventType, MethodInfo mi, object target )
     {
       Delegate result = null;
 
-      Type[] args = GetDelegateParameterTypes(eventType);
+      Type[] args = GetDelegateParameterTypes( eventType );
       //param 1 should be "sender"
       //param 2 should be our eventArgs
-      Type eventArgs = args[1];
+      Type eventArgs = args[ 1 ];
 
-      string s = String.Format("RatCow.MvcFramework.GenericEventHandlerProxy`2[{0}, {1}]", eventType.FullName, eventArgs.FullName);
-      Type proxyType = Type.GetType(s);
+      string s = String.Format( "RatCow.MvcFramework.GenericEventHandlerProxy`2[{0}, {1}]", eventType.FullName, eventArgs.FullName );
+      Type proxyType = Type.GetType( s );
       //Type proxyType = temp.MakeGenericType(new Type[] { eventType });
-      object proxy = Activator.CreateInstance(proxyType);
-      ((IEventHandlerProxy)proxy).SetHooks(mi, target);
+      object proxy = Activator.CreateInstance( proxyType );
+      ( (IEventHandlerProxy)proxy ).SetHooks( mi, target );
 
       //result = ((IEventHandlerProxy)proxy).GetEventHook();
 

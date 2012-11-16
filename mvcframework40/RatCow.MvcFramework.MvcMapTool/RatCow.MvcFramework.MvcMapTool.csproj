@@ -149,6 +149,10 @@
       <Project>{AA53FC2C-ADE1-4FEF-84F3-FCB566517D55}</Project>
       <Name>RatCow.MvcFramework.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RatCow.PluginFramework\RatCow.PluginFramework.csproj">
+      <Project>{B0CA9671-A456-4B6F-B2EA-FFC0946B3080}</Project>
+      <Name>RatCow.PluginFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

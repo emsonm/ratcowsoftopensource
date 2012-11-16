@@ -46,9 +46,9 @@
   </ControlActionMap>
   <AssemblyDependencies>
     <ViewAssembly>
-      <AssemblyName>Janus.Windows.Common.v3.dll</AssemblyName>
-      <AssemblyFullName></AssemblyFullName>
-      <HintPath>C:\Program Files\Janus Systems\Controls for Microsoft .NET\Windows Forms Controls v3\Bin</HintPath>
+      <AssemblyName>RatCow.MvcFramework.Mapping.dll</AssemblyName>
+      <AssemblyFullName>RatCow.MvcFramework.Mapping, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</AssemblyFullName>
+      <HintPath>C:\Documents and Settings\matt\Desktop\develop\ratcow\ratcowsoftopensource\mvcframework40\WrapperTestWinforms\bin\Debug</HintPath>
     </ViewAssembly>
   </AssemblyDependencies>
 </ViewActionMap>

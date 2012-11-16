@@ -46,6 +46,7 @@ namespace RatCow.MvcFramework.Tools
     {
       GlobalMap = new ViewActions();
       ControlActionMap = new ViewControlActions();
+      AssemblyDependencies = new ViewAssemblies();
     }
 
     /// <summary>
@@ -66,6 +67,10 @@ namespace RatCow.MvcFramework.Tools
     [XmlArray( "ControlActionMap" )]
     [XmlArrayItem( "ViewControlAction" )]
     public ViewControlActions ControlActionMap { get; set; }
+
+    [XmlArray( "AssemblyDependencies" )]
+    [XmlArrayItem( "ViewAssembly" )]
+    public ViewAssemblies AssemblyDependencies { get; set; }
 
     /// <summary>
     /// This is called to create a default file
