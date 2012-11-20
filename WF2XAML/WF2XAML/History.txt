@@ -1,0 +1,28 @@
+﻿====================================
+WinForm(2)XAML
+====================================
+Release history
+
+0.6.2.1
+
+Source recreated from the orphaned exe files by Rat Cow Soft.
+
+0.6.2.0
+- Added convert log support
+- Added Template for ListBox
+- Added Template for PictureBox
+- Fixed crash bug when control template not found
+
+0.6.0.0
+- Added support for different destination projects 
+	- WPF User Control
+	- WPF Window
+	- WPF Page
+	- Silverlight User Control
+	- Windows Phone Navigation Page
+- Changes in config file
+- Templates moved in Ingenium.WF2XAML.Templates.dll, leaving exe file without templates
+- Base classes moved to Ingenium.WF2XAML.dll (now this dll can be referenced to create your own templates)
+
+0.5.0.0
+- Initial Release

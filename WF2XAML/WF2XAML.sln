@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WF2XAML", "WF2XAML\WF2XAML.csproj", "{2B222018-79EA-48DB-82EE-321799B031F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ingenium.WF2XAML", "Ingenium.WF2XAML\Ingenium.WF2XAML.csproj", "{1FD3A595-9707-47A4-BC8E-E8C44072FC5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ingenium.WF2XAML.Templates", "Ingenium.WF2XAML.Templates\Ingenium.WF2XAML.Templates.csproj", "{89927C2E-A662-4FCD-816B-610591B00553}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B222018-79EA-48DB-82EE-321799B031F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B222018-79EA-48DB-82EE-321799B031F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B222018-79EA-48DB-82EE-321799B031F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B222018-79EA-48DB-82EE-321799B031F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FD3A595-9707-47A4-BC8E-E8C44072FC5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FD3A595-9707-47A4-BC8E-E8C44072FC5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FD3A595-9707-47A4-BC8E-E8C44072FC5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FD3A595-9707-47A4-BC8E-E8C44072FC5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89927C2E-A662-4FCD-816B-610591B00553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89927C2E-A662-4FCD-816B-610591B00553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89927C2E-A662-4FCD-816B-610591B00553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89927C2E-A662-4FCD-816B-610591B00553}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

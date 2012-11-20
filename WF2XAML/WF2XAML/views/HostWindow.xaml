@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="Ingenium.WF2XAML.Views.HostWindow" Title="HostWindow" Height="300" Width="300" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid Name="LayoutRoot" />
+</Window>
