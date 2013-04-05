@@ -45,6 +45,7 @@
     <Compile Include="ControlUtils.cs" />
     <Compile Include="EnumUtils.cs" />
     <Compile Include="GenericsUtils.cs" />
+    <Compile Include="ISynchronizeInvokeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringFormattingUtils.cs" />
   </ItemGroup>

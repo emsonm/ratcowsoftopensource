@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using RatCow.UKBankAccValidator;
 
 namespace RatCow.UKBankAccValidator.Tests
@@ -11,6 +10,15 @@ namespace RatCow.UKBankAccValidator.Tests
   [TestClass]
   public class BankAccountValidation
   {
+    [TestMethod]
+    public void AbsoluteBasicFundamentalTest()
+    {
+      //really basic test...  but we actually failed this at one point!
+      ValidationResult result = Core.ValidateAccountNumber( 0, 0 );
+
+      Assert.AreEqual( result, ValidationResult.Invalid );
+    }
+
     [TestMethod]
     public void StandardRulesThatShouldAllBeEqual()
     {
@@ -34,25 +42,24 @@ namespace RatCow.UKBankAccValidator.Tests
 
       Assert.AreEqual( result, ValidationResult.Valid );
 
-
       //exception 10 and 11, first check fails, second passes
       result = Core.ValidateAccountNumber( 872427, 46238510 );
 
       Assert.AreEqual( result, ValidationResult.Valid );
 
-      //Exception 10 where in the account number ab=99 and the g=9. The first 
+      //Exception 10 where in the account number ab=99 and the g=9. The first
       //check passes and the second check fails.
       result = Core.ValidateAccountNumber( 871427, 99123496 );
 
       Assert.AreEqual( result, ValidationResult.Valid );
 
-      //Exception 3, and the sorting code is the start of a range. As c=6 the 
+      //Exception 3, and the sorting code is the start of a range. As c=6 the
       //second check should be ignored.
       result = Core.ValidateAccountNumber( 820000, 73688637 );
 
       Assert.AreEqual( result, ValidationResult.Valid );
 
-      //Exception 3, and the sorting code is the end of a range. As c=9 the 
+      //Exception 3, and the sorting code is the end of a range. As c=9 the
       //second check should be ignored.
 
       result = Core.ValidateAccountNumber( 827999, 73988638 );
@@ -66,12 +73,12 @@ namespace RatCow.UKBankAccValidator.Tests
       result = Core.ValidateAccountNumber( 827101, 28748352 );
 
       Assert.AreEqual( result, ValidationResult.Valid );
-      //Exception 1 – ensures that 27 has been added to the accumulated total 
+      //Exception 1 – ensures that 27 has been added to the accumulated total
       //and passes double alternate modulus check. Y
       result = Core.ValidateAccountNumber( 118765, 64371389 );
 
       Assert.AreEqual( result, ValidationResult.Valid );
-      //Exception 6 where the account fails standard check but is a foreign 
+      //Exception 6 where the account fails standard check but is a foreign
       //currency account. Y
       result = Core.ValidateAccountNumber( 200915, 41011166 );
 
@@ -84,7 +91,7 @@ namespace RatCow.UKBankAccValidator.Tests
       result = Core.ValidateAccountNumber( 938600, 42368003 );
 
       Assert.AreEqual( result, ValidationResult.Valid );
-      //Exception 5 where both checks produce a remainder of 0 and pass.  
+      //Exception 5 where both checks produce a remainder of 0 and pass.
       result = Core.ValidateAccountNumber( 938063, 55065200 );
 
       Assert.AreEqual( result, ValidationResult.Valid );
@@ -101,7 +108,7 @@ namespace RatCow.UKBankAccValidator.Tests
       result = Core.ValidateAccountNumber( 309070, 02355688 );
 
       Assert.AreEqual( result, ValidationResult.Valid );
-      //Exception 2 & 9 where the first check fails and second check passes with 
+      //Exception 2 & 9 where the first check fails and second check passes with
       //substitution. Y
       result = Core.ValidateAccountNumber( 309070, 12345668 );
 
