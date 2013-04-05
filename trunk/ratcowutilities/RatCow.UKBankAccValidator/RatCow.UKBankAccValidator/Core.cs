@@ -9,9 +9,8 @@ namespace RatCow.UKBankAccValidator
 
   public class Core
   {
-
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static ValidationResult ValidateAccountNumber( int sortCode, int accountNumber )
     {
@@ -23,12 +22,11 @@ namespace RatCow.UKBankAccValidator
         return ProcessRules( rules, sortCode, accountNumber );
       }
 
-
       return ValidationResult.Notfound; //we treat thes is "valid"
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     private static ValidationResult ProcessRules( IEnumerable<Rule> rules, int sortCode, int accountNumber )
     {
@@ -37,7 +35,6 @@ namespace RatCow.UKBankAccValidator
       var rulesa = rules.ToArray();
 
       string value;
-
 
       //sort out any exceptions
 
@@ -55,6 +52,12 @@ namespace RatCow.UKBankAccValidator
       Rule rule = rulesa[ 0 ];
 
       value = ApplyExceptionsToAccount( sortCode, accountNumber, rule );
+
+      //we need to check for all zeros here
+      if ( value == "00000000000000" )
+      {
+        return ValidationResult.Invalid;
+      }
 
       Rule erule;
 
@@ -91,8 +94,6 @@ namespace RatCow.UKBankAccValidator
             return ValidationResult.Valid;
 
           break;
-
-
 
         case 6:
           var digit1 = GetAccountDigit( 'A', value );
@@ -202,7 +203,6 @@ namespace RatCow.UKBankAccValidator
               var newvalue = "309634" + accountNumber.ToString( "00000000" );
               if ( rulesa[ 0 ].Exception == 2 )
               {
-
                 //if ( GetAccountDigit( 'A', value ) != 0 && GetAccountDigit( 'A', value ) != 9 )
                 //{
                 //  erule = Exception2aRule( rule );
@@ -214,13 +214,11 @@ namespace RatCow.UKBankAccValidator
                 //  result = GetRuleResult( newvalue, erule );
                 //}
                 //else
-                  result = GetRuleResult( newvalue, rule );
+                result = GetRuleResult( newvalue, rule );
               }
               else
                 result = GetRuleResult( newvalue, rule );
               break;
-
-
 
             case 11:
               if ( rulesa[ 0 ].Exception == 10 )
@@ -326,7 +324,6 @@ namespace RatCow.UKBankAccValidator
               var newvalue = "309634" + accountNumber.ToString( "00000000" );
               //if ( rulesa[ 0 ].Exception == 2 )
               //{
-
               //  if ( rule.A != 0 && rule.G != 9 )
               //  {
               //    erule = Exception2aRule( rule );
@@ -341,10 +338,8 @@ namespace RatCow.UKBankAccValidator
               //    result = GetRuleResult( newvalue, rule );
               //}
               //else
-                result = GetRuleResult( newvalue, rule );
+              result = GetRuleResult( newvalue, rule );
               break;
-
-
 
             case 11:
               if ( rulesa[ 0 ].Exception == 10 )
@@ -397,13 +392,12 @@ namespace RatCow.UKBankAccValidator
               result = GetRuleResult( value, rule );
               break;
           }
+
           #endregion
 
           return result;
         }
       }
-
-
 
       return result;
     }
@@ -579,7 +573,6 @@ namespace RatCow.UKBankAccValidator
       return erule;
     }
 
-
     private static ValidationResult GetRuleResult( string value, Rule rule )
     {
       ValidationResult result = ValidationResult.Invalid;
@@ -600,7 +593,7 @@ namespace RatCow.UKBankAccValidator
       return result;
     }
 
-    static int DBALSplit( int value )
+    private static int DBALSplit( int value )
     {
       var vu = value % 10; //get units
       var result = ( ( value - vu ) / 10 ) + vu;
@@ -668,7 +661,6 @@ namespace RatCow.UKBankAccValidator
       tally += Convert.ToInt32( s[ 12 ].ToString() ) * rule.G;
       tally += Convert.ToInt32( s[ 13 ].ToString() ) * rule.H;
 
-
       var modulus = tally % 11;
 
       if ( rule.Exception == 4 )
@@ -721,13 +713,10 @@ namespace RatCow.UKBankAccValidator
 
       var modulus = tally % 10;
 
-
-
       if ( modulus == 0 )
         return ValidationResult.Valid;
       else
         return ValidationResult.Invalid;
-
     }
   }
 }
