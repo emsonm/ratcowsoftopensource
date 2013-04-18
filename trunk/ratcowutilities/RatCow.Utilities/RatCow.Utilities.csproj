@@ -44,8 +44,11 @@
   <ItemGroup>
     <Compile Include="CallbackUtils.cs" />
     <Compile Include="CaptchaImage.cs" />
+    <Compile Include="CastExtensions.cs" />
     <Compile Include="ControlUtils.cs" />
     <Compile Include="EnumUtils.cs" />
+    <Compile Include="EnumWrapper.cs" />
+    <Compile Include="EventExtensions.cs" />
     <Compile Include="GenericsUtils.cs" />
     <Compile Include="ISynchronizeInvokeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
