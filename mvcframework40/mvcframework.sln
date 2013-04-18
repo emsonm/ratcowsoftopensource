@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.Templates", "RatCow.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.PluginFramework", "RatCow.PluginFramework\RatCow.PluginFramework.csproj", "{B0CA9671-A456-4B6F-B2EA-FFC0946B3080}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RatCow.VS.ControllerCompilerAddIn", "RatCow.VS.ControllerCompilerAddIn\RatCow.VS.ControllerCompilerAddIn.csproj", "{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -252,6 +254,16 @@ Global
 		{B0CA9671-A456-4B6F-B2EA-FFC0946B3080}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B0CA9671-A456-4B6F-B2EA-FFC0946B3080}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B0CA9671-A456-4B6F-B2EA-FFC0946B3080}.Release|x86.ActiveCfg = Release|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -263,5 +275,6 @@ Global
 		{31DA3A2D-C6B3-45F0-B506-190FEB28F898} = {33E00D9D-BF7D-4EF0-B020-0780A136DBDA}
 		{8CFDF5F0-D43D-4390-9C18-9C4CAB25FC46} = {33E00D9D-BF7D-4EF0-B020-0780A136DBDA}
 		{48BCA6DE-A6AB-4BF4-BEBA-064E902CC271} = {33E00D9D-BF7D-4EF0-B020-0780A136DBDA}
+		{1AE46B4B-D3FB-4FAA-A6F0-23C929A21475} = {33E00D9D-BF7D-4EF0-B020-0780A136DBDA}
 	EndGlobalSection
 EndGlobal
