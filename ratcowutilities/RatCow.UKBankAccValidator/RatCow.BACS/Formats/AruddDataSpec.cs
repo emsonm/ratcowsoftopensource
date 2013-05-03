@@ -640,6 +640,9 @@ namespace RatCow.BACS.Formats.ARUDD
         this.valueOfField = value;
       }
     }
+
+    [XmlIgnore]
+    public string FileReference { get; set; }
   }
 
   /// <remarks/>
