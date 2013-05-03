@@ -150,6 +150,7 @@ namespace RatCow.BACS
                   try
                   {
                     var item = (RatCow.BACS.Formats.ADDACS.MessagingAdvice)serializer.Deserialize( stream );
+                    item.FileReference = file.Name;
                     addacsData.Add( item );
                   }
                   catch
@@ -227,6 +228,7 @@ namespace RatCow.BACS
                       try
                       {
                         var item = (RatCow.BACS.Formats.ARUDD.ReturnedDebitItem)serializer.Deserialize( stream );
+                        item.FileReference = file.Name;
                         aruddData.Add( item );
                       }
                       catch

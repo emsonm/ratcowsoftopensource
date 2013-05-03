@@ -564,6 +564,9 @@ namespace RatCow.BACS.Formats.ADDACS
         this.usernumberField = value;
       }
     }
+
+    [XmlIgnore]
+    public string FileReference { get; set; }
   }
 
   /// <remarks/>
