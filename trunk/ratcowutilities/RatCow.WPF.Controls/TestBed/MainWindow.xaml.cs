@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using RatCow.WPF.Controls;
 
 namespace TestBed
 {
@@ -45,6 +46,11 @@ namespace TestBed
         private void HeaderControl_ImageClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Yes it works");
+        }
+
+        private void GraphicalCheckBox_CheckClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show((sender as GraphicalCheckBox).IsChecked ? "Checked": "Unchecked");
         }
     }
 }

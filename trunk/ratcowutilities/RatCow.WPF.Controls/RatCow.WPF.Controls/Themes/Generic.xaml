@@ -1,4 +1,4 @@
-﻿<ResourceDictionary
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:RatCow.WPF.Controls">
@@ -7,7 +7,6 @@
         other dictionaries at runtime  -->
         <ResourceDictionary Source="/RatCow.WPF.Controls;component/Themes/HeaderControl.Generic.xaml" />
         <ResourceDictionary Source="/RatCow.WPF.Controls;component/Themes/CheckListBox.Generic.xaml" />
+        <ResourceDictionary Source="/RatCow.WPF.Controls;component/Themes/GraphicalCheckBox.Generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    
 </ResourceDictionary>

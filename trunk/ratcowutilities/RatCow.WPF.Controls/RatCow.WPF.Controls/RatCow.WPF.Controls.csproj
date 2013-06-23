@@ -53,11 +53,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\GraphicalCheckBox.Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="CheckListBox.cs" />
+    <Compile Include="GraphicalCheckBox.cs" />
     <Compile Include="HeaderControl.cs">
       <SubType>Code</SubType>
     </Compile>
