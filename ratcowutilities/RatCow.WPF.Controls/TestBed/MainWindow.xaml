@@ -11,7 +11,8 @@
         
        
         <StackPanel Orientation="Vertical">
-            <control:HeaderControl ImageClick="HeaderControl_ImageClick" NormalImage="{StaticResource ResourceKey=HeaderControl_Mouseup}" OverImage="{StaticResource ResourceKey=HeaderControl_Mousedown}" ></control:HeaderControl>
+            <control:GraphicalCheckBox Text="Test" FontFamily="Arial" FontSize="15" BorderThickness="2" BorderBrush="AliceBlue" Height="46"  UncheckedImage="{StaticResource ResourceKey=HeaderControl_Mouseup}" CheckedImage="{StaticResource ResourceKey=HeaderControl_Mousedown}" CheckClick="GraphicalCheckBox_CheckClick"></control:GraphicalCheckBox>
+            <control:HeaderControl ImageClick="HeaderControl_ImageClick" NormalImage="{StaticResource ResourceKey=HeaderControl_Mouseup}" OverImage="{StaticResource ResourceKey=HeaderControl_Mousedown}" Height="29"></control:HeaderControl>
             <control:CheckListBox x:Name="chx" BorderBrush="Black"></control:CheckListBox>
         </StackPanel>
     </Grid>

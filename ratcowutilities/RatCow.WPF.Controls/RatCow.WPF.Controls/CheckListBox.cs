@@ -74,6 +74,9 @@ namespace RatCow.WPF.Controls
 
     }
 
+    /// <summary>
+    /// This class is used to represent a list of checkitems
+    /// </summary>
     public class CheckListItem : DependencyObject
     {
         public bool IsChecked
