@@ -1,0 +1,18 @@
+﻿<Window x:Class="TestBed.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:control="clr-namespace:RatCow.WPF.Controls;assembly=RatCow.WPF.Controls"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <BitmapImage x:Key="HeaderControl_Mouseup" UriSource="/Images/Empty_mouseup.bmp" />
+        <BitmapImage x:Key="HeaderControl_Mousedown" UriSource="/Images/Empty_mousedown.bmp" />
+    </Window.Resources>
+    <Grid>
+        
+       
+        <StackPanel Orientation="Vertical">
+            <control:HeaderControl ImageClick="HeaderControl_ImageClick" NormalImage="{StaticResource ResourceKey=HeaderControl_Mouseup}" OverImage="{StaticResource ResourceKey=HeaderControl_Mousedown}" ></control:HeaderControl>
+            <control:CheckListBox x:Name="chx" BorderBrush="Black"></control:CheckListBox>
+        </StackPanel>
+    </Grid>
+</Window>

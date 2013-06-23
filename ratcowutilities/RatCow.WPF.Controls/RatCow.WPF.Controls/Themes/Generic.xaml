@@ -1,0 +1,13 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:RatCow.WPF.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <!--  We have to use this 'component' relative notation to load  the 
+        other dictionaries at runtime  -->
+        <ResourceDictionary Source="/RatCow.WPF.Controls;component/Themes/HeaderControl.Generic.xaml" />
+        <ResourceDictionary Source="/RatCow.WPF.Controls;component/Themes/CheckListBox.Generic.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    
+</ResourceDictionary>
