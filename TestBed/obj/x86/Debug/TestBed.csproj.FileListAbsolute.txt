@@ -1,0 +1,13 @@
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\bin\Debug\TestBedApp.exe
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\bin\Debug\TestBedApp.pdb
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\bin\Debug\RatCow.Controls.dll
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\bin\Debug\RatCow.Controls.GDIPlusGraphicsContext.dll
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\bin\Debug\RatCow.Controls.GDIPlusGraphicsContext.pdb
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\bin\Debug\RatCow.Controls.pdb
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\obj\x86\Debug\RatCow.TestBed.Form1.resources
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\obj\x86\Debug\RatCow.TestBed.Properties.Resources.resources
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\obj\x86\Debug\TestBedApp.exe
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\TestBed\obj\x86\Debug\TestBedApp.pdb

@@ -1,0 +1,5 @@
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls\bin\Debug\RatCow.Controls.dll
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls\bin\Debug\RatCow.Controls.pdb
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls\obj\Debug\RatCow.Controls.dll
+C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls\obj\Debug\RatCow.Controls.pdb
