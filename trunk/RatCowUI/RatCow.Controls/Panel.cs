@@ -36,76 +36,35 @@ using System.Text;
 
 namespace RatCow.Controls
 {
-    public class Control
+    public class Panel: Container
     {
-        public Control()
+        public override void Paint()
         {
-            EnabledColor = System.Drawing.Color.Silver;
-            DisabledColor = System.Drawing.Color.Coral;
-            TextColor = System.Drawing.Color.Black;
-            Parent = null;
-        }
-
-        public bool Enabled { get; set; }
-        public System.Drawing.Color EnabledColor { get; set; }
-        public System.Drawing.Color DisabledColor { get; set; }
-
-        public bool Visible { get; set; }
-        public string Name { get; set; }
-
-        int _left = 0;
-        int _top = 0;
-        public int Left
-        {
-            get
+            if (Visible)
             {
-                if (Parent != null)
+                var g = GraphicContext.Instance;
+
+                g.Rectangle(
+                    Left,
+                    Top,
+                    Width,
+                    Height,
+                    System.Drawing.Color.Cornsilk,
+                    true);
+
+                g.Rectangle(
+                    Left,
+                    Top,
+                    Width,
+                    Height,
+                    System.Drawing.Color.Black);
+
+                foreach (var control in Controls)
                 {
-                    return _left + Parent.Left;
-                }
-                else
-                {
-                    return _left;
+                    if (control.Parent != this) control.Parent = this;
+                    control.Paint();
                 }
             }
-            set
-            {
-                _left = value;
-            }
-        }
-
-        public int Top
-        {
-            get
-            {
-                if (Parent != null)
-                {
-                    return _top + Parent.Top;
-                }
-                else
-                {
-                    return _top;
-                }
-            }
-            set
-            {
-                _top = value;
-            }
-        }
-
-        public int Width { get; set; }
-        public int Height { get; set; }
-
-        public string Text { get; set; }
-        public System.Drawing.Color TextColor { get; set; }
-
-        public Control Parent { get; set; }
-
-        public virtual void Paint()
-        {
-
         }
     }
-
-    public delegate void ControlAction(object sender);
 }
