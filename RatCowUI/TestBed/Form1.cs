@@ -63,19 +63,27 @@ namespace RatCow.TestBed
             var button1 = new Button() { Top = 30, Left = 30, Height = 35, Width = 50, Text = "test", Enabled = true, Visible = true, Focused = false, Name = "Button1" };
             button1.Click += new ControlAction(button1_Click);
 
+            var button2 = new Button() { Top = 30, Left = 30, Height = 35, Width = 50, Text = "test", Enabled = true, Visible = true, Focused = false, Name = "Button2" };
+            button2.Click += new ControlAction(button1_Click);
+
             var textBox1 = new TextBox() { Top = 100, Left = 100, Height = 35, Width = 100, Enabled = true, Visible = true, Focused = false, Selected = true };
 
-            var cbx1 = new CheckBox() { Top = 150, Left = 30, Height = 35, Width = 50, Text = "test", Enabled = true, Visible = true, Focused = false, Name = "Button1" };
+            var cbx1 = new CheckBox() { Top = 150, Left = 30, Height = 35, Width = 50, Text = "test", Enabled = true, Visible = true, Focused = false, Name = "Checkbox1" };
+
+            var pnl1 = new Panel() { Top = 150, Left = 100, Height = 100, Width = 150, Text = "test", Enabled = true, Visible = true };
+            pnl1.Controls.Add(button2);
 
             GraphicContext.Instance.GraphicsObjects.Add(button1);
             GraphicContext.Instance.GraphicsObjects.Add(textBox1);
             GraphicContext.Instance.GraphicsObjects.Add(cbx1);
+            GraphicContext.Instance.GraphicsObjects.Add(pnl1);
+            GraphicContext.Instance.GraphicsObjects.Add(button2);
 
         }
 
         void button1_Click(object sender)
         {
-            //MessageBox.Show("!!");
+            (sender as Button).Text = "Blip!";
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
