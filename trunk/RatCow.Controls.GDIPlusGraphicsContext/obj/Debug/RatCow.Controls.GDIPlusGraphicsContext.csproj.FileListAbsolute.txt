@@ -1,7 +1,0 @@
-C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls.GDIPlusGraphicsContext\obj\Debug\ResolveAssemblyReference.cache
-C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls.GDIPlusGraphicsContext\bin\Debug\RatCow.Controls.GDIPlusGraphicsContext.dll
-C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls.GDIPlusGraphicsContext\bin\Debug\RatCow.Controls.GDIPlusGraphicsContext.pdb
-C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls.GDIPlusGraphicsContext\bin\Debug\RatCow.Controls.dll
-C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls.GDIPlusGraphicsContext\bin\Debug\RatCow.Controls.pdb
-C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls.GDIPlusGraphicsContext\obj\Debug\RatCow.Controls.GDIPlusGraphicsContext.dll
-C:\Users\matt\Documents\Visual Studio 2010\Projects\WindowsFormsApplication1\RatCow.Controls.GDIPlusGraphicsContext\obj\Debug\RatCow.Controls.GDIPlusGraphicsContext.pdb
