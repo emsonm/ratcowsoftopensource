@@ -77,7 +77,7 @@ namespace RatCow.TestBed
             GraphicContext.Instance.GraphicsObjects.Add(textBox1);
             GraphicContext.Instance.GraphicsObjects.Add(cbx1);
             GraphicContext.Instance.GraphicsObjects.Add(pnl1);
-            GraphicContext.Instance.GraphicsObjects.Add(button2);
+            //GraphicContext.Instance.GraphicsObjects.Add(button2);
 
         }
 
