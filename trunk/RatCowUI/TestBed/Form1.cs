@@ -66,7 +66,7 @@ namespace RatCow.TestBed
             var button2 = new Button() { Top = 30, Left = 30, Height = 35, Width = 50, Text = "test", Enabled = true, Visible = true, Focused = false, Name = "Button2" };
             button2.Click += new ControlAction(button1_Click);
 
-            var textBox1 = new TextBox() { Top = 100, Left = 100, Height = 35, Width = 100, Enabled = true, Visible = true, Focused = false, Selected = true };
+            var textBox1 = new TextBox() { Top = 100, Left = 100, Height = 35, Width = 100, Enabled = true, Visible = true, Focused = false, Selected = false };
 
             var cbx1 = new CheckBox() { Top = 150, Left = 30, Height = 35, Width = 50, Text = "test", Enabled = true, Visible = true, Focused = false, Name = "Checkbox1" };
 
@@ -77,8 +77,6 @@ namespace RatCow.TestBed
             GraphicContext.Instance.GraphicsObjects.Add(textBox1);
             GraphicContext.Instance.GraphicsObjects.Add(cbx1);
             GraphicContext.Instance.GraphicsObjects.Add(pnl1);
-            //GraphicContext.Instance.GraphicsObjects.Add(button2);
-
         }
 
         void button1_Click(object sender)

@@ -46,6 +46,7 @@ namespace RatCow.Controls
         string MeasureText(string text, int size, int width);
         void Plot(int x, int y, System.Drawing.Color pixelColor);
         void Rectangle(int x, int y, int width, int height, System.Drawing.Color pixelColor, bool fill = false);
+        void RoundRectangle(int x, int y, int width, int height, System.Drawing.Color pixelColor, bool fill = false);
         void Render(int x, int y, bool? mouseIsDown);
         void RenderKey(Key key, bool shiftDown, bool controlDown, bool altDown);
         void RenderText(char key);

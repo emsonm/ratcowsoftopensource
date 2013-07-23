@@ -90,6 +90,11 @@ namespace RatCow.Controls
             _nativeInstance.Rectangle(x, y, width, height, pixelColor, fill);
         }
 
+        public void RoundRectangle(int x, int y, int width, int height, Color pixelColor, bool fill = false)
+        {
+            _nativeInstance.RoundRectangle(x, y, width, height, pixelColor, fill);
+        }
+
         public void Text(int x, int y, int size, Color pixelColor, string text)
         {
             _nativeInstance.Text(x, y, size, pixelColor, text);
