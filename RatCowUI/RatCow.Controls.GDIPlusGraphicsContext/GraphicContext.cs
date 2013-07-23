@@ -31,9 +31,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace RatCow.Controls.GDIPlusGraphicsContext
 {
@@ -53,9 +52,11 @@ namespace RatCow.Controls.GDIPlusGraphicsContext
         private bool _valid = false;
 
         public int Width { get; private set; }
+
         public int Height { get; private set; }
 
         public List<Control> GraphicsObjects { get; internal set; }
+
         public void AddGraphicsObject(Control control)
         {
             GraphicsObjects.Add(control);
@@ -109,7 +110,26 @@ namespace RatCow.Controls.GDIPlusGraphicsContext
                     hittestPassed = (control as FocusControl).HitTest(x, y, mouseIsDown);
                 }
 
-                if (control is SelectionControl)
+                if (control is TextControl)
+                {
+                    if (!hittestPassed)
+                    {
+                        //we have moved the mouse, but did we click?
+                        if (mouseIsDown.HasValue && mouseIsDown.Value)
+                        {
+                            (control as TextControl).Selected = false;
+                        }
+                    }
+                    else
+                    {
+                        //we have moved the mouse, but did we click?
+                        if (mouseIsDown.HasValue && mouseIsDown.Value)
+                        {
+                            (control as TextControl).Selected = true;
+                        }
+                    }
+                }
+                else if (control is SelectionControl)
                 {
                     (control as SelectionControl).Selected = hittestPassed;
                 }
@@ -132,7 +152,6 @@ namespace RatCow.Controls.GDIPlusGraphicsContext
                         }
                     }
                 }
-
 
                 control.Paint();
             }
@@ -220,6 +239,48 @@ namespace RatCow.Controls.GDIPlusGraphicsContext
             }
         }
 
+        public void RoundRectangle(int x, int y, int width, int height, Color pixelColor, bool fill = false)
+        {
+            if (_valid)
+            {
+                var g = Graphics.FromImage(_nativeTarget);
+                try
+                {
+                    if (fill)
+                    {
+                        g.FillPath(new SolidBrush(pixelColor), GetRoundRectPath(x, y, width, height, 7));
+                    }
+                    else
+                    {
+                        g.DrawPath(new Pen(pixelColor), GetRoundRectPath(x, y, width, height, 7));
+                    }
+                }
+                finally
+                {
+                    g.Dispose();
+                }
+            }
+        }
+
+        private GraphicsPath GetRoundRectPath(int x, int y, int width, int height, int rad)
+        {
+            int dia = rad * 2;
+
+            int tx = x + width;
+            int ty = y + height;
+
+            var path = new GraphicsPath();
+
+            // Create the path by connecting arcs.
+            path.AddArc(x, y, dia, dia, 180, 90);
+            path.AddArc(tx - dia, y, dia, dia, 270, 90);
+            path.AddArc(tx - dia, ty - dia, dia, dia, 0, 90);
+            path.AddArc(x, ty - dia, dia, dia, 90, 90);
+            path.CloseFigure();
+
+            return path;
+        }
+
         public void Text(int x, int y, int size, Color pixelColor, string text)
         {
             Text(x, y, -1, -1, size, pixelColor, text);
@@ -277,7 +338,6 @@ namespace RatCow.Controls.GDIPlusGraphicsContext
             }
             return result;
         }
-
 
         public object NativeTargetObject
         {

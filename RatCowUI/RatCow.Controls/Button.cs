@@ -70,7 +70,7 @@ namespace RatCow.Controls
                     color = DisabledColor;
                 }
 
-                g.Rectangle(
+                g.RoundRectangle(
                     Left,
                     Top,
                     Width,
@@ -78,7 +78,7 @@ namespace RatCow.Controls
                     color,
                     true);
 
-                g.Rectangle(
+                g.RoundRectangle(
                     Left,
                     Top,
                     Width,

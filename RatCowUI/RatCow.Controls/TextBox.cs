@@ -41,8 +41,11 @@ namespace RatCow.Controls
         public TextBox()
             : base()
         {
+            CaretChar = "¦";
 
         }
+
+        public string CaretChar { get; set; }
 
         public bool MultiLine { get; set; }
 
@@ -61,7 +64,7 @@ namespace RatCow.Controls
 
                 var displayText = g.MeasureText(Text, 9, Width - 2);
 
-                g.Text(Left + 2, Top + (Height / 2 - 10), Width - 2, Height - 5, 9, TextColor, displayText + "|");
+                g.Text(Left + 2, Top + (Height / 2 - 10), Width - 2, Height - 5, 9, TextColor, displayText + (this.Selected ? CaretChar: String.Empty));
             }
 
         }

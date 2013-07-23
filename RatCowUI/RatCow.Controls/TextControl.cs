@@ -79,6 +79,11 @@ namespace RatCow.Controls
             else
                 handled = false;
         }
+
+        public override bool HitTest(int x, int y, bool? mouseIsDown)
+        {
+            return base.HitTest(x, y, mouseIsDown);
+        }
     }
 
     public delegate void TextInputAction(object sender, char key, out bool handled);
