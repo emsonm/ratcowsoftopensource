@@ -113,6 +113,27 @@ namespace RatCow.Controls.GDIPlusGraphicsContext
                 {
                     (control as SelectionControl).Selected = hittestPassed;
                 }
+                else
+                {
+                    if (control is Container)
+                    {
+                        var container = (control as Container);
+                        foreach (var subcontrol in container.Controls)
+                        {
+                            if (subcontrol is FocusControl)
+                            {
+                                hittestPassed = (subcontrol as FocusControl).HitTest(x, y, mouseIsDown);
+                            }
+
+                            if (subcontrol is SelectionControl)
+                            {
+                                (subcontrol as SelectionControl).Selected = hittestPassed;
+                            }
+                        }
+                    }
+                }
+
+
                 control.Paint();
             }
         }
