@@ -36,26 +36,8 @@ using System.Text;
 
 namespace RatCow.Controls
 {
-    public class CheckedControl : BooleanStateControl, ICheckedControl
+    public class RadioButton : GroupedControl, ICheckedControl
     {
-        public bool Checked
-        {
-            get { return State; }
-            set { State = value; }
-        }
-    }
-
-
-    public class CheckBox : CheckedControl
-    {
-        public CheckBox()
-            : base()
-        {
-            PressedColor = System.Drawing.Color.LightGray;
-            UnfocusedColor = System.Drawing.Color.Transparent;
-        }
-
-
         public override void Paint()
         {
             if (Visible)
@@ -79,7 +61,7 @@ namespace RatCow.Controls
                     color = DisabledColor;
                 }
 
-                g.Rectangle(
+                g.RoundRectangle(
                     Left + 5,
                     Top + 10,
                     20,
@@ -89,26 +71,29 @@ namespace RatCow.Controls
 
                 if (State)
                 {
-                    //g.Rectangle(
-                    //   Left + 7,
-                    //   Top + 12,
-                    //   16,
-                    //   16,
-                    //   System.Drawing.Color.Black,
-                    //   true);
-                    var tx = Left + 8;
-                    var ty = Top + 14;
-                    var bx = Left + 20;
-                    var by = Top + 26;
-                    g.Line(tx, ty, bx, by, System.Drawing.Color.Black);
-                    g.Line(tx, by, bx, ty, System.Drawing.Color.Black);
+                    var tx = Left + 7;
+                    var ty = Top + 12;
+                    g.RoundRectangle(
+                    tx,
+                    ty,
+                    16,
+                    16,
+                    System.Drawing.Color.Black,
+                    true);
                 }
 
-                g.Rectangle(
-                    Left + 4,
-                    Top + 9,
-                    21,
-                    21,
+                g.RoundRectangle(
+                    Left + 7,
+                    Top + 12,
+                    16,
+                    16,
+                    System.Drawing.Color.Black);
+
+                g.RoundRectangle(
+                    Left + 5,
+                    Top + 10,
+                    20,
+                    20,
                     System.Drawing.Color.Black);
 
 
@@ -131,19 +116,24 @@ namespace RatCow.Controls
             {
                 Pressed = (result & mouseIsDown.Value);
                 if (mouseIsDown.Value)
-                    Checked = !Checked;
+                {
+                    Checked = true;
+                    NotifyMembers(this);
+                }
             }
 
             return result;
         }
 
-        protected override void DoAction()
+        public bool Checked
         {
-            if (Click != null)
-                Click(this);
+            get { return State; }
+            set { State = value; }
         }
 
-
-        public event ControlAction Click;
+        public override void Notified(IGroupControl sender, GroupNotificationArgs e)
+        {
+            State = false;
+        }
     }
 }

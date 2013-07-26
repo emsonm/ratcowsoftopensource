@@ -49,6 +49,8 @@ namespace RatCow.TestBed
             InitializeComponent();
         }
 
+        ControlGroup grp = new ControlGroup();
+
         private void Form1_Load(object sender, EventArgs e)
         {
             RatCow.Controls.GDIPlusGraphicsContext.GraphicContext.Init();
@@ -68,15 +70,26 @@ namespace RatCow.TestBed
 
             var textBox1 = new TextBox() { Top = 100, Left = 100, Height = 35, Width = 100, Enabled = true, Visible = true, Focused = false, Selected = false };
 
-            var cbx1 = new CheckBox() { Top = 150, Left = 30, Height = 35, Width = 50, Text = "test", Enabled = true, Visible = true, Focused = false, Name = "Checkbox1" };
+            var cbx1 = new CheckBox() { Top = 100, Left = 30, Height = 35, Width = 50, Text = "test", Enabled = true, Visible = true, Focused = false, Name = "Checkbox1" };
 
             var pnl1 = new Panel() { Top = 150, Left = 100, Height = 100, Width = 150, Text = "test", Enabled = true, Visible = true };
             pnl1.Controls.Add(button2);
+
+            var rd1 = new RadioButton() { Top = 150, Left = 30, Height = 35, Width = 50, Text = "test 1", Enabled = true, Visible = true, Focused = false, Name = "rd1" };
+            var rd2 = new RadioButton() { Top = 180, Left = 30, Height = 35, Width = 50, Text = "test 2", Enabled = true, Visible = true, Focused = false, Name = "rd2" };
+            var rd3 = new RadioButton() { Top = 210, Left = 30, Height = 35, Width = 50, Text = "test 3", Enabled = true, Visible = true, Focused = false, Name = "rd3" };
+
+            grp.Add(rd1);
+            grp.Add(rd2);
+            grp.Add(rd3);
 
             GraphicContext.Instance.GraphicsObjects.Add(button1);
             GraphicContext.Instance.GraphicsObjects.Add(textBox1);
             GraphicContext.Instance.GraphicsObjects.Add(cbx1);
             GraphicContext.Instance.GraphicsObjects.Add(pnl1);
+            GraphicContext.Instance.GraphicsObjects.Add(rd1);
+            GraphicContext.Instance.GraphicsObjects.Add(rd2);
+            GraphicContext.Instance.GraphicsObjects.Add(rd3);
         }
 
         void button1_Click(object sender)
