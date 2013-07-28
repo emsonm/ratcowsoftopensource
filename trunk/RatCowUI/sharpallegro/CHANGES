@@ -1,0 +1,19 @@
+0.0.4
+=====
+
+- Made alleg dll required in output folder
+- Fixed build output path
+- Compressed allegro dll with UPX
+- Upgraded version and copyright infos
+- Refactored project to use the official name sharpallegro instead of allegro
+- Replaced references to alleg42 and encapsulated dll name in a const
+- Updated allegro to 4.4.2
+- Removed deleted projects
+- Initial import of sharpallegro project to new repository
+- Created folder for sharpallegro project
+- Forced x86 platform compilation on all projects
+- Ported RLE_SPRITE and COMPILED_SPRITE structs. (Actually COMPILED_SPRITE behaves as an RLE_SPRITE as if I386 was not defined)
+- Forced x86 platform compilation
+- Added missing files
+- Removed meaningless property
+- Changed release version
