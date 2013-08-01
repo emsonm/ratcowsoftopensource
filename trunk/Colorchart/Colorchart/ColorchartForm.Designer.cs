@@ -64,6 +64,7 @@ namespace RatCow.Colorchart
             this.largeImages = new System.Windows.Forms.ImageList(this.components);
             this.smallImages = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbgValue = new System.Windows.Forms.Label();
             this.sortButton = new System.Windows.Forms.Button();
             this.detailButton = new System.Windows.Forms.Button();
             this.controlImages = new System.Windows.Forms.ImageList(this.components);
@@ -92,6 +93,7 @@ namespace RatCow.Colorchart
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.rbgValue);
             this.panel1.Controls.Add(this.sortButton);
             this.panel1.Controls.Add(this.detailButton);
             this.panel1.Controls.Add(this.smallViewButton);
@@ -100,8 +102,17 @@ namespace RatCow.Colorchart
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(284, 32);
+            this.panel1.Size = new System.Drawing.Size(687, 32);
             this.panel1.TabIndex = 1;
+            // 
+            // rbgValue
+            // 
+            this.rbgValue.AutoSize = true;
+            this.rbgValue.Location = new System.Drawing.Point(148, 9);
+            this.rbgValue.Name = "rbgValue";
+            this.rbgValue.Size = new System.Drawing.Size(16, 13);
+            this.rbgValue.TabIndex = 5;
+            this.rbgValue.Text = "...";
             // 
             // sortButton
             // 
@@ -109,7 +120,7 @@ namespace RatCow.Colorchart
             this.sortButton.BackColor = System.Drawing.Color.Gainsboro;
             this.sortButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.sortButton.Font = new System.Drawing.Font("Agency FB", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sortButton.Location = new System.Drawing.Point(230, 3);
+            this.sortButton.Location = new System.Drawing.Point(633, 3);
             this.sortButton.Name = "sortButton";
             this.sortButton.Size = new System.Drawing.Size(46, 23);
             this.sortButton.TabIndex = 4;
@@ -186,7 +197,7 @@ namespace RatCow.Colorchart
             this.panel2.Controls.Add(this.colorsListView);
             this.panel2.Location = new System.Drawing.Point(3, 34);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(277, 225);
+            this.panel2.Size = new System.Drawing.Size(680, 360);
             this.panel2.TabIndex = 2;
             // 
             // colorsListView
@@ -197,10 +208,11 @@ namespace RatCow.Colorchart
             this.colorsListView.LargeImageList = this.largeImages;
             this.colorsListView.Location = new System.Drawing.Point(0, 0);
             this.colorsListView.Name = "colorsListView";
-            this.colorsListView.Size = new System.Drawing.Size(277, 225);
+            this.colorsListView.Size = new System.Drawing.Size(680, 360);
             this.colorsListView.SmallImageList = this.smallImages;
             this.colorsListView.TabIndex = 1;
             this.colorsListView.UseCompatibleStateImageBehavior = false;
+            this.colorsListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.colorsListView_ItemSelectionChanged);
             this.colorsListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.colorsListView_RetrieveVirtualItem);
             // 
             // columnHeader1
@@ -212,13 +224,15 @@ namespace RatCow.Colorchart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.ClientSize = new System.Drawing.Size(687, 397);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "ColorchartForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DotNet Color explorer";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.ColorchartForm_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -238,6 +252,7 @@ namespace RatCow.Colorchart
         private System.Windows.Forms.ListView colorsListView;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button sortButton;
+        private System.Windows.Forms.Label rbgValue;
 
     }
 }
