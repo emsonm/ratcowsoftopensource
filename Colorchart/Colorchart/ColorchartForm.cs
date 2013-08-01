@@ -105,11 +105,26 @@ namespace RatCow.Colorchart
             return bmp;
         }
 
+        private Color GetSelectedItemColor()
+        {
+            Color result = Color.Transparent;
+
+            for (int i = 0; i < colorsListView.Items.Count; i++)
+            {
+                if (colorsListView.Items[i].Selected)
+                {
+                    result = ((ColorItem)items[i]).Color;
+                    break;
+                }
+            }
+            return result;
+        }
+
         #endregion Private methods
 
         #region Event handlers
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void ColorchartForm_Load(object sender, EventArgs e)
         {
             LoadColors();
         }
@@ -165,6 +180,17 @@ namespace RatCow.Colorchart
             sortButton.Text = sortKind.ToString();
 
             colorsListView.Refresh();
+        }
+
+        private void colorsListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            var selectedColor = GetSelectedItemColor();
+            if (selectedColor != Color.Transparent)
+            {
+                rbgValue.Text = String.Format("R: {0} G: {1} B: {2} A: {3}", selectedColor.R, selectedColor.G, selectedColor.B, selectedColor.A);
+            }
+            else rbgValue.Text = "...";
+
         }
 
         #endregion Event handlers
