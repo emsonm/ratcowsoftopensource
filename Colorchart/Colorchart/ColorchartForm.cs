@@ -172,6 +172,36 @@ namespace RatCow.Colorchart
             {
                 items.Sort(alphaSort);
             }
+            else if (sortKind == ColorSort.HSB)
+            {
+                items = (from x in items
+                         orderby x.Color.GetHue(), x.Color.GetSaturation(), x.Color.GetBrightness()
+                         select x).ToList();
+            }
+            else if (sortKind == ColorSort.SBH)
+            {
+                items = (from x in items
+                         orderby x.Color.GetSaturation(), x.Color.GetBrightness(), x.Color.GetHue()
+                         select x).ToList();
+            }
+            else if (sortKind == ColorSort.SHB)
+            {
+                items = (from x in items
+                         orderby x.Color.GetSaturation(), x.Color.GetHue(), x.Color.GetBrightness()
+                         select x).ToList();
+            }
+            else if (sortKind == ColorSort.BHS)
+            {
+                items = (from x in items
+                         orderby x.Color.GetBrightness(), x.Color.GetHue(), x.Color.GetSaturation()
+                         select x).ToList();
+            }
+            else if (sortKind == ColorSort.BSH)
+            {
+                items = (from x in items
+                         orderby x.Color.GetBrightness(), x.Color.GetSaturation(), x.Color.GetHue()
+                         select x).ToList();
+            }
             else
             {
                 items.Sort(argbSort);
@@ -210,7 +240,12 @@ namespace RatCow.Colorchart
         {
             switch (sortKind)
             {
-                case ColorSort.Alpha: return ColorSort.Argb;
+                case ColorSort.Alpha: return ColorSort.HSB;
+                case ColorSort.HSB: return ColorSort.SBH;
+                case ColorSort.SBH: return ColorSort.BSH;
+                case ColorSort.BSH: return ColorSort.BHS;
+                case ColorSort.BHS: return ColorSort.SHB;
+                case ColorSort.SHB: return ColorSort.Argb;
                 case ColorSort.Argb: return ColorSort.R;
                 case ColorSort.R: return ColorSort.G;
                 case ColorSort.G: return ColorSort.B;
@@ -288,7 +323,7 @@ namespace RatCow.Colorchart
 
         #region Private classes and enums
 
-        private enum ColorSort : byte { Alpha = 0, Argb, R, G, B };
+        private enum ColorSort : byte { Alpha = 0, HSB, SBH, SHB, BHS, BSH, Argb, R, G, B };
 
         private class ColorItem
         {
@@ -299,6 +334,6 @@ namespace RatCow.Colorchart
             public int ImageIndex { get; set; }
         }
 
-        #endregion Private classes and enums        
+        #endregion Private classes and enums
     }
 }
