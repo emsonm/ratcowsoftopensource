@@ -214,6 +214,7 @@ namespace RatCow.Colorchart
             this.colorsListView.UseCompatibleStateImageBehavior = false;
             this.colorsListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.colorsListView_ItemSelectionChanged);
             this.colorsListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.colorsListView_RetrieveVirtualItem);
+            this.colorsListView.DoubleClick += new System.EventHandler(this.colorsListView_DoubleClick);
             // 
             // columnHeader1
             // 

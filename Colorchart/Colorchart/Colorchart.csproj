@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorChangeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorChangeDialog.Designer.cs">
+      <DependentUpon>ColorChangeDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorchartForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,6 +60,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ColorChangeDialog.resx">
+      <DependentUpon>ColorChangeDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ColorchartForm.resx">
       <DependentUpon>ColorchartForm.cs</DependentUpon>
     </EmbeddedResource>

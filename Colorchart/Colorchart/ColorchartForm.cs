@@ -193,6 +193,15 @@ namespace RatCow.Colorchart
 
         }
 
+        private void colorsListView_DoubleClick(object sender, EventArgs e)
+        {
+            var selectedColor = GetSelectedItemColor();
+            if (selectedColor != Color.Transparent)
+            {
+                ColorChangeDialog.Show(selectedColor);
+            }
+        }
+
         #endregion Event handlers
 
         #region Sort related
@@ -290,6 +299,6 @@ namespace RatCow.Colorchart
             public int ImageIndex { get; set; }
         }
 
-        #endregion Private classes and enums
+        #endregion Private classes and enums        
     }
 }
