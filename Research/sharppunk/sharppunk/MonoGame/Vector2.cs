@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
+using System.Text;
 
 namespace sharppunk
 {
@@ -35,6 +33,7 @@ namespace sharppunk
         }
 
         public float X { get; set; }
+
         public float Y { get; set; }
 
         #region public methods
@@ -126,7 +125,6 @@ namespace sharppunk
         {
             return (float)Math.Sqrt((value1.X - value2.X) * (value1.X - value2.X) + (value1.Y - value2.Y) * (value1.Y - value2.Y));
         }
-
 
         public static void Distance(ref Vector2 value1, ref Vector2 value2, out float result)
         {
@@ -445,8 +443,7 @@ namespace sharppunk
             return sb.ToString();
         }
 
-        #endregion Public Methods
-
+        #endregion public methods
 
         #region Operators
 
@@ -457,18 +454,15 @@ namespace sharppunk
             return value;
         }
 
-
         public static bool operator ==(Vector2 value1, Vector2 value2)
         {
             return value1.X == value2.X && value1.Y == value2.Y;
         }
 
-
         public static bool operator !=(Vector2 value1, Vector2 value2)
         {
             return value1.X != value2.X || value1.Y != value2.Y;
         }
-
 
         public static Vector2 operator +(Vector2 value1, Vector2 value2)
         {
@@ -477,14 +471,12 @@ namespace sharppunk
             return value1;
         }
 
-
         public static Vector2 operator -(Vector2 value1, Vector2 value2)
         {
             value1.X -= value2.X;
             value1.Y -= value2.Y;
             return value1;
         }
-
 
         public static Vector2 operator *(Vector2 value1, Vector2 value2)
         {
@@ -493,14 +485,12 @@ namespace sharppunk
             return value1;
         }
 
-
         public static Vector2 operator *(Vector2 value, float scaleFactor)
         {
             value.X *= scaleFactor;
             value.Y *= scaleFactor;
             return value;
         }
-
 
         public static Vector2 operator *(float scaleFactor, Vector2 value)
         {
@@ -509,14 +499,12 @@ namespace sharppunk
             return value;
         }
 
-
         public static Vector2 operator /(Vector2 value1, Vector2 value2)
         {
             value1.X /= value2.X;
             value1.Y /= value2.Y;
             return value1;
         }
-
 
         public static Vector2 operator /(Vector2 value1, float divider)
         {
@@ -531,7 +519,7 @@ namespace sharppunk
         public Point ToPoint()
         {
             return new Point(
-                Convert.ToInt32(Math.Ceiling((double)X)), 
+                Convert.ToInt32(Math.Ceiling((double)X)),
                 Convert.ToInt32(Math.Ceiling((double)Y))
               );
         }

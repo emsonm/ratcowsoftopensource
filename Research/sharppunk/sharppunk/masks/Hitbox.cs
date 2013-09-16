@@ -1,12 +1,9 @@
-using System;
-
-namespace Dabrorius.MonoPunk
+namespace sharppunk.masks
 {
-	public class Hitbox
-	{
-		public Hitbox ()
-		{
-		}
-	}
+    public class Hitbox
+    {
+        public Hitbox()
+        {
+        }
+    }
 }
-

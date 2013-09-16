@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace sharppunk
 {
@@ -12,8 +9,7 @@ namespace sharppunk
         public Vector3 Direction;
         public Vector3 Position;
 
-        #endregion
-
+        #endregion Public Fields
 
         #region Public Constructors
 
@@ -23,8 +19,7 @@ namespace sharppunk
             this.Direction = direction;
         }
 
-        #endregion
-
+        #endregion Public Constructors
 
         #region Public Methods
 
@@ -33,18 +28,15 @@ namespace sharppunk
             return (obj is Ray) ? this.Equals((Ray)obj) : false;
         }
 
-
         public bool Equals(Ray other)
         {
             return this.Position.Equals(other.Position) && this.Direction.Equals(other.Direction);
         }
 
-
         public override int GetHashCode()
         {
             return Position.GetHashCode() ^ Direction.GetHashCode();
         }
-
 
         public float? Intersects(BoundingBox box)
         {
@@ -81,7 +73,7 @@ namespace sharppunk
                     return null;// ray go on opposite of face
                 //coordonate of hit point of face of cube
                 float coord = Position.Z + maxT.X * Direction.Z;
-                // if hit point coord ( intersect face with ray) is out of other plane coord it miss 
+                // if hit point coord ( intersect face with ray) is out of other plane coord it miss
                 if (coord < box.Min.Z || coord > box.Max.Z)
                     return null;
                 coord = Position.Y + maxT.X * Direction.Y;
@@ -95,7 +87,7 @@ namespace sharppunk
                     return null;// ray go on opposite of face
                 //coordonate of hit point of face of cube
                 float coord = Position.Z + maxT.Y * Direction.Z;
-                // if hit point coord ( intersect face with ray) is out of other plane coord it miss 
+                // if hit point coord ( intersect face with ray) is out of other plane coord it miss
                 if (coord < box.Min.Z || coord > box.Max.Z)
                     return null;
                 coord = Position.X + maxT.Y * Direction.X;
@@ -109,7 +101,7 @@ namespace sharppunk
                     return null;// ray go on opposite of face
                 //coordonate of hit point of face of cube
                 float coord = Position.X + maxT.Z * Direction.X;
-                // if hit point coord ( intersect face with ray) is out of other plane coord it miss 
+                // if hit point coord ( intersect face with ray) is out of other plane coord it miss
                 if (coord < box.Min.X || coord > box.Max.X)
                     return null;
                 coord = Position.Y + maxT.Z * Direction.Y;
@@ -119,18 +111,15 @@ namespace sharppunk
             }
         }
 
-
         public void Intersects(ref BoundingBox box, out float? result)
         {
             result = Intersects(box);
         }
 
-
         public float? Intersects(BoundingFrustum frustum)
         {
             throw new NotImplementedException();
         }
-
 
         public float? Intersects(BoundingSphere sphere)
         {
@@ -185,23 +174,21 @@ namespace sharppunk
             result = (dist < 0) ? null : distanceAlongRay - (float?)Math.Sqrt(dist);
         }
 
-
         public static bool operator !=(Ray a, Ray b)
         {
             return !a.Equals(b);
         }
-
 
         public static bool operator ==(Ray a, Ray b)
         {
             return a.Equals(b);
         }
 
-
         public override string ToString()
         {
             return string.Format("{{Position:{0} Direction:{1}}}", Position.ToString(), Direction.ToString());
         }
-        #endregion
+
+        #endregion Public Methods
     }
 }

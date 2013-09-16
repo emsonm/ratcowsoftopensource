@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace sharppunk
@@ -21,8 +19,10 @@ namespace sharppunk
         #endregion Private Fields
 
         #region Public Fields
+
         public const int CornerCount = 8;
-        #endregion
+
+        #endregion Public Fields
 
         #region Public Constructors
 
@@ -34,7 +34,6 @@ namespace sharppunk
         }
 
         #endregion Public Constructors
-
 
         #region Public Properties
 
@@ -80,7 +79,6 @@ namespace sharppunk
         }
 
         #endregion Public Properties
-
 
         #region Public Methods
 
@@ -241,9 +239,7 @@ namespace sharppunk
                 return;
             }
             //duff idea : test if all corner is in same side of a plane if yes and outside it is disjoint else intersect
-            // issue is that we can have some times when really close aabb 
-
-
+            // issue is that we can have some times when really close aabb
 
             // If we're here, the the sphere's centre was outside of the frustum. This makes things hard :(
             // We can't use perpendicular distance anymore. I'm not sure how to code this.
@@ -402,10 +398,10 @@ namespace sharppunk
 
         #endregion Public Methods
 
-
         #region Private Methods
 
 #warning Move this to the PlaneHelper class
+
         private void CreateCorners()
         {
             this.corners = new Vector3[8];
@@ -435,7 +431,6 @@ namespace sharppunk
                                     -this.matrix.M34 - this.matrix.M32, -this.matrix.M44 - this.matrix.M42);
 
             this.near = new Plane(-this.matrix.M13, -this.matrix.M23, -this.matrix.M33, -this.matrix.M43);
-
 
             this.far = new Plane(this.matrix.M13 - this.matrix.M14, this.matrix.M23 - this.matrix.M24,
                                  this.matrix.M33 - this.matrix.M34, this.matrix.M43 - this.matrix.M44);
@@ -477,6 +472,6 @@ namespace sharppunk
             p.D *= factor;
         }
 
-        #endregion
+        #endregion Private Methods
     }
 }

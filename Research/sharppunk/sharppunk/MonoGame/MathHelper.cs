@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace sharppunk
 {
@@ -62,7 +59,6 @@ namespace sharppunk
             return (float)result;
         }
 
-
         public static float Lerp(float value1, float value2, float amount)
         {
             return value1 + (value2 - value1) * amount;
@@ -104,7 +100,6 @@ namespace sharppunk
             return (float)(degrees * 0.017453292519943295769236907684886);
         }
 
-
         public static float WrapAngle(float angle)
         {
             angle = (float)Math.IEEERemainder((double)angle, 6.2831854820251465); //2xPi precission is double
@@ -119,6 +114,5 @@ namespace sharppunk
             }
             return angle;
         }
-
     }
 }

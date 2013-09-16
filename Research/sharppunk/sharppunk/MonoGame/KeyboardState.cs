@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace sharppunk
@@ -14,7 +11,6 @@ namespace sharppunk
 
         #endregion Private Fields
 
-
         #region Public Properties
 
         public KeyState this[Keys key]
@@ -23,8 +19,7 @@ namespace sharppunk
             internal set { this.keyStates[(int)key] = (value == KeyState.Down) ? true : false; }
         }
 
-        #endregion
-
+        #endregion Public Properties
 
         #region Constructors
 
@@ -33,8 +28,7 @@ namespace sharppunk
             keyStates = new bool[numKeys];
         }
 
-        #endregion
-
+        #endregion Constructors
 
         #region Public Methods
 
@@ -78,7 +72,7 @@ namespace sharppunk
             return !keyStates[(int)key];
         }
 
-        #endregion
+        #endregion Public Methods
 
         public static KeyboardState GetState()
         {

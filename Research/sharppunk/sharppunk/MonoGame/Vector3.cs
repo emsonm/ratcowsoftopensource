@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace sharppunk
@@ -23,7 +21,6 @@ namespace sharppunk
 
         #endregion Private Fields
 
-
         #region Public Fields
 
         public float X;
@@ -31,7 +28,6 @@ namespace sharppunk
         public float Z;
 
         #endregion Public Fields
-
 
         #region Properties
 
@@ -92,7 +88,6 @@ namespace sharppunk
 
         #endregion Properties
 
-
         #region Constructors
 
         public Vector3(float x, float y, float z)
@@ -102,14 +97,12 @@ namespace sharppunk
             this.Z = z;
         }
 
-
         public Vector3(float value)
         {
             this.X = value;
             this.Y = value;
             this.Z = value;
         }
-
 
         public Vector3(Vector2 value, float z)
         {
@@ -118,9 +111,7 @@ namespace sharppunk
             this.Z = z;
         }
 
-
         #endregion Constructors
-
 
         #region Public Methods
 
@@ -558,8 +549,7 @@ namespace sharppunk
                                  (normal.X * matrix.M13) + (normal.Y * matrix.M23) + (normal.Z * matrix.M33));
         }
 
-        #endregion Public methods
-
+        #endregion Public Methods
 
         #region Operators
 
@@ -640,6 +630,6 @@ namespace sharppunk
             return value;
         }
 
-        #endregion
+        #endregion Operators
     }
 }
