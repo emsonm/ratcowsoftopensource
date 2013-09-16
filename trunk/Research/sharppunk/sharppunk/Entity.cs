@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace sharppunk
 {
-    public class Entity
+    public class Entity //: Graphic
     {
         public Boolean Visible = true;
         public Boolean Active = true; // this should be movet to tweener
@@ -56,11 +56,11 @@ namespace sharppunk
 
         public Bitmap renderTarget;
 
-        virtual public void Render()
+        virtual public void Render()   
         {
             if (graphic != null && graphic.Visible)
             {
-                graphic.Render(renderTarget != null ? renderTarget : MP.Buffer, Position, MP.Camera);
+                graphic.Render(Graphics.FromImage(renderTarget != null ? renderTarget : MP.Buffer), Position, MP.Camera);
             }
         }
 
