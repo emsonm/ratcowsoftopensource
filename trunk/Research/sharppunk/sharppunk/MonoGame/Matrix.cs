@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace sharppunk
 {
@@ -28,17 +25,16 @@ namespace sharppunk
 
         #endregion Public Fields
 
-
         #region Static Properties
 
         private static Matrix identity = new Matrix(1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
+
         public static Matrix Identity
         {
             get { return identity; }
         }
 
         #endregion Static Properties
-
 
         #region Public Properties
 
@@ -121,8 +117,8 @@ namespace sharppunk
 
         #endregion Public Properties
 
-
         #region Constructors
+
         /// <summary>
         /// Constructor for 4x4 Matrix
         /// </summary>
@@ -391,7 +387,6 @@ namespace sharppunk
             return matrix1;
         }
 
-
         /// <summary>
         /// Adds two Matrix and save to the result Matrix
         /// </summary>
@@ -424,7 +419,6 @@ namespace sharppunk
             result.M44 = matrix1.M44 + matrix2.M44;
         }
 
-
         public static Matrix CreateBillboard(Vector3 objectPosition, Vector3 cameraPosition,
             Vector3 cameraUpVector, Nullable<Vector3> cameraForwardVector)
         {
@@ -455,25 +449,21 @@ namespace sharppunk
             throw new NotImplementedException();
         }
 
-
         public static void CreateConstrainedBillboard(ref Vector3 objectPosition, ref Vector3 cameraPosition,
             ref Vector3 rotateAxis, Vector3? cameraForwardVector, Vector3? objectForwardVector, out Matrix result)
         {
             throw new NotImplementedException();
         }
 
-
         public static Matrix CreateFromAxisAngle(Vector3 axis, float angle)
         {
             throw new NotImplementedException();
         }
 
-
         public static void CreateFromAxisAngle(ref Vector3 axis, float angle, out Matrix result)
         {
             throw new NotImplementedException();
         }
-
 
         public static Matrix CreateFromQuaternion(Quaternion quaternion)
         {
@@ -481,7 +471,6 @@ namespace sharppunk
             CreateFromQuaternion(ref quaternion, out ret);
             return ret;
         }
-
 
         public static void CreateFromQuaternion(ref Quaternion quaternion, out Matrix result)
         {
@@ -498,14 +487,12 @@ namespace sharppunk
             result.M33 = 1 - 2 * (quaternion.X * quaternion.X + quaternion.Y * quaternion.Y);
         }
 
-
         public static Matrix CreateLookAt(Vector3 cameraPosition, Vector3 cameraTarget, Vector3 cameraUpVector)
         {
             Matrix ret;
             CreateLookAt(ref cameraPosition, ref cameraTarget, ref cameraUpVector, out ret);
             return ret;
         }
-
 
         public static void CreateLookAt(ref Vector3 cameraPosition, ref Vector3 cameraTarget, ref Vector3 cameraUpVector, out Matrix result)
         {
@@ -536,7 +523,6 @@ namespace sharppunk
             return ret;
         }
 
-
         public static void CreateOrthographic(float width, float height, float zNearPlane, float zFarPlane, out Matrix result)
         {
             result.M11 = 2 / width;
@@ -557,14 +543,12 @@ namespace sharppunk
             result.M44 = 1;
         }
 
-
         public static Matrix CreateOrthographicOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane)
         {
             Matrix ret;
             CreateOrthographicOffCenter(left, right, bottom, top, zNearPlane, zFarPlane, out ret);
             return ret;
         }
-
 
         public static void CreateOrthographicOffCenter(float left, float right, float bottom, float top,
             float zNearPlane, float zFarPlane, out Matrix result)
@@ -587,18 +571,15 @@ namespace sharppunk
             result.M44 = 1;
         }
 
-
         public static Matrix CreatePerspective(float width, float height, float zNearPlane, float zFarPlane)
         {
             throw new NotImplementedException();
         }
 
-
         public static void CreatePerspective(float width, float height, float zNearPlane, float zFarPlane, out Matrix result)
         {
             throw new NotImplementedException();
         }
-
 
         public static Matrix CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance)
         {
@@ -606,7 +587,6 @@ namespace sharppunk
             CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearPlaneDistance, farPlaneDistance, out ret);
             return ret;
         }
-
 
         public static void CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance, out Matrix result)
         {
@@ -637,18 +617,15 @@ namespace sharppunk
             result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
         }
 
-
         public static Matrix CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float zNearPlane, float zFarPlane)
         {
             throw new NotImplementedException();
         }
 
-
         public static void CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float nearPlaneDistance, float farPlaneDistance, out Matrix result)
         {
             throw new NotImplementedException();
         }
-
 
         public static Matrix CreateRotationX(float radians)
         {
@@ -662,7 +639,6 @@ namespace sharppunk
             return returnMatrix;
         }
 
-
         public static void CreateRotationX(float radians, out Matrix result)
         {
             result = Matrix.Identity;
@@ -672,7 +648,6 @@ namespace sharppunk
             result.M32 = -result.M23;
             result.M33 = result.M22;
         }
-
 
         public static Matrix CreateRotationY(float radians)
         {
@@ -686,7 +661,6 @@ namespace sharppunk
             return returnMatrix;
         }
 
-
         public static void CreateRotationY(float radians, out Matrix result)
         {
             result = Matrix.Identity;
@@ -696,7 +670,6 @@ namespace sharppunk
             result.M31 = -result.M13;
             result.M33 = result.M11;
         }
-
 
         public static Matrix CreateRotationZ(float radians)
         {
@@ -710,7 +683,6 @@ namespace sharppunk
             return returnMatrix;
         }
 
-
         public static void CreateRotationZ(float radians, out Matrix result)
         {
             result = Matrix.Identity;
@@ -720,7 +692,6 @@ namespace sharppunk
             result.M21 = -result.M12;
             result.M22 = result.M11;
         }
-
 
         public static Matrix CreateScale(float scale)
         {
@@ -733,7 +704,6 @@ namespace sharppunk
             return returnMatrix;
         }
 
-
         public static void CreateScale(float scale, out Matrix result)
         {
             result = Matrix.Identity;
@@ -742,7 +712,6 @@ namespace sharppunk
             result.M22 = scale;
             result.M33 = scale;
         }
-
 
         public static Matrix CreateScale(float xScale, float yScale, float zScale)
         {
@@ -755,7 +724,6 @@ namespace sharppunk
             return returnMatrix;
         }
 
-
         public static void CreateScale(float xScale, float yScale, float zScale, out Matrix result)
         {
             result = Matrix.Identity;
@@ -764,7 +732,6 @@ namespace sharppunk
             result.M22 = yScale;
             result.M33 = zScale;
         }
-
 
         public static Matrix CreateScale(Vector3 scales)
         {
@@ -777,7 +744,6 @@ namespace sharppunk
             return returnMatrix;
         }
 
-
         public static void CreateScale(ref Vector3 scales, out Matrix result)
         {
             result = Matrix.Identity;
@@ -786,7 +752,6 @@ namespace sharppunk
             result.M22 = scales.Y;
             result.M33 = scales.Z;
         }
-
 
         public static Matrix CreateTranslation(float xPosition, float yPosition, float zPosition)
         {
@@ -799,7 +764,6 @@ namespace sharppunk
             return returnMatrix;
         }
 
-
         public static void CreateTranslation(float xPosition, float yPosition, float zPosition, out Matrix result)
         {
             result = Matrix.Identity;
@@ -808,7 +772,6 @@ namespace sharppunk
             result.M42 = yPosition;
             result.M43 = zPosition;
         }
-
 
         public static Matrix CreateTranslation(Vector3 position)
         {
@@ -820,7 +783,6 @@ namespace sharppunk
 
             return returnMatrix;
         }
-
 
         public static void CreateTranslation(ref Vector3 position, out Matrix result)
         {
@@ -858,7 +820,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void Divide(ref Matrix matrix1, ref Matrix matrix2, out Matrix result)
         {
             Matrix inverse = Matrix.Invert(matrix2);
@@ -883,7 +844,6 @@ namespace sharppunk
             result.M44 = matrix1.M41 * inverse.M14 + matrix1.M42 * inverse.M24 + matrix1.M43 * inverse.M34 + matrix1.M44 * inverse.M44;
         }
 
-
         public static Matrix Divide(Matrix matrix1, float divider)
         {
             float inverseDivider = 1.0f / divider;
@@ -907,7 +867,6 @@ namespace sharppunk
 
             return matrix1;
         }
-
 
         public static void Divide(ref Matrix matrix1, float divider, out Matrix result)
         {
@@ -936,13 +895,12 @@ namespace sharppunk
             return matrix;
         }
 
-
         public static void Invert(ref Matrix matrix, out Matrix result)
         {
             //
             // Use Laplace expansion theorem to calculate the inverse of a 4x4 matrix
-            // 
-            // 1. Calculate the 2x2 determinants needed and the 4x4 determinant based on the 2x2 determinants 
+            //
+            // 1. Calculate the 2x2 determinants needed and the 4x4 determinant based on the 2x2 determinants
             // 2. Create the adjugate matrix, which satisfies: A * adj(A) = det(A) * I
             // 3. Divide adjugate matrix with the determinant to find the inverse
 
@@ -985,12 +943,10 @@ namespace sharppunk
             result = ret;
         }
 
-
         public static Matrix Lerp(Matrix matrix1, Matrix matrix2, float amount)
         {
             throw new NotImplementedException();
         }
-
 
         public static void Lerp(ref Matrix matrix1, ref Matrix matrix2, float amount, out Matrix result)
         {
@@ -1024,7 +980,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void Multiply(ref Matrix matrix1, ref Matrix matrix2, out Matrix result)
         {
             result.M11 = matrix1.M11 * matrix2.M11 + matrix1.M12 * matrix2.M21 + matrix1.M13 * matrix2.M31 + matrix1.M14 * matrix2.M41;
@@ -1048,7 +1003,6 @@ namespace sharppunk
             result.M44 = matrix1.M41 * matrix2.M14 + matrix1.M42 * matrix2.M24 + matrix1.M43 * matrix2.M34 + matrix1.M44 * matrix2.M44;
         }
 
-
         public static Matrix Multiply(Matrix matrix1, float factor)
         {
             matrix1.M11 *= factor;
@@ -1070,7 +1024,6 @@ namespace sharppunk
             return matrix1;
         }
 
-
         public static void Multiply(ref Matrix matrix1, float factor, out Matrix result)
         {
             result.M11 = matrix1.M11 * factor;
@@ -1090,7 +1043,6 @@ namespace sharppunk
             result.M43 = matrix1.M43 * factor;
             result.M44 = matrix1.M44 * factor;
         }
-
 
         public static Matrix Negate(Matrix matrix)
         {
@@ -1112,7 +1064,6 @@ namespace sharppunk
             matrix.M44 = -matrix.M44;
             return matrix;
         }
-
 
         public static void Negate(ref Matrix matrix, out Matrix result)
         {
@@ -1201,7 +1152,6 @@ namespace sharppunk
 
             return result;
         }
-
 
         public static void Transpose(ref Matrix matrix, out Matrix result)
         {
@@ -1449,7 +1399,6 @@ namespace sharppunk
             return matrix1;
         }
 
-
         public static Matrix operator -(Matrix matrix)
         {
             matrix.M11 = -matrix.M11;
@@ -1471,7 +1420,7 @@ namespace sharppunk
             return matrix;
         }
 
-        #endregion
+        #endregion Operators
 
         #region Object Overrides
 
@@ -1495,7 +1444,6 @@ namespace sharppunk
                     " {M41:" + M41 + " M42:" + M42 + " M43:" + M43 + " M44:" + M44 + "} }";
         }
 
-        #endregion
-
+        #endregion Object Overrides
     }
 }

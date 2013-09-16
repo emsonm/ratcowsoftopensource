@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
 
 namespace sharppunk
@@ -15,7 +13,6 @@ namespace sharppunk
 
         #endregion Public Fields
 
-
         #region Constructors
 
         public BoundingSphere(Vector3 center, float radius)
@@ -25,7 +22,6 @@ namespace sharppunk
         }
 
         #endregion Constructors
-
 
         #region Public Methods
 
@@ -85,7 +81,6 @@ namespace sharppunk
 
             //else disjoint
             return ContainmentType.Disjoint;
-
         }
 
         public void Contains(ref BoundingBox box, out ContainmentType result)

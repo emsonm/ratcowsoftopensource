@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace sharppunk
@@ -11,8 +9,7 @@ namespace sharppunk
         public float Y;
         public float Z;
         public float W;
-        static Quaternion identity = new Quaternion(0, 0, 0, 1);
-
+        private static Quaternion identity = new Quaternion(0, 0, 0, 1);
 
         public Quaternion(float x, float y, float z, float w)
         {
@@ -21,7 +18,6 @@ namespace sharppunk
             this.Z = z;
             this.W = w;
         }
-
 
         public Quaternion(Vector3 vectorPart, float scalarPart)
         {
@@ -36,7 +32,6 @@ namespace sharppunk
             get { return identity; }
         }
 
-
         public static Quaternion Add(Quaternion quaternion1, Quaternion quaternion2)
         {
             quaternion1.X += quaternion2.X;
@@ -45,7 +40,6 @@ namespace sharppunk
             quaternion1.W += quaternion2.W;
             return quaternion1;
         }
-
 
         public static void Add(ref Quaternion quaternion1, ref Quaternion quaternion2, out Quaternion result)
         {
@@ -122,7 +116,6 @@ namespace sharppunk
             return new Quaternion(axis.X * sin_a, axis.Y * sin_a, axis.Z * sin_a, (float)Math.Cos(angle / 2.0f));
         }
 
-
         public static void CreateFromAxisAngle(ref Vector3 axis, float angle, out Quaternion result)
         {
             float sin_a = (float)Math.Sin(angle / 2.0f);
@@ -131,7 +124,6 @@ namespace sharppunk
             result.Z = axis.Z * sin_a;
             result.W = (float)Math.Cos(angle / 2.0f);
         }
-
 
         public static Quaternion CreateFromRotationMatrix(Matrix matrix)
         {
@@ -175,7 +167,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void CreateFromRotationMatrix(ref Matrix matrix, out Quaternion result)
         {
             if ((matrix.M11 + matrix.M22 + matrix.M33) > 0.0F)
@@ -216,7 +207,6 @@ namespace sharppunk
             result.W = (matrix.M12 - matrix.M21) * M7;
         }
 
-
         public static Quaternion Divide(Quaternion quaternion1, Quaternion quaternion2)
         {
             Quaternion result;
@@ -234,7 +224,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void Divide(ref Quaternion quaternion1, ref Quaternion quaternion2, out Quaternion result)
         {
             float w5 = 1.0F / ((quaternion2.X * quaternion2.X) + (quaternion2.Y * quaternion2.Y) + (quaternion2.Z * quaternion2.Z) + (quaternion2.W * quaternion2.W));
@@ -249,24 +238,20 @@ namespace sharppunk
             result.W = (quaternion1.W * quaternion2.W * w5) - ((quaternion1.X * w4) + (quaternion1.Y * w3) + (quaternion1.Z * w2));
         }
 
-
         public static float Dot(Quaternion quaternion1, Quaternion quaternion2)
         {
             return (quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y) + (quaternion1.Z * quaternion2.Z) + (quaternion1.W * quaternion2.W);
         }
-
 
         public static void Dot(ref Quaternion quaternion1, ref Quaternion quaternion2, out float result)
         {
             result = (quaternion1.X * quaternion2.X) + (quaternion1.Y * quaternion2.Y) + (quaternion1.Z * quaternion2.Z) + (quaternion1.W * quaternion2.W);
         }
 
-
         public override bool Equals(object obj)
         {
             return (obj is Quaternion) ? this == (Quaternion)obj : false;
         }
-
 
         public bool Equals(Quaternion other)
         {
@@ -275,12 +260,10 @@ namespace sharppunk
             return false;
         }
 
-
         public override int GetHashCode()
         {
             return X.GetHashCode() + Y.GetHashCode() + Z.GetHashCode() + W.GetHashCode();
         }
-
 
         public static Quaternion Inverse(Quaternion quaternion)
         {
@@ -293,7 +276,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void Inverse(ref Quaternion quaternion, out Quaternion result)
         {
             float m1 = 1.0F / ((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y) + (quaternion.Z * quaternion.Z) + (quaternion.W * quaternion.W));
@@ -303,18 +285,15 @@ namespace sharppunk
             result.W = quaternion.W * m1;
         }
 
-
         public float Length()
         {
             return (float)System.Math.Sqrt((double)((X * X) + (Y * Y) + (Z * Z) + (W * W)));
         }
 
-
         public float LengthSquared()
         {
             return (X * X) + (Y * Y) + (Z * Z) + (W * W);
         }
-
 
         public static Quaternion Lerp(Quaternion quaternion1, Quaternion quaternion2, float amount)
         {
@@ -343,7 +322,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void Lerp(ref Quaternion quaternion1, ref Quaternion quaternion2, float amount, out Quaternion result)
         {
             float m2 = 1.0F - amount;
@@ -368,7 +346,6 @@ namespace sharppunk
             result.Z *= m3;
             result.W *= m3;
         }
-
 
         public static Quaternion Slerp(Quaternion quaternion1, Quaternion quaternion2, float amount)
         {
@@ -401,7 +378,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void Slerp(ref Quaternion quaternion1, ref Quaternion quaternion2, float amount, out Quaternion result)
         {
             float q2, q3;
@@ -431,7 +407,6 @@ namespace sharppunk
             result.W = (q3 * quaternion1.W) + (q2 * quaternion2.W);
         }
 
-
         public static Quaternion Subtract(Quaternion quaternion1, Quaternion quaternion2)
         {
             quaternion1.X -= quaternion2.X;
@@ -441,7 +416,6 @@ namespace sharppunk
             return quaternion1;
         }
 
-
         public static void Subtract(ref Quaternion quaternion1, ref Quaternion quaternion2, out Quaternion result)
         {
             result.X = quaternion1.X - quaternion2.X;
@@ -449,7 +423,6 @@ namespace sharppunk
             result.Z = quaternion1.Z - quaternion2.Z;
             result.W = quaternion1.W - quaternion2.W;
         }
-
 
         public static Quaternion Multiply(Quaternion quaternion1, Quaternion quaternion2)
         {
@@ -465,7 +438,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static Quaternion Multiply(Quaternion quaternion1, float scaleFactor)
         {
             quaternion1.X *= scaleFactor;
@@ -475,7 +447,6 @@ namespace sharppunk
             return quaternion1;
         }
 
-
         public static void Multiply(ref Quaternion quaternion1, float scaleFactor, out Quaternion result)
         {
             result.X = quaternion1.X * scaleFactor;
@@ -483,7 +454,6 @@ namespace sharppunk
             result.Z = quaternion1.Z * scaleFactor;
             result.W = quaternion1.W * scaleFactor;
         }
-
 
         public static void Multiply(ref Quaternion quaternion1, ref Quaternion quaternion2, out Quaternion result)
         {
@@ -497,7 +467,6 @@ namespace sharppunk
             result.W = (quaternion1.W * quaternion2.W) - f9;
         }
 
-
         public static Quaternion Negate(Quaternion quaternion)
         {
             Quaternion result;
@@ -508,7 +477,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void Negate(ref Quaternion quaternion, out Quaternion result)
         {
             result.X = -quaternion.X;
@@ -516,7 +484,6 @@ namespace sharppunk
             result.Z = -quaternion.Z;
             result.W = -quaternion.W;
         }
-
 
         public void Normalize()
         {
@@ -526,7 +493,6 @@ namespace sharppunk
             this.Z *= f1;
             this.W *= f1;
         }
-
 
         public static Quaternion Normalize(Quaternion quaternion)
         {
@@ -539,7 +505,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static void Normalize(ref Quaternion quaternion, out Quaternion result)
         {
             float f1 = 1.0F / (float)System.Math.Sqrt((double)((quaternion.X * quaternion.X) + (quaternion.Y * quaternion.Y) + (quaternion.Z * quaternion.Z) + (quaternion.W * quaternion.W)));
@@ -549,7 +514,6 @@ namespace sharppunk
             result.W = quaternion.W * f1;
         }
 
-
         public static Quaternion operator +(Quaternion quaternion1, Quaternion quaternion2)
         {
             quaternion1.X += quaternion2.X;
@@ -558,7 +522,6 @@ namespace sharppunk
             quaternion1.W += quaternion2.W;
             return quaternion1;
         }
-
 
         public static Quaternion operator /(Quaternion quaternion1, Quaternion quaternion2)
         {
@@ -577,7 +540,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static bool operator ==(Quaternion quaternion1, Quaternion quaternion2)
         {
             return quaternion1.X == quaternion2.X
@@ -586,7 +548,6 @@ namespace sharppunk
                 && quaternion1.W == quaternion2.W;
         }
 
-
         public static bool operator !=(Quaternion quaternion1, Quaternion quaternion2)
         {
             return quaternion1.X != quaternion2.X
@@ -594,7 +555,6 @@ namespace sharppunk
                 || quaternion1.Z != quaternion2.Z
                 || quaternion1.W != quaternion2.W;
         }
-
 
         public static Quaternion operator *(Quaternion quaternion1, Quaternion quaternion2)
         {
@@ -610,7 +570,6 @@ namespace sharppunk
             return result;
         }
 
-
         public static Quaternion operator *(Quaternion quaternion1, float scaleFactor)
         {
             quaternion1.X *= scaleFactor;
@@ -619,7 +578,6 @@ namespace sharppunk
             quaternion1.W *= scaleFactor;
             return quaternion1;
         }
-
 
         public static Quaternion operator -(Quaternion quaternion1, Quaternion quaternion2)
         {
@@ -630,7 +588,6 @@ namespace sharppunk
             return quaternion1;
         }
 
-
         public static Quaternion operator -(Quaternion quaternion)
         {
             quaternion.X = -quaternion.X;
@@ -639,7 +596,6 @@ namespace sharppunk
             quaternion.W = -quaternion.W;
             return quaternion;
         }
-
 
         public override string ToString()
         {
@@ -655,6 +611,5 @@ namespace sharppunk
             sb.Append("}");
             return sb.ToString();
         }
-
     }
 }

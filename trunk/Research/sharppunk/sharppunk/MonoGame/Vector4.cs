@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace sharppunk
@@ -18,7 +16,6 @@ namespace sharppunk
 
         #endregion Private Fields
 
-
         #region Public Fields
 
         public float X;
@@ -27,7 +24,6 @@ namespace sharppunk
         public float W;
 
         #endregion Public Fields
-
 
         #region Properties
 
@@ -63,7 +59,6 @@ namespace sharppunk
 
         #endregion Properties
 
-
         #region Constructors
 
         public Vector4(float x, float y, float z, float w)
@@ -98,8 +93,7 @@ namespace sharppunk
             this.W = value;
         }
 
-        #endregion
-
+        #endregion Constructors
 
         #region Public Methods
 
@@ -581,7 +575,6 @@ namespace sharppunk
 
         #endregion Public Methods
 
-
         #region Operators
 
         public static Vector4 operator -(Vector4 value)
@@ -675,5 +668,4 @@ namespace sharppunk
 
         #endregion Operators
     }
-
 }

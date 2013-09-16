@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace sharppunk
 {
     public struct BoundingBox : IEquatable<BoundingBox>
     {
-
         #region Public Fields
 
         public Vector3 Min;
@@ -15,7 +12,6 @@ namespace sharppunk
         public const int CornerCount = 8;
 
         #endregion Public Fields
-
 
         #region Public Constructors
 
@@ -26,7 +22,6 @@ namespace sharppunk
         }
 
         #endregion Public Constructors
-
 
         #region Public Methods
 
@@ -40,7 +35,6 @@ namespace sharppunk
                 || box.Max.Z < Min.Z
                 || box.Min.Z > Max.Z)
                 return ContainmentType.Disjoint;
-
 
             if (box.Min.X >= Min.X
                 && box.Max.X <= Max.X
@@ -60,7 +54,7 @@ namespace sharppunk
 
         public ContainmentType Contains(BoundingFrustum frustum)
         {
-            //TODO: bad done here need a fix. 
+            //TODO: bad done here need a fix.
             //Because question is not frustum contain box but reverse and this is not the same
             int i;
             ContainmentType contained;
@@ -80,7 +74,6 @@ namespace sharppunk
             if (i != 0)             // if i is not equal to zero, we can fastpath and say that this box intersects
                 return ContainmentType.Intersects;
 
-
             // If we get here, it means the first (and only) point we checked was actually contained in the frustum.
             // So we assume that all other points will also be contained. If one of the points is disjoint, we can
             // exit immediately saying that the result is Intersects
@@ -90,7 +83,6 @@ namespace sharppunk
                 this.Contains(ref corners[i], out contained);
                 if (contained != ContainmentType.Contains)
                     return ContainmentType.Intersects;
-
             }
 
             // If we get here, then we know all the points were actually contained, therefore result is Contains
@@ -161,8 +153,6 @@ namespace sharppunk
                 result = ContainmentType.Intersects;
             else
                 result = ContainmentType.Contains;
-
-
         }
 
         public static BoundingBox CreateFromPoints(IEnumerable<Vector3> points)
@@ -221,10 +211,10 @@ namespace sharppunk
         public Vector3[] GetCorners()
         {
             return new Vector3[] {
-                new Vector3(this.Min.X, this.Max.Y, this.Max.Z), 
+                new Vector3(this.Min.X, this.Max.Y, this.Max.Z),
                 new Vector3(this.Max.X, this.Max.Y, this.Max.Z),
-                new Vector3(this.Max.X, this.Min.Y, this.Max.Z), 
-                new Vector3(this.Min.X, this.Min.Y, this.Max.Z), 
+                new Vector3(this.Max.X, this.Min.Y, this.Max.Z),
+                new Vector3(this.Min.X, this.Min.Y, this.Max.Z),
                 new Vector3(this.Min.X, this.Max.Y, this.Min.Z),
                 new Vector3(this.Max.X, this.Max.Y, this.Min.Z),
                 new Vector3(this.Max.X, this.Min.Y, this.Min.Z),
@@ -359,7 +349,6 @@ namespace sharppunk
                 return PlaneIntersectionType.Front;
 
             return PlaneIntersectionType.Back;
-
         }
 
         public void Intersects(ref Plane plane, out PlaneIntersectionType result)

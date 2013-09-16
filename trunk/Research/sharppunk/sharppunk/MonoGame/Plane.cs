@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace sharppunk
 {
@@ -14,13 +11,11 @@ namespace sharppunk
 
         #endregion Public Fields
 
-
         #region Constructors
 
         public Plane(Vector4 value)
             : this(new Vector3(value.X, value.Y, value.Z), value.W)
         {
-
         }
 
         public Plane(Vector3 normal, float d)
@@ -42,11 +37,9 @@ namespace sharppunk
         public Plane(float a, float b, float c, float d)
             : this(new Vector3(a, b, c), d)
         {
-
         }
 
         #endregion Constructors
-
 
         #region Public Methods
 
@@ -181,7 +174,7 @@ namespace sharppunk
             return string.Format("{{Normal:{0} D:{1}}}", Normal, D);
         }
 
-        #endregion
+        #endregion Public Methods
     }
 
     internal class PlaneHelper

@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="graphics\Anim.cs" />
+    <Compile Include="graphics\Backdrop.cs" />
+    <Compile Include="graphics\Image.cs" />
+    <Compile Include="graphics\Spritemap.cs" />
+    <Compile Include="graphics\Tilemap.cs" />
+    <Compile Include="masks\Hitbox.cs" />
     <Compile Include="MonoGame\BoundingFrustum.cs" />
     <Compile Include="MonoGame\BoundingSphere.cs" />
     <Compile Include="MonoGame\BoundingBox.cs" />
@@ -53,7 +59,6 @@
     <Compile Include="Entity.cs" />
     <Compile Include="MonoGame\Enums.cs" />
     <Compile Include="Graphic.cs" />
-    <Compile Include="Graphics\Image.cs" />
     <Compile Include="Mask.cs" />
     <Compile Include="MonoGame\KeyState.cs" />
     <Compile Include="MonoGame\MathHelper.cs" />
@@ -98,6 +103,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
