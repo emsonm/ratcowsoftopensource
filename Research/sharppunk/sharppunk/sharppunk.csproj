@@ -80,6 +80,7 @@
     <Compile Include="MonoGame\Vector2.cs" />
     <Compile Include="MonoGame\Vector3.cs" />
     <Compile Include="MonoGame\Vector4.cs" />
+    <Compile Include="Utils\KeyMessageFilter.cs" />
     <Compile Include="World.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
