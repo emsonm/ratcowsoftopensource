@@ -56,11 +56,11 @@ namespace sharppunk
 
         public Bitmap renderTarget;
 
-        virtual public void Render()   
+        virtual public void Render()
         {
             if (graphic != null && graphic.Visible)
             {
-                graphic.Render(Graphics.FromImage(renderTarget != null ? renderTarget : MP.Buffer), Position, MP.Camera);
+                graphic.Render((renderTarget != null ? renderTarget : MP.Buffer), Position, MP.Camera);
             }
         }
 

@@ -5,20 +5,28 @@ namespace sharpallegro
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int FClose(IntPtr userdata);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int GetC(IntPtr userdata);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int UngetC(int c, IntPtr userdata);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int FRead(IntPtr p, int n, IntPtr userdata);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int PutC(int c, IntPtr userdata);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int FWrite(IntPtr p, int n, IntPtr userdata);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int FSeek(IntPtr userdata, int offset);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int FEOF(IntPtr userdata);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int FError(IntPtr userdata);
 
@@ -73,6 +81,7 @@ namespace sharpallegro
          * false then the following is not even allocated. This must be the last
          * member in the structure.
          */
+
         public IntPtr normal
         {
             get

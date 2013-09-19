@@ -12,12 +12,12 @@ namespace sharppunk
         {
         }
 
-        virtual public void Update()
+        public virtual void Update()
         {
             // to override
         }
 
-        virtual public void Render(Graphics target, Vector2 point, Vector2 camera)
+        public virtual void Render(Bitmap target, Vector2 point, Vector2 camera)
         {
             // to override
         }

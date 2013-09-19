@@ -1,11 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Reflection;
 
 namespace sharpallegro
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int DIALOG_PROC(int msg, IntPtr d, int c);
+
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate int MenuCallback();
 
@@ -284,6 +284,7 @@ namespace sharpallegro
     }
 
     /* stored information about the state of an active GUI dialog */
+
     public class DIALOG_PLAYER : ManagedPointer
     {
         public DIALOG_PLAYER(IntPtr pointer)
@@ -568,8 +569,6 @@ namespace sharpallegro
         {
             return new MENU(pointer);
         }
-
-
 
         //char *text;                   /* menu item text */
         //AL_METHOD(int, proc, (void)); /* callback function */

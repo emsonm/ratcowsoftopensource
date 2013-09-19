@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 
 namespace sharpallegro
 {
@@ -43,6 +42,7 @@ namespace sharpallegro
         }
 
         /* physical (not virtual!) screen size */
+
         public int w
         {
             get
@@ -60,6 +60,7 @@ namespace sharpallegro
         }
 
         /* true if video memory is linear */
+
         public int linear
         {
             get
@@ -69,6 +70,7 @@ namespace sharpallegro
         }
 
         /* bank size, in bytes */
+
         public int bank_size
         {
             get
@@ -78,6 +80,7 @@ namespace sharpallegro
         }
 
         /* bank granularity, in bytes */
+
         public int bank_gran
         {
             get
@@ -87,6 +90,7 @@ namespace sharpallegro
         }
 
         /* video memory size, in bytes */
+
         public int vid_mem
         {
             get
@@ -96,6 +100,7 @@ namespace sharpallegro
         }
 
         /* physical address of video memory */
+
         public int vid_phys_base
         {
             get
@@ -105,6 +110,7 @@ namespace sharpallegro
         }
 
         /* true if driver runs windowed */
+
         public int windowed
         {
             get
@@ -288,6 +294,7 @@ namespace sharpallegro
             : base(pointer)
         {
         }
+
         /*
         /// <summary>
         /// set if it's a planar (mode-X) sprite
@@ -745,5 +752,4 @@ namespace sharpallegro
             return new GFX_VTABLE(pointer);
         }
     }
-
 }

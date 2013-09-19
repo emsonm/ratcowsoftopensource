@@ -253,7 +253,7 @@ namespace sharpallegro
     /// </summary>
     public class SAMPLE : ManagedPointer
     {
-        SAMPLE(IntPtr pointer)
+        private SAMPLE(IntPtr pointer)
             : base(pointer)
         {
         }
@@ -399,8 +399,8 @@ namespace sharpallegro
     public class MIDI : ManagedPointer
     {
         /* Theoretical maximums: */
-        const int MIDI_VOICES = 64;       /* actual drivers may not be */
-        const int MIDI_TRACKS = 32;       /* able to handle this many */
+        private const int MIDI_VOICES = 64;       /* actual drivers may not be */
+        private const int MIDI_TRACKS = 32;       /* able to handle this many */
 
         public MIDI(IntPtr pointer)
             : base(pointer)
@@ -425,6 +425,7 @@ namespace sharpallegro
                 return new MIDI_TRACK(Offset(pointer, 2 * index * sizeof(Int32)));
             }
         }
+
         public static implicit operator MIDI(IntPtr pointer)
         {
             return new MIDI(pointer);
@@ -514,6 +515,7 @@ namespace sharpallegro
                 return ReadPointer(6 * sizeof(Int32));
             }
         }
+
         public static implicit operator AUDIOSTREAM(IntPtr pointer)
         {
             return new AUDIOSTREAM(pointer);

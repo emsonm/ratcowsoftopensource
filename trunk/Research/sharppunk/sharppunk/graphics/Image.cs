@@ -1,4 +1,5 @@
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace sharppunk.graphics
 {
@@ -50,7 +51,7 @@ namespace sharppunk.graphics
             texture = source;
         }
 
-        public override void Render(System.Drawing.Graphics target, Vector2 point, Vector2 camera)
+        public override void Render(Bitmap target, Vector2 point, Vector2 camera)
         {
             if (texture == null) return;
 
@@ -58,8 +59,32 @@ namespace sharppunk.graphics
 
             point += origin;
 
-            //target.Draw ( texture, point, clipRect, Color.White, MP.Degs2Rad(Angle),
-            //			origin, 1.0f, Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f );
+            using (var g = System.Drawing.Graphics.FromImage(target))
+            {
+                //target.Draw ( texture, point, clipRect, Color.White, MP.Degs2Rad(Angle),
+                //			origin, 1.0f, Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f );
+
+                Bitmap image = new Bitmap(texture);
+
+                //g.Clip = new Region(clipRect); //clip region
+
+                ////do rotation (should we do this if angle is 0?)
+                float x1 = point.X + ((image.Width * 1f) / 2f);
+                float y1 = point.Y + ((image.Height * 1f) / 2f);
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                g.TranslateTransform(-x1, -y1, MatrixOrder.Append);
+                g.RotateTransform(Angle, MatrixOrder.Append);
+                g.ScaleTransform(1f, 1f, MatrixOrder.Append);
+                g.TranslateTransform(x1, y1, MatrixOrder.Append);
+
+                if (Flipped)
+                {
+                    image.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                }
+
+                g.DrawImage(image, point.X, point.Y);
+                g.ResetTransform();
+            }
         }
 
         protected Rectangle clipRect;

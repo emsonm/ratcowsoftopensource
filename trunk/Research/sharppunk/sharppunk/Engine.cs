@@ -75,7 +75,7 @@ namespace sharppunk
         {
             using (var graphics = System.Drawing.Graphics.FromImage(MP.Buffer))
             {
-                graphics.FillRectangle(new SolidBrush(Color.CornflowerBlue), 0.0f, 0.0f, MP.Width, MP.Height);
+                graphics.Clear(Color.CornflowerBlue); //FillRectangle(new SolidBrush(Color.CornflowerBlue), 0.0f, 0.0f, MP.Width, MP.Height);
             }
         }
 
@@ -112,6 +112,8 @@ namespace sharppunk
 
         public void Render()
         {
+            ClearScreen();
+
             MP.CurrentWorld.Render();
         }
 
