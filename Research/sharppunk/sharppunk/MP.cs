@@ -50,5 +50,4 @@ namespace sharppunk
 
         public static bool AllowUserResizing { get; set; }
     }
-
 }

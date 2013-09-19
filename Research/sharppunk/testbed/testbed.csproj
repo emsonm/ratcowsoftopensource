@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A7BE47B3-1A8E-4CC4-B935-2B7F43268C01}</ProjectGuid>
+    <ProjectGuid>{513D6F9C-FECC-4C16-8176-225CA9BF6588}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sharppunk</RootNamespace>
-    <AssemblyName>sharppunk</AssemblyName>
+    <RootNamespace>testbed</RootNamespace>
+    <AssemblyName>testbed</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -46,42 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="graphics\Anim.cs" />
-    <Compile Include="graphics\Backdrop.cs" />
-    <Compile Include="graphics\Image.cs" />
-    <Compile Include="graphics\Spritemap.cs" />
-    <Compile Include="graphics\Tilemap.cs" />
-    <Compile Include="masks\Hitbox.cs" />
-    <Compile Include="MonoGame\BoundingFrustum.cs" />
-    <Compile Include="MonoGame\BoundingSphere.cs" />
-    <Compile Include="MonoGame\BoundingBox.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="MonoGame\Enums.cs" />
-    <Compile Include="Graphic.cs" />
-    <Compile Include="Mask.cs" />
-    <Compile Include="MonoGame\KeyState.cs" />
-    <Compile Include="MonoGame\MathHelper.cs" />
-    <Compile Include="MonoGame\Matrix.cs" />
-    <Compile Include="MP.cs" />
-    <Compile Include="MonoGame\Plane.cs" />
-    <Compile Include="MonoGame\Quarternion.cs" />
-    <Compile Include="MonoGame\Ray.cs" />
-    <Compile Include="RenderForm.cs">
+    <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RenderForm.Designer.cs">
-      <DependentUpon>RenderForm.cs</DependentUpon>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\Input.cs" />
-    <Compile Include="MonoGame\KeyboardState.cs" />
-    <Compile Include="MonoGame\Vector2.cs" />
-    <Compile Include="MonoGame\Vector3.cs" />
-    <Compile Include="MonoGame\Vector4.cs" />
-    <Compile Include="Utils\KeyMessageFilter.cs" />
-    <Compile Include="World.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -91,9 +66,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="RenderForm.resx">
-      <DependentUpon>RenderForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

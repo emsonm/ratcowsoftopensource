@@ -44,6 +44,8 @@ namespace sharppunk
                     e = e.renderPrev;
                 }
             }
+
+            UpdateLists();
         }
 
         /**

@@ -18,6 +18,7 @@ namespace sharpallegro
     {
         public int flags;
         public int num_axis;
+
         //JOYSTICK_AXIS_INFO axis[MAX_JOYSTICK_AXIS];
         public JOYSTICK_AXIS_INFO[] axis
         {
@@ -26,9 +27,9 @@ namespace sharpallegro
                 return new JOYSTICK_AXIS_INFO[0];
             }
         }
+
         public string name;
     }
-
 
     ///* information about a joystick button */
     [StructLayout(LayoutKind.Sequential)]
@@ -38,14 +39,15 @@ namespace sharpallegro
         public string name;
     }
 
-
     /* information about an entire joystick */
+
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct JOYSTICK_INFO
     {
         public int flags;
         public int num_sticks;
         public int num_buttons;
+
         //JOYSTICK_STICK_INFO stick[MAX_JOYSTICK_STICKS];
         public JOYSTICK_STICK_INFO[] stick
         {
@@ -54,6 +56,7 @@ namespace sharpallegro
                 return new JOYSTICK_STICK_INFO[0];
             }
         }
+
         //JOYSTICK_BUTTON_INFO button[MAX_JOYSTICK_BUTTONS];
         public JOYSTICK_BUTTON_INFO[] button
         {

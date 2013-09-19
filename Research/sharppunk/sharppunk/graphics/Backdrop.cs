@@ -15,7 +15,7 @@ namespace sharppunk.graphics
 
         /** @private Renders the Backdrop. */
 
-        public override void Render(System.Drawing.Graphics target, Vector2 point, Vector2 camera)
+        public override void Render(Bitmap target, Vector2 point, Vector2 camera)
         {
             if (texture == null) return;
 
@@ -42,6 +42,5 @@ namespace sharppunk.graphics
         private float x;
         /** @private */
         private float y;
-
     }
 }

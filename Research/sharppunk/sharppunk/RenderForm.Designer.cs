@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.OutputImage = new System.Windows.Forms.PictureBox();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.OutputImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,6 +45,12 @@
             this.OutputImage.TabIndex = 0;
             this.OutputImage.TabStop = false;
             // 
+            // refreshTimer
+            // 
+            this.refreshTimer.Enabled = true;
+            this.refreshTimer.Interval = 10;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
+            // 
             // RenderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -52,6 +60,7 @@
             this.MinimumSize = new System.Drawing.Size(815, 639);
             this.Name = "RenderForm";
             this.Text = "Render target";
+            this.Load += new System.EventHandler(this.RenderForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.OutputImage)).EndInit();
             this.ResumeLayout(false);
 
@@ -60,6 +69,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox OutputImage;
+        private System.Windows.Forms.Timer refreshTimer;
     }
 }
 

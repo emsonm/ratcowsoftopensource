@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Collections.Generic;
 
 namespace sharpallegro
 {
@@ -9,6 +8,7 @@ namespace sharpallegro
     {
         [DllImport(@"kernel32.dll", SetLastError = true)]
         public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
         [DllImport(@"kernel32.dll", SetLastError = true)]
         public static extern IntPtr LoadLibrary(string lpszLib);
 
@@ -20,7 +20,7 @@ namespace sharpallegro
         public ManagedPointer(int size)
             : this(Alloc(size))
         {
-        }        
+        }
 
         public static IntPtr GetAddress(string lib, string name)
         {
@@ -229,7 +229,7 @@ namespace sharpallegro
     // TODO: see wether to use a template
     public class ManagedPointerBidimensionalArray : ManagedPointerArray
     {
-        int w, h;
+        private int w, h;
 
         public ManagedPointerBidimensionalArray(IntPtr pointer, int w, int h)
             : base(pointer)

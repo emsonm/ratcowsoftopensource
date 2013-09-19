@@ -1,23 +1,23 @@
 /*
  * SharpAllegro: a C# wrapper around Allegro game library.
  * Copyright (C) 2007  Eugenio Favalli
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation;
  * version 2.1 of the License.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
+ *
  * $Id: AllegroAPI.cs 106 2011-01-04 15:58:32Z eugeniofavalli $
- * 
+ *
  */
 
 using System;
@@ -312,6 +312,7 @@ namespace sharpallegro
         /// flags for drawing_mode()
         /// </summary>
         protected const int DRAW_MODE_SOLID = 0;
+
         protected const int DRAW_MODE_XOR = 1;
         protected const int DRAW_MODE_COPY_PATTERN = 2;
         protected const int DRAW_MODE_SOLID_PATTERN = 3;
@@ -347,6 +348,7 @@ namespace sharpallegro
 
         // Mouse cursors
         public const int MOUSE_CURSOR_NONE = 0;
+
         public const int MOUSE_CURSOR_ALLEGRO = 1;
         public const int MOUSE_CURSOR_ARROW = 2;
         public const int MOUSE_CURSOR_BUSY = 3;
@@ -392,7 +394,6 @@ namespace sharpallegro
         public const int D_INTERNAL = 128;   /* reserved for internal use */
         public const int D_USER = 256;   /* from here on is free for your own use */
 
-
         /* return values for the dialog procedures */
         public const int D_O_K = 0;  /* normal exit status */
         public const int D_CLOSE = 1;   /* request to close the dialog */
@@ -402,7 +403,6 @@ namespace sharpallegro
         public const int D_USED_CHAR = 16;       /* object has used the keypress */
         public const int D_REDRAW_ALL = 32;       /* request to redraw all active dialogs */
         public const int D_DONTWANTMOUSE = 64;       /* this object does not want mouse focus */
-
 
         /* messages for the dialog procedures */
         public const int MSG_START = 1;  /* start the dialog, initialise */
@@ -431,11 +431,11 @@ namespace sharpallegro
         public const int MSG_WANTMOUSE = 24;       /* does object want the mouse? */
         public const int MSG_USER = 25;       /* from here on are free... */
 
-        const int QUAT_SHORT = 0;
-        const int QUAT_LONG = 1;
-        const int QUAT_CW = 2;
-        const int QUAT_CCW = 3;
-        const int QUAT_USER = 4;
+        private const int QUAT_SHORT = 0;
+        private const int QUAT_LONG = 1;
+        private const int QUAT_CW = 2;
+        private const int QUAT_CCW = 3;
+        private const int QUAT_USER = 4;
 
         public const int JOY_TYPE_AUTODETECT = -1;
         public const int JOY_TYPE_NONE = 0;
@@ -457,7 +457,7 @@ namespace sharpallegro
         public const int JOYFLAG_ANALOG = JOYFLAG_ANALOGUE;
         public const int JOYFLAG_CALIB_ANALOG = JOYFLAG_CALIB_ANALOGUE;
 
-        #endregion
+        #endregion Constants
 
         #region Magic region
 
@@ -472,37 +472,67 @@ namespace sharpallegro
         public const int _AL_RAND_MAX = 0xFFFF;
 
         public delegate int CatExitPtr();
+
         public delegate void CloseButtonCallback();
+
         public delegate int IntGetter(string name, int def);
+
         public delegate string StringGetter(string name, string def);
+
         public delegate void StringSetter(string name, string value);
+
         public delegate void MouseCallback(int flags);
+
         public delegate void TimerHandler();
+
         public delegate void ParamTimerHandler(IntPtr p);
+
         public delegate void RestCallback();
+
         public delegate int KeyPressedCallback();
+
         public delegate int ReadKeyCallback();
+
         public delegate int KeyboardCallback(int key);
+
         public delegate int KeyboardUCallback(int key, ref int scancode);
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void KeyboardLowLevelCallback(int scancode);
+
         public delegate void DisplaySwitchCallback();
+
         public delegate IntPtr Load(string filename, RGB[] pal);
+
         public delegate int Save(string filename, IntPtr bmp, RGB[] pal);
+
         public delegate void LineCallback(IntPtr bmp, int x, int y, int d);
+
         public delegate void CircleCallback(IntPtr bmp, int x, int y, int d);
+
         public delegate void EllipseCallback(IntPtr bmp, int x, int y, int d);
+
         public delegate void ArcCallback(IntPtr bmp, int x, int y, int d);
+
         public delegate IntPtr SampleLoadCallback(string filename);
+
         public delegate int SampleSaveCallback(string filename, IntPtr spl);
+
         public delegate void MidiMsgCallback(int msg, int byte1, int byte2);
+
         public delegate void MidiMetaCallback(int type, string data, int length);
+
         public delegate void MidiSysexCallback(string data, int length);
+
         public delegate void DatafileCallback(IntPtr d);
+
         public delegate void DatafileLoadCallback(IntPtr f, long size);
+
         public delegate void DatafileDestroyCallback(IntPtr data);
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void BlendCallback(IntPtr pal, int x, int y, IntPtr rgb);
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate int FLICCallback();
 
@@ -545,6 +575,7 @@ namespace sharpallegro
 
         [DllImport(@"kernel32.dll", SetLastError = true)]
         public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+
         [DllImport(@"kernel32.dll", SetLastError = true)]
         public static extern IntPtr LoadLibrary(string lpszLib);
 
@@ -561,8 +592,6 @@ namespace sharpallegro
             }
             return IntPtr.Zero;
         }
-
-
 
         public static GFX_DRIVER gfx_driver
         {
@@ -784,8 +813,7 @@ namespace sharpallegro
             return ret;
         }
 
-
-        #endregion
+        #endregion Magic region
 
         #region Using Allegro
 
@@ -837,7 +865,7 @@ namespace sharpallegro
 
         /// <summary>
         /// Closes down the Allegro system.
-        /// </summary> 
+        /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void allegro_exit();
 
@@ -1002,19 +1030,19 @@ namespace sharpallegro
 
         /// <summary>
         /// Sets the window title of the Allegro program.
-        /// </summary> 
+        /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe void set_window_title(string name);
 
         /// <summary>
         /// Handles the user clicking on the close button of the window.
-        /// </summary> 
+        /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int set_close_button_callback(CloseButtonCallback proc);
 
         /// <summary>
         /// Finds out the desktop color depth.
-        /// </summary> 
+        /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int desktop_color_depth();
 
@@ -1074,7 +1102,7 @@ namespace sharpallegro
             }
         }
 
-        #endregion
+        #endregion Using Allegro
 
         #region Structures and types defined by Allegro
 
@@ -1086,6 +1114,7 @@ namespace sharpallegro
         {
             public int num_modes;
             public GFX_MODE* mode;
+
             // Saves the original unmanaged memory address
             public IntPtr p;
         }
@@ -1103,7 +1132,6 @@ namespace sharpallegro
         /// Number of entries in a palette.
         /// </summary>
         public const int PAL_SIZE = 256;
-
 
         /// <summary>
         /// Fixed point vertex structure used by 3d functions.
@@ -1164,6 +1192,7 @@ namespace sharpallegro
         {
             // TODO: replace with bidimensional array
             public fixed float v[9];                /* scaling and rotation */
+
             public fixed float t[3];                   /* translation */
         }
 
@@ -1204,7 +1233,7 @@ namespace sharpallegro
         //  public IntPtr dp, dp2, dp3;          /* pointers to more object data */
         //}
 
-        #endregion
+        #endregion Structures and types defined by Allegro
 
         #region Unicode routines
 
@@ -1339,7 +1368,7 @@ namespace sharpallegro
             return ustrzcat(dest, INT_MAX, src);
         }
 
-        #endregion
+        #endregion Unicode routines
 
         #region Configuration routines
 
@@ -1520,7 +1549,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int free_config_entries(string[] names);
 
-        #endregion
+        #endregion Configuration routines
 
         #region Mouse routines
 
@@ -1779,7 +1808,7 @@ namespace sharpallegro
             }
         }
 
-        #endregion
+        #endregion Mouse routines
 
         #region Timer routines
 
@@ -1926,7 +1955,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void rest_callback(long time, RestCallback callback);
 
-        #endregion
+        #endregion Timer routines
 
         #region Keyboard routines
 
@@ -2094,7 +2123,7 @@ namespace sharpallegro
         /// </summary>
         public static int key_led_flag;
 
-        #endregion
+        #endregion Keyboard routines
 
         #region Joystick routines
 
@@ -2181,7 +2210,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int initialise_joystick();
 
-        #endregion
+        #endregion Joystick routines
 
         #region Graphics modes
 
@@ -2333,7 +2362,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void vsync();
 
-        #endregion
+        #endregion Graphics modes
 
         #region Bitmap objects
 
@@ -2576,7 +2605,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int is_inside_bitmap(IntPtr bmp, int x, int y, int clip);
 
-        #endregion
+        #endregion Bitmap objects
 
         #region Loading image files
 
@@ -2709,7 +2738,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int get_color_conversion();
 
-        #endregion
+        #endregion Loading image files
 
         #region Palette routines
 
@@ -2831,6 +2860,7 @@ namespace sharpallegro
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void unselect_palette();
+
         /// <summary>
         /// Constructs a fake truecolor palette.
         /// </summary>
@@ -2841,11 +2871,11 @@ namespace sharpallegro
         /// Generates an optimized palette for a bitmap.
         /// </summary>
         //[DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern int generate_optimized_palette(BITMAP bmp, PALETTE pal, char rsvd[PAL_SIZE]); 
+        //public static extern int generate_optimized_palette(BITMAP bmp, PALETTE pal, char rsvd[PAL_SIZE]);
 
         /// <summary>
         /// The default IBM BIOS palette.
-        /// </summary>    
+        /// </summary>
         public static PALETTE default_palette
         {
             get
@@ -2856,7 +2886,7 @@ namespace sharpallegro
 
         /// <summary>
         /// A palette containing solid black colors.
-        /// </summary>    
+        /// </summary>
         public static PALETTE black_palette
         {
             get
@@ -2867,7 +2897,7 @@ namespace sharpallegro
 
         /// <summary>
         /// The palette used by the Atari ST low resolution desktop.
-        /// </summary>    
+        /// </summary>
         public static PALETTE desktop_palette
         {
             get
@@ -2876,7 +2906,7 @@ namespace sharpallegro
             }
         }
 
-        #endregion
+        #endregion Palette routines
 
         #region Truecolor pixel formats
 
@@ -2931,7 +2961,7 @@ namespace sharpallegro
         public static extern int makecol32(int r, int g, int b);
 
         /// <summary>
-        /// Converts an RGBA color into a 32-bit display pixel format. 
+        /// Converts an RGBA color into a 32-bit display pixel format.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int makeacol32(int r, int g, int b, int a);
@@ -2984,7 +3014,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int geta_depth(int color_depth, int c);
 
-        #endregion
+        #endregion Truecolor pixel formats
 
         #region Drawing primitives
 
@@ -3046,7 +3076,7 @@ namespace sharpallegro
         /// Faster specific version of putpixel().
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void _putpixel32(IntPtr bmp, int x, int y, int color); 
+        public static extern void _putpixel32(IntPtr bmp, int x, int y, int color);
 
         /// <summary>
         /// Reads a pixel from a bitmap.
@@ -3055,10 +3085,10 @@ namespace sharpallegro
         public static extern int getpixel(IntPtr bmp, int x, int y);
 
         /// <summary>
-        /// Faster specific version of getpixel(). 
+        /// Faster specific version of getpixel().
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int _getpixel32(IntPtr bmp, int x, int y);         
+        public static extern int _getpixel32(IntPtr bmp, int x, int y);
 
         /// <summary>
         /// Draws a vertical line onto the bitmap.
@@ -3190,7 +3220,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void floodfill(IntPtr bmp, int x, int y, int color);
 
-        #endregion
+        #endregion Drawing primitives
 
         #region Blitting and sprites
 
@@ -3337,7 +3367,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void pivot_scaled_sprite_v_flip(IntPtr bmp, IntPtr sprite, int x, int y, int cx, int cy, int angle, int scale);
 
-        #endregion
+        #endregion Blitting and sprites
 
         #region RLE sprites
 
@@ -3378,7 +3408,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void draw_lit_rle_sprite(IntPtr bmp, IntPtr sprite, int x, int y, int color);
 
-        #endregion
+        #endregion RLE sprites
 
         #region Compiled sprites
 
@@ -3405,7 +3435,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void draw_compiled_sprite(IntPtr bmp, IntPtr sprite, int x, int y);
 
-        #endregion
+        #endregion Compiled sprites
 
         #region Fonts
 
@@ -3447,7 +3477,7 @@ namespace sharpallegro
         /// Makes a font use transparency.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void make_trans_font(IntPtr f); 
+        public static extern void make_trans_font(IntPtr f);
 
         /// <summary>
         /// Returns TRUE if a font is a color font.
@@ -3479,7 +3509,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr merge_fonts(IntPtr f1, IntPtr f2);
 
-        #endregion
+        #endregion Fonts
 
         #region Text output
 
@@ -3584,7 +3614,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void textprintf_justify_ex(IntPtr bmp, IntPtr f, int x1, int x2, int y, int diff, int color, int bg, string fmt);
 
-        #endregion
+        #endregion Text output
 
         #region Polygon rendering
 
@@ -3712,7 +3742,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void render_scene();
 
-        #endregion
+        #endregion Polygon rendering
 
         #region Transparency and patterned drawing
 
@@ -3738,7 +3768,6 @@ namespace sharpallegro
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void solid_mode();
-
 
         /* color_map - Global pointer to the color mapping table.
          * create_trans_table - Fills a color mapping table for translucency effects.
@@ -3791,52 +3820,52 @@ namespace sharpallegro
         public static extern void set_add_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a burn blender mode. 
+        /// Enables a burn blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void set_burn_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a color blender mode.  
+        /// Enables a color blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void set_color_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a difference blender mode.  
+        /// Enables a difference blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void set_difference_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a dissolve blender mode.   
+        /// Enables a dissolve blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void set_dissolve_blender(int r, int g, int b, int a); 
+        public static extern void set_dissolve_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a dodge blender mode.   
+        /// Enables a dodge blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void set_dodge_blender(int r, int g, int b, int a); 
+        public static extern void set_dodge_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a hue blender mode.  
+        /// Enables a hue blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void set_hue_blender(int r, int g, int b, int a); 
+        public static extern void set_hue_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables an invert blender mode.   
+        /// Enables an invert blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void set_invert_blender(int r, int g, int b, int a); 
+        public static extern void set_invert_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a luminance blender mode.   
+        /// Enables a luminance blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void set_luminance_blender(int r, int g, int b, int a); 
+        public static extern void set_luminance_blender(int r, int g, int b, int a);
 
         /// <summary>
         /// Enables a multiply blender mode.
@@ -3845,30 +3874,30 @@ namespace sharpallegro
         public static extern void set_multiply_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a saturation blender mode. 
+        /// Enables a saturation blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void set_saturation_blender(int r, int g, int b, int a); 
+        public static extern void set_saturation_blender(int r, int g, int b, int a);
 
         /// <summary>
-        /// Enables a screen blender mode. 
+        /// Enables a screen blender mode.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void set_screen_blender(int r, int g, int b, int a); 
+        public static extern void set_screen_blender(int r, int g, int b, int a);
 
         /// <summary>
         /// Specifies a custom set of truecolor blender routines
         /// </summary>
         //[DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void set_blender_mode(BLENDER_FUNC b15, BLENDER_FUNC b16, BLENDER_FUNC b24, int r, int g, int b, int a); 
+        //public static extern void set_blender_mode(BLENDER_FUNC b15, BLENDER_FUNC b16, BLENDER_FUNC b24, int r, int g, int b, int a);
 
         /// <summary>
-        /// An even more complex version of set_blender_mode(). 
+        /// An even more complex version of set_blender_mode().
         /// </summary>
         //[DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void set_blender_mode_ex(BLENDER_FUNC b15, BLENDER_FUNC b16, BLENDER_FUNC b24, BLENDER_FUNC b32, BLENDER_FUNC b15x, BLENDER_FUNC b16x, BLENDER_FUNC b24x, int r, int g, int b, int a); 
+        //public static extern void set_blender_mode_ex(BLENDER_FUNC b15, BLENDER_FUNC b16, BLENDER_FUNC b24, BLENDER_FUNC b32, BLENDER_FUNC b15x, BLENDER_FUNC b16x, BLENDER_FUNC b24x, int r, int g, int b, int a);
 
-        #endregion
+        #endregion Transparency and patterned drawing
 
         #region Convert between color formats
 
@@ -3888,7 +3917,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void rgb_to_hsv(int r, int g, int b, ref float h, ref float s, ref float v);
 
-        #endregion
+        #endregion Convert between color formats
 
         #region Direct access to video memory
 
@@ -3915,7 +3944,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void bmp_unwrite_line(IntPtr bmp);
 
-        #endregion
+        #endregion Direct access to video memory
 
         #region FLIC routines
 
@@ -3942,7 +3971,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int play_fli(string filename, BITMAP bmp, int loop, IntPtr callback);
 
-        #endregion
+        #endregion FLIC routines
 
         #region Sound init routines
 
@@ -4018,7 +4047,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void get_hardware_volume(out int digi_volume, out int midi_volume);
 
-        #endregion
+        #endregion Sound init routines
 
         #region Mixer routines
 
@@ -4073,7 +4102,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int get_mixer_buffer_length();
 
-        #endregion
+        #endregion Mixer routines
 
         #region Digital sample routines
 
@@ -4210,7 +4239,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void voice_stop(int voice);
 
-        #endregion
+        #endregion Digital sample routines
 
         #region Music routines (MIDI)
 
@@ -4385,7 +4414,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int load_ibk(string filename, int drums);
 
-        #endregion
+        #endregion Music routines (MIDI)
 
         #region Audio stream routines
 
@@ -4419,7 +4448,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void free_audio_stream_buffer(IntPtr stream);
 
-        #endregion
+        #endregion Audio stream routines
 
         #region Recording routines
 
@@ -4437,7 +4466,7 @@ namespace sharpallegro
          * midi_recorder - Hook notifying you when new MIDI data becomes available.
          */
 
-        #endregion
+        #endregion Recording routines
 
         #region File and compression routines
 
@@ -4551,7 +4580,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int pack_fread(IntPtr p, int n, IntPtr f);
 
-        #endregion
+        #endregion File and compression routines
 
         #region Datafile routines
 
@@ -4651,7 +4680,7 @@ namespace sharpallegro
             return AL_ID(a, b, c, d);
         }
 
-        #endregion
+        #endregion Datafile routines
 
         #region Fixed point math routines
 
@@ -4816,7 +4845,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int fixhypot(int x, int y);
 
-        #endregion
+        #endregion Fixed point math routines
 
         #region 3D math routines
 
@@ -5076,7 +5105,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void persp_project_f(float x, float y, float z, ref float xout, ref float yout);
 
-        #endregion
+        #endregion 3D math routines
 
         #region Quaternion math routines
 
@@ -5166,7 +5195,7 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void quat_slerp(ref QUAT from, ref QUAT to, float t, out QUAT q, int how);
 
-        #endregion
+        #endregion Quaternion math routines
 
         #region GUI routines
 
@@ -5250,8 +5279,6 @@ namespace sharpallegro
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int d_slider_proc(int msg, IntPtr d, int c);
-
-
 
         /* gui_mouse_focus - Tells if the input focus follows the mouse pointer.
          * gui_fg_color
@@ -5454,10 +5481,10 @@ namespace sharpallegro
         public static extern int dialog_message(IntPtr dialog, int msg, int c, out int obj);
 
         /// <summary>
-        /// Broadcasts a message to all the objects in the active dialog. 
+        /// Broadcasts a message to all the objects in the active dialog.
         /// </summary>
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int broadcast_dialog_message(int msg, int c); 
+        public static extern int broadcast_dialog_message(int msg, int c);
 
         /// <summary>
         /// Basic dialog manager function.
@@ -5543,13 +5570,13 @@ namespace sharpallegro
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern int gfx_mode_select_ex(ref int card, ref int w, ref int h, ref int color_depth);
 
-        #endregion
+        #endregion GUI routines
 
         #region Windows specific
 
         [DllImport(ALLEG_DLL, CallingConvention = CallingConvention.Cdecl)]
         public static extern void win_set_window(IntPtr wnd);
 
-        #endregion
+        #endregion Windows specific
     }
 }
