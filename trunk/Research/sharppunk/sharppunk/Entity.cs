@@ -56,20 +56,43 @@ namespace sharppunk
 
         public Bitmap renderTarget;
 
-        virtual public void Render()
+        public virtual void Render()
         {
+            System.Diagnostics.Debug.WriteLine("--------------------------Begin render--------------------------");
             if (graphic != null && graphic.Visible)
             {
-                graphic.Render((renderTarget != null ? renderTarget : MP.Buffer), Position, MP.Camera);
+                //Graphics g = (renderTarget != null ? renderTarget : MP.BeginRender()) 
+
+                if (renderTarget != null)
+                {
+                    using (var g = Graphics.FromImage(renderTarget))
+                    {
+                        graphic.Render(g, Position, MP.Camera);
+                    }
+                }
+                else
+                {
+                    
+                    var g = MP.BeginRender();
+                    try
+                    {
+                        graphic.Render(g, Position, MP.Camera);
+                    }
+                    finally
+                    {
+                        MP.EndRender();                       
+                    }                
+                }
             }
+            System.Diagnostics.Debug.WriteLine("-----------------------------End render----------------------------");
         }
 
-        virtual public void Added()
+        public virtual void Added()
         {
             // to override
         }
 
-        virtual public void Removed()
+        public virtual void Removed()
         {
             // to override
         }
@@ -210,7 +233,7 @@ namespace sharppunk
             }
         }
 
-        virtual public void Update()
+        public virtual void Update()
         {
         }
 

@@ -6,8 +6,6 @@ namespace sharppunk
 {
     public class Engine
     {
-        private System.Drawing.Graphics graphics;
-
         public static Engine currentEngine;
 
         public Engine(int width, int height, string assetsDirectory = "./")
@@ -73,9 +71,19 @@ namespace sharppunk
 
         private void ClearScreen()
         {
-            using (var graphics = System.Drawing.Graphics.FromImage(MP.Buffer))
+            //using (var graphics = System.Drawing.Graphics.FromImage(MP.Buffer))
+            //{
+            //    graphics.Clear(Color.CornflowerBlue); //FillRectangle(new SolidBrush(Color.CornflowerBlue), 0.0f, 0.0f, MP.Width, MP.Height);
+            //}
+
+            var g = MP.BeginRender();
+            try
             {
-                graphics.Clear(Color.CornflowerBlue); //FillRectangle(new SolidBrush(Color.CornflowerBlue), 0.0f, 0.0f, MP.Width, MP.Height);
+                g.Clear(Color.CornflowerBlue);
+            }
+            finally
+            {
+                MP.EndRender();
             }
         }
 
@@ -112,9 +120,17 @@ namespace sharppunk
 
         public void Render()
         {
-            ClearScreen();
+            MP.BeginRender();
+            try
+            {
+                ClearScreen();
 
-            MP.CurrentWorld.Render();
+                MP.CurrentWorld.Render();
+            }
+            finally
+            {
+                MP.EndRender();
+            }
         }
 
         /** @private Switch Worlds if they've changed. */

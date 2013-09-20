@@ -54,7 +54,7 @@ namespace sharppunk
          * to call super.update() or your Entities will not be updated.
          */
 
-        virtual public void Update()
+        public virtual void Update()
         {
             // update the entities
             Entity e = updateFirst;

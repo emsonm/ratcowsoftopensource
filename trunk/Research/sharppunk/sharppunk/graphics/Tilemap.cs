@@ -79,7 +79,7 @@ namespace sharppunk.graphics
 
         /** @public Renders the Tilemap. */
 
-        override public void Render(Bitmap target, Vector2 point, Vector2 camera)
+        override public void Render(Graphics target, Vector2 point, Vector2 camera)
         {
             Vector2 origin = new Vector2();
 

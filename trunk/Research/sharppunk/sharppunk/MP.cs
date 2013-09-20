@@ -9,6 +9,43 @@ namespace sharppunk
         * The current screen buffer, drawn to in the render loop.
         */
         public static Bitmap Buffer;
+        private static Graphics _bufferObject = null;
+        private static int bufferRequests = 0;
+        private static object bufferLock = new object();
+
+        internal static Graphics BeginRender()
+        {
+            if (_bufferObject == null)
+            {
+                _bufferObject = Graphics.FromImage(Buffer);           
+            }
+
+            lock (bufferLock)
+            {
+                bufferRequests++;
+                System.Diagnostics.Debug.WriteLine("++" + bufferRequests.ToString());
+            }
+
+            return _bufferObject;
+        }
+
+        internal static void EndRender()
+        {
+            lock (bufferLock)
+            {
+                bufferRequests--;
+                System.Diagnostics.Debug.WriteLine("--" + bufferRequests.ToString());
+                if (bufferRequests < 0) bufferRequests = 0;
+                System.Diagnostics.Debug.WriteLine("(R)--" + bufferRequests.ToString());
+            }
+
+            if (_bufferObject != null)
+            {
+                _bufferObject.Dispose();
+                _bufferObject = null;
+            }
+        }
+
         public static double Elapsed;
 
         public static int Width;
@@ -43,7 +80,8 @@ namespace sharppunk
             return random.Next(0, amount);
         }
 
-        internal static World currentWorld;
+        /*internal*/
+        public static World currentWorld;
         internal static World nextWorld;
 
         private static Random random = new Random();
