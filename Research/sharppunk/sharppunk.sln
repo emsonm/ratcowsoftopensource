@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sharpallegro", "sharpallegr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testbed", "testbed\testbed.csproj", "{513D6F9C-FECC-4C16-8176-225CA9BF6588}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EngineTestBed", "EngineTestBed\EngineTestBed.csproj", "{83A3E23A-B421-411D-9288-65737F94111C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{513D6F9C-FECC-4C16-8176-225CA9BF6588}.Release|Mixed Platforms.Build.0 = Release|x86
 		{513D6F9C-FECC-4C16-8176-225CA9BF6588}.Release|x86.ActiveCfg = Release|x86
 		{513D6F9C-FECC-4C16-8176-225CA9BF6588}.Release|x86.Build.0 = Release|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Debug|x86.ActiveCfg = Debug|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Debug|x86.Build.0 = Debug|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Release|Any CPU.ActiveCfg = Release|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Release|x86.ActiveCfg = Release|x86
+		{83A3E23A-B421-411D-9288-65737F94111C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

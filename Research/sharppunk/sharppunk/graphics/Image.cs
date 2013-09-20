@@ -51,7 +51,7 @@ namespace sharppunk.graphics
             texture = source;
         }
 
-        public override void Render(Bitmap target, Vector2 point, Vector2 camera)
+        public override void Render(Graphics target, Vector2 point, Vector2 camera)
         {
             if (texture == null) return;
 
@@ -59,7 +59,8 @@ namespace sharppunk.graphics
 
             point += origin;
 
-            using (var g = System.Drawing.Graphics.FromImage(target))
+            //using (
+            var g = target; //System.Drawing.Graphics.FromImage(target))
             {
                 //target.Draw ( texture, point, clipRect, Color.White, MP.Degs2Rad(Angle),
                 //			origin, 1.0f, Flipped ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f );

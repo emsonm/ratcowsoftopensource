@@ -17,7 +17,7 @@ namespace sharppunk
             // to override
         }
 
-        public virtual void Render(Bitmap target, Vector2 point, Vector2 camera)
+        public virtual void Render(Graphics target, Vector2 point, Vector2 camera)
         {
             // to override
         }

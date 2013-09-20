@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A7BE47B3-1A8E-4CC4-B935-2B7F43268C01}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{83A3E23A-B421-411D-9288-65737F94111C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>sharppunk</RootNamespace>
-    <AssemblyName>sharppunk</AssemblyName>
+    <RootNamespace>EngineTestBed</RootNamespace>
+    <AssemblyName>EngineTestBed</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -33,9 +33,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,35 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="graphics\Anim.cs" />
-    <Compile Include="graphics\Backdrop.cs" />
-    <Compile Include="graphics\Image.cs" />
-    <Compile Include="graphics\Spritemap.cs" />
-    <Compile Include="graphics\Tilemap.cs" />
-    <Compile Include="masks\Hitbox.cs" />
-    <Compile Include="MonoGame\BoundingFrustum.cs" />
-    <Compile Include="MonoGame\BoundingSphere.cs" />
-    <Compile Include="MonoGame\BoundingBox.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="MonoGame\Enums.cs" />
-    <Compile Include="Graphic.cs" />
-    <Compile Include="Mask.cs" />
-    <Compile Include="MonoGame\KeyState.cs" />
-    <Compile Include="MonoGame\MathHelper.cs" />
-    <Compile Include="MonoGame\Matrix.cs" />
-    <Compile Include="MP.cs" />
-    <Compile Include="MonoGame\Plane.cs" />
-    <Compile Include="MonoGame\Quarternion.cs" />
-    <Compile Include="MonoGame\Ray.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\Input.cs" />
-    <Compile Include="MonoGame\KeyboardState.cs" />
-    <Compile Include="MonoGame\Vector2.cs" />
-    <Compile Include="MonoGame\Vector3.cs" />
-    <Compile Include="MonoGame\Vector4.cs" />
-    <Compile Include="Utils\KeyMessageFilter.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="RenderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RenderForm.Designer.cs">
+      <DependentUpon>RenderForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -87,6 +63,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RenderForm.resx">
+      <DependentUpon>RenderForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -98,9 +77,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="test.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\sharppunk\sharppunk.csproj">
+      <Project>{A7BE47B3-1A8E-4CC4-B935-2B7F43268C01}</Project>
+      <Name>sharppunk</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
