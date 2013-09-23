@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace sharppunk
 {
-    public class Entity //: Graphic
+    public class Entity//: Graphic
     {
         public Boolean Visible = true;
         public Boolean Active = true; // this should be movet to tweener
@@ -23,7 +23,7 @@ namespace sharppunk
             set { Position.Y = value; }
         }
 
-        public Vector2 Size;
+        public Vector2 Size = new Vector2();
 
         public float Width
         {

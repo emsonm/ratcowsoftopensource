@@ -73,8 +73,25 @@ namespace sharppunk.graphics
             return anims[name];
         }
 
+        //public Anim Play(string name = "", bool reset = false)
+        //{
+            
+        //    var anim = Play(name, reset, (int)frame);
+
+        //    frame++;
+
+        //    System.Diagnostics.Debug.WriteLine(frame.ToString());
+
+        //    if (frame > (int)anim.frameCount)
+        //        frame = 0;
+
+        //    return anim; 
+        //}
+
         public Anim Play(string name = "", bool reset = false, int frame = 0)
         {
+            System.Diagnostics.Debug.WriteLine(frame.ToString());
+
             if (!reset && anim != null && anim.Name == name) return anim;
             anim = anims[name];
             if (anim == null)

@@ -69,7 +69,7 @@ namespace sharppunk.graphics
 
                 //g.Clip = new Region(clipRect); //clip region
 
-                ////do rotation (should we do this if angle is 0?)
+                //do rotation (should we do this if angle is 0?)
                 float x1 = point.X + ((image.Width * 1f) / 2f);
                 float y1 = point.Y + ((image.Height * 1f) / 2f);
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -83,7 +83,9 @@ namespace sharppunk.graphics
                     image.RotateFlip(RotateFlipType.RotateNoneFlipX);
                 }
 
-                g.DrawImage(image, point.X, point.Y);
+                var destRect = new Rectangle(0, 0, 50, 50);//new Rectangle((int)point.X, (int)point.Y, (int)point.X + clipRect.Width, (int)point.Y+clipRect.Height);
+
+                g.DrawImage(image, point.X, point.Y, clipRect, GraphicsUnit.Pixel);
                 g.ResetTransform();
             }
         }
