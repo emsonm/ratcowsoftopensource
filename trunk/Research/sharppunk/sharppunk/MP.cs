@@ -15,18 +15,20 @@ namespace sharppunk
 
         internal static Graphics BeginRender()
         {
-            if (_bufferObject == null)
-            {
-                _bufferObject = Graphics.FromImage(Buffer);           
-            }
-
             lock (bufferLock)
             {
-                bufferRequests++;
-                System.Diagnostics.Debug.WriteLine("++" + bufferRequests.ToString());
-            }
+                if (_bufferObject == null)
+                {
+                    _bufferObject = Graphics.FromImage(Buffer);
+                    System.Diagnostics.Debug.WriteLine("alloc new graphics with requests at " + bufferRequests.ToString());
 
-            return _bufferObject;
+
+                    bufferRequests++;
+                    System.Diagnostics.Debug.WriteLine("++" + bufferRequests.ToString());
+                }
+
+                return _bufferObject;
+            }
         }
 
         internal static void EndRender()
@@ -37,12 +39,14 @@ namespace sharppunk
                 System.Diagnostics.Debug.WriteLine("--" + bufferRequests.ToString());
                 if (bufferRequests < 0) bufferRequests = 0;
                 System.Diagnostics.Debug.WriteLine("(R)--" + bufferRequests.ToString());
-            }
 
-            if (_bufferObject != null)
-            {
-                _bufferObject.Dispose();
-                _bufferObject = null;
+                if (_bufferObject != null)
+                {
+                    _bufferObject.Dispose();
+                    _bufferObject = null;
+                    System.Diagnostics.Debug.WriteLine("dealloc graphics with requests at " + bufferRequests.ToString());
+                    bufferRequests = 0;
+                }
             }
         }
 
