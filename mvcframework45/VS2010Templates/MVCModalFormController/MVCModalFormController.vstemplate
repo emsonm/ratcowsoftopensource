@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+ <TemplateData>
+  <Name>MVCModalFormController</Name>
+  <Description>&lt;No description available&gt;</Description>
+  <Icon>MVCModalFormController.ico</Icon>
+  <TemplateID>1bbe2891-8712-4437-a4ad-9f17b8b73da0</TemplateID>
+  <ProjectType>CSharp</ProjectType>
+  <ProjectSubType>MVCApplication</ProjectSubType>
+  <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+  <NumberOfParentCategoriesToRollUp>2</NumberOfParentCategoriesToRollUp>
+  <DefaultName>Form.cs</DefaultName>
+ </TemplateData>
+ <TemplateContent>
+  <References>
+   <Reference>
+    <Assembly>
+     RatCow.MvcFramework, Culture=neutral, processorArchitecture=MSIL
+    </Assembly>
+   </Reference>
+  </References>
+  <ProjectItem ReplaceParameters="true" TargetFileName="Views\$fileinputname$.cs" SubType="Form">Form.cs</ProjectItem>
+  <ProjectItem ReplaceParameters="true" TargetFileName="Views\$fileinputname$.Designer.cs">Form.Designer.cs</ProjectItem>
+  <ProjectItem ReplaceParameters="true" TargetFileName="Views\$fileinputname$.resx">Form.resx</ProjectItem>
+  <ProjectItem ReplaceParameters="true" TargetFileName="Views\$fileinputname$.mvcmap">Form.mvcmap</ProjectItem>
+  <ProjectItem ReplaceParameters="true" TargetFileName="Controllers\$fileinputname$Controller.cs">ModalFormController.cs</ProjectItem>
+  <ProjectItem ReplaceParameters="true" TargetFileName="Controllers\$fileinputname$Controller.Designer.cs">ModalFormController.Designer.cs</ProjectItem>
+ </TemplateContent>
+ <WizardExtension>
+  <Assembly>RatCow.Templates, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1e62c5db267813ae</Assembly>
+  <FullClassName>RatCow.Templates.MVCFormControllerWizard</FullClassName>
+ </WizardExtension>
+</VSTemplate>

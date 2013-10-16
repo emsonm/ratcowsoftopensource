@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewActionMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GlobalMap>
+    <ViewAction>
+      <EventName>Click</EventName>
+      <EventHandlerName>EventHandler</EventHandlerName>
+      <EventArgsName>EventArgs</EventArgsName>
+    </ViewAction>
+  </GlobalMap>
+  <ControlActionMap>
+    <ViewControlAction>
+      <ControlType>TextBox</ControlType>
+      <ControlActions>
+        <ViewAction>
+          <EventName>TextChanged</EventName>
+          <EventHandlerName>EventHandler</EventHandlerName>
+          <EventArgsName>EventArgs</EventArgsName>
+        </ViewAction>
+      </ControlActions>
+    </ViewControlAction>
+    <ViewControlAction>
+      <ControlType>CheckBox</ControlType>
+      <ControlActions>
+        <ViewAction>
+          <EventName>CheckedChanged</EventName>
+          <EventHandlerName>EventHandler</EventHandlerName>
+          <EventArgsName>EventArgs</EventArgsName>
+        </ViewAction>
+      </ControlActions>
+    </ViewControlAction>
+  </ControlActionMap>
+</ViewActionMap>

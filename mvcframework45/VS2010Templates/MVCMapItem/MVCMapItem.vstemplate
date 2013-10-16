@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+ <TemplateData>
+  <Name>MVCMapItem</Name>
+  <Description>&lt;No description available&gt;</Description>
+  <Icon>MVCMapItem.ico</Icon>
+  <TemplateID>194cc830-5154-4ea8-a2b7-338bd786a3aa</TemplateID>
+  <ProjectType>CSharp</ProjectType>
+  <ProjectSubType>MVCApplication</ProjectSubType>
+  <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+  <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+  <DefaultName>MapItem.mvcmap</DefaultName>
+ </TemplateData>
+ <TemplateContent>
+  <References>
+   <Reference>
+    <Assembly>System</Assembly>
+   </Reference>
+  </References>
+
+  <ProjectItem ReplaceParameters="true" >mapitem.mvcmap</ProjectItem>
+ </TemplateContent>
+</VSTemplate>
