@@ -33,6 +33,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using log4net;
+using log4net.Config;
 
 namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation and revised location
 {
@@ -42,13 +44,18 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
   /// without any donkey work. It obviouusly does *not* account for future changes
   /// to the form... this will come later on.
   /// </summary>
-  internal class Program
+  public class MvcTool
   {
+    private static readonly ILog _log = LogManager.GetLogger( typeof( MvcTool ) );
+
+    public static ILog Log { get { return _log; } }
+
     private static void Main( string[] args )
     {
       //System.Diagnostics.Debugger.Break(); //Use this for force debugging
+      XmlConfigurator.Configure( new System.IO.FileInfo( "mvctool.exe.config" ) );
 
-      CompilerFlags flags = new CompilerFlags();
+      CompilerFlags flags = new CompilerFlags(_log);
 
       //generate a list of assemblies in the associated mvcmap
       var assemblies = new List<String>();
@@ -85,14 +92,14 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
           return;
         }
 
-
-
         foreach ( string arg in args )
         {
           Console.WriteLine( arg );
+          Log.Debug( arg );
 
           if ( arg.StartsWith( "-" ) )
           {
+            Log.DebugFormat( "Parsing param : {0}", arg );
             //assume it's a param
             if ( arg.Contains( "-a" ) )
               flags.IsAbstract = true; //okay, this is a bit of a cheat
@@ -140,7 +147,9 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
             //assume it's the form name
             if ( foundFormName )
             {
-              Console.WriteLine( String.Format( "Did not understand \"{0}\", already found \"{1}\", ignoring.", className, arg ) );
+              var s = String.Format( "Did not understand \"{0}\", already found \"{1}\", ignoring.", className, arg );
+              Console.WriteLine( s );
+              Log.Error( s );
             }
             else
             {
@@ -153,20 +162,24 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
               else
                 className = arg;
               foundFormName = true;
+              Log.DebugFormat( "Found {0}", className ); 
             }
           }
         }
 
         Console.WriteLine( flags );
+        Log.Debug( flags );
 
         if ( !foundFormName )
         {
           Console.WriteLine( "Could not find the form name in the params! Aborted" );
+          Log.Error( "Could not find the form name in the params! Aborted" );
           return;
         }
       }
       else if ( args.Length == 1 && args[ 0 ].Contains( "-c" ) )
       {
+        Log.Debug( "Creating default.mvcmap" );
         CreateNewActionConfig( "default.mvcmap" );
         return;
       }
@@ -181,25 +194,29 @@ namespace RatCow.MvcFramework.Tools  // <--- corrected namespace capitalisation 
       }
 
       string outputAssemblyName = String.Format( "{0}_{1}.dll", className, DateTime.Now.Ticks );
-
+      Log.Debug( outputAssemblyName );
 
 
 
       //we currently assume this is one param and that is the name of the class
       //we also assume the files will be named in a standard C# naming convention.
       //i.e. MainForm -> MainForm.Designer.cs
+      Log.Debug( "Compiling class bootstrap" );
       if ( ControllerCreationEngine.Compile( className, outputAssemblyName, flags, assemblies ) )
       {
+        Log.Debug( "Generating code" );
         //if we get here, we created the desired assembly above
         ControllerCreationEngine.Generate( className, outputAssemblyName, flags, assemblies );
+        Log.Debug( "Successfully generated code" );
       }
       else
       {
         Console.WriteLine( "Error! The file could not be generated." );
+        Log.Error( "Error! The file could not be generated." );
         return;
       }
 
-      //Console.ReadLine(); //DEBUG
+      //Console.ReadLine(); //DEBUG - stop app before close
     }
 
     /// <summary>

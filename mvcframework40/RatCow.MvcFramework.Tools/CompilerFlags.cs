@@ -33,11 +33,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using log4net;
 
 namespace RatCow.MvcFramework.Tools
 {
   public class CompilerFlags
   {
+    public CompilerFlags(ILog log)
+    {
+      _log = log;
+    }
+
     public bool IsAbstract = false;
     public bool UsePartialMethods = false;
     public bool PassControllerToEvents = false;
@@ -47,5 +53,35 @@ namespace RatCow.MvcFramework.Tools
     public bool AppendDesignedToFilename = false;
     public bool CreateEmptyNonDesignedFile = false;
     public bool IgnoreResourceFiles = false;
+    public string InputPath = ".";
+    public string OutputPath = ".";
+    private ILog _log = null;
+
+    public void LogDebug( string format, params object[] data )
+    {
+      LogDebug( String.Format( format, data ) );
+    }
+
+    public void LogDebug(string data)
+    {
+      if ( _log != null )
+      {
+        _log.Debug( data ); 
+      }
+    }
+
+    public void LogError( string format, params object[] data )
+    {
+      LogError( String.Format( format, data ) );
+    }
+
+    public void LogError(string data)
+    {
+      if ( _log != null )
+      {
+        _log.Error( data );
+      }
+    }
+
   }
 }
