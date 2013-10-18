@@ -81,7 +81,7 @@ namespace testapp2
 	partial class Form1Controller
 	{
 		[Outlet("statusStrip1")]
-		public StatusStrip statusStrip1 { get; set; }
+		public System.Windows.Forms.StatusStrip statusStrip1 { get; set; }
 		[Action("statusStrip1", "Click")]
 		public void FstatusStrip1_Click(object sender, EventArgs e)
 		{
@@ -90,7 +90,7 @@ namespace testapp2
 		}
 
 		[Outlet("toolStripStatusLabel1")]
-		public ToolStripStatusLabel toolStripStatusLabel1 { get; set; }
+		public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1 { get; set; }
 		[Action("toolStripStatusLabel1", "Click")]
 		public void FtoolStripStatusLabel1_Click(object sender, EventArgs e)
 		{
@@ -99,7 +99,7 @@ namespace testapp2
 		}
 
 		[Outlet("toolStripStatusLabel2")]
-		public ToolStripStatusLabel toolStripStatusLabel2 { get; set; }
+		public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2 { get; set; }
 		[Action("toolStripStatusLabel2", "Click")]
 		public void FtoolStripStatusLabel2_Click(object sender, EventArgs e)
 		{
@@ -108,7 +108,7 @@ namespace testapp2
 		}
 
 		[Outlet("toolStripProgressBar1")]
-		public ToolStripProgressBar toolStripProgressBar1 { get; set; }
+		public System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1 { get; set; }
 		[Action("toolStripProgressBar1", "Click")]
 		public void FtoolStripProgressBar1_Click(object sender, EventArgs e)
 		{
@@ -117,7 +117,7 @@ namespace testapp2
 		}
 
 		[Outlet("panel1")]
-		public Panel panel1 { get; set; }
+		public System.Windows.Forms.Panel panel1 { get; set; }
 		[Action("panel1", "Click")]
 		public void Fpanel1_Click(object sender, EventArgs e)
 		{
@@ -126,7 +126,7 @@ namespace testapp2
 		}
 
 		[Outlet("textBox3")]
-		public TextBox textBox3 { get; set; }
+		public System.Windows.Forms.TextBox textBox3 { get; set; }
 		[Action("textBox3", "Click")]
 		public void FtextBox3_Click(object sender, EventArgs e)
 		{
@@ -142,7 +142,7 @@ namespace testapp2
 		}
 
 		[Outlet("button4")]
-		public Button button4 { get; set; }
+		public System.Windows.Forms.Button button4 { get; set; }
 		[Action("button4", "Click")]
 		public void Fbutton4_Click(object sender, EventArgs e)
 		{
@@ -151,7 +151,7 @@ namespace testapp2
 		}
 
 		[Outlet("dateTimePicker1")]
-		public DateTimePicker dateTimePicker1 { get; set; }
+		public System.Windows.Forms.DateTimePicker dateTimePicker1 { get; set; }
 		[Action("dateTimePicker1", "Click")]
 		public void FdateTimePicker1_Click(object sender, EventArgs e)
 		{
@@ -160,7 +160,7 @@ namespace testapp2
 		}
 
 		[Outlet("panel2")]
-		public Panel panel2 { get; set; }
+		public System.Windows.Forms.Panel panel2 { get; set; }
 		[Action("panel2", "Click")]
 		public void Fpanel2_Click(object sender, EventArgs e)
 		{
@@ -169,7 +169,7 @@ namespace testapp2
 		}
 
 		[Outlet("tabControl1")]
-		public TabControl tabControl1 { get; set; }
+		public System.Windows.Forms.TabControl tabControl1 { get; set; }
 		[Action("tabControl1", "Click")]
 		public void FtabControl1_Click(object sender, EventArgs e)
 		{
@@ -178,7 +178,7 @@ namespace testapp2
 		}
 
 		[Outlet("tabPage1")]
-		public TabPage tabPage1 { get; set; }
+		public System.Windows.Forms.TabPage tabPage1 { get; set; }
 		[Action("tabPage1", "Click")]
 		public void FtabPage1_Click(object sender, EventArgs e)
 		{
@@ -187,7 +187,7 @@ namespace testapp2
 		}
 
 		[Outlet("textBox2")]
-		public TextBox textBox2 { get; set; }
+		public System.Windows.Forms.TextBox textBox2 { get; set; }
 		[Action("textBox2", "Click")]
 		public void FtextBox2_Click(object sender, EventArgs e)
 		{
@@ -203,7 +203,7 @@ namespace testapp2
 		}
 
 		[Outlet("button2")]
-		public Button button2 { get; set; }
+		public System.Windows.Forms.Button button2 { get; set; }
 		[Action("button2", "Click")]
 		public void Fbutton2_Click(object sender, EventArgs e)
 		{
@@ -212,7 +212,7 @@ namespace testapp2
 		}
 
 		[Outlet("tabPage2")]
-		public TabPage tabPage2 { get; set; }
+		public System.Windows.Forms.TabPage tabPage2 { get; set; }
 		[Action("tabPage2", "Click")]
 		public void FtabPage2_Click(object sender, EventArgs e)
 		{
@@ -221,7 +221,7 @@ namespace testapp2
 		}
 
 		[Outlet("checkBox3")]
-		public CheckBox checkBox3 { get; set; }
+		public System.Windows.Forms.CheckBox checkBox3 { get; set; }
 		[Action("checkBox3", "Click")]
 		public void FcheckBox3_Click(object sender, EventArgs e)
 		{
@@ -237,7 +237,7 @@ namespace testapp2
 		}
 
 		[Outlet("button3")]
-		public Button button3 { get; set; }
+		public System.Windows.Forms.Button button3 { get; set; }
 		[Action("button3", "Click")]
 		public void Fbutton3_Click(object sender, EventArgs e)
 		{
@@ -246,7 +246,7 @@ namespace testapp2
 		}
 
 		[Outlet("checkBox2")]
-		public CheckBox checkBox2 { get; set; }
+		public System.Windows.Forms.CheckBox checkBox2 { get; set; }
 		[Action("checkBox2", "Click")]
 		public void FcheckBox2_Click(object sender, EventArgs e)
 		{
@@ -262,7 +262,7 @@ namespace testapp2
 		}
 
 		[Outlet("listView1")]
-		public ListView listView1 { get; set; }
+		public System.Windows.Forms.ListView listView1 { get; set; }
 		[Action("listView1", "Click")]
 		public void FlistView1_Click(object sender, EventArgs e)
 		{
@@ -285,7 +285,7 @@ namespace testapp2
 		}
 
 		[Outlet("textBox1")]
-		public TextBox textBox1 { get; set; }
+		public System.Windows.Forms.TextBox textBox1 { get; set; }
 		[Action("textBox1", "Click")]
 		public void FtextBox1_Click(object sender, EventArgs e)
 		{
@@ -301,7 +301,7 @@ namespace testapp2
 		}
 
 		[Outlet("label1")]
-		public Label label1 { get; set; }
+		public System.Windows.Forms.Label label1 { get; set; }
 		[Action("label1", "Click")]
 		public void Flabel1_Click(object sender, EventArgs e)
 		{
@@ -310,7 +310,7 @@ namespace testapp2
 		}
 
 		[Outlet("button1")]
-		public Button button1 { get; set; }
+		public System.Windows.Forms.Button button1 { get; set; }
 		[Action("button1", "Click")]
 		public void Fbutton1_Click(object sender, EventArgs e)
 		{
@@ -319,7 +319,7 @@ namespace testapp2
 		}
 
 		[Outlet("checkBox1")]
-		public CheckBox checkBox1 { get; set; }
+		public System.Windows.Forms.CheckBox checkBox1 { get; set; }
 		[Action("checkBox1", "Click")]
 		public void FcheckBox1_Click(object sender, EventArgs e)
 		{
@@ -335,7 +335,7 @@ namespace testapp2
 		}
 
 		[Outlet("timer1")]
-		public Timer timer1 { get; set; }
+		public System.Windows.Forms.Timer timer1 { get; set; }
 		protected void SetData<T>(ListViewHelper<T> helper, List<T> data) where T : class
 		{
 			//Auto generated call

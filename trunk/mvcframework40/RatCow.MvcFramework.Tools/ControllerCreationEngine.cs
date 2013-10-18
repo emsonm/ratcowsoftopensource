@@ -67,7 +67,7 @@ namespace RatCow.MvcFramework.Tools
         ControlTree tree = trees[0];
         string s = ClassGenerator(tree, flags);
         string infill = (flags.AppendDesignedToFilename ? ".Designer" : String.Empty); //add in the Designed
-        string fileName = String.Format("{1}{0}Controller{2}.cs", tree.ClassName, prefix, infill);
+        string fileName = System.IO.Path.Combine(flags.OutputPath, String.Format( "{1}{0}Controller{2}.cs", tree.ClassName, prefix, infill ));
 
         //added a check to see if file exists, otherwise we might get weird streaming issues
         //if it does, I delete it for now.
@@ -78,7 +78,7 @@ namespace RatCow.MvcFramework.Tools
 
         if (flags.CreateEmptyNonDesignedFile)
         {
-          string stubFileName = String.Format("{1}{0}Controller.cs", tree.ClassName, prefix);
+          string stubFileName = System.IO.Path.Combine(flags.OutputPath, String.Format( "{1}{0}Controller.cs", tree.ClassName, prefix ));
           if (!System.IO.File.Exists(stubFileName))
           {
             WriteFile(CreateStubFile(tree, flags), stubFileName);
@@ -135,6 +135,8 @@ namespace RatCow.MvcFramework.Tools
     /// <returns></returns>
     public static bool Compile(string className, string outputAssemblyName, CompilerFlags flags, List<String> extraAssemblies)
     {
+      flags.LogDebug( "Enter Compile" );
+
       //we attempt to compile the file provided and then read info from it
       CSharpCodeProvider compiler = new CSharpCodeProvider();
       CompilerParameters compilerParams = new CompilerParameters();
@@ -158,7 +160,7 @@ namespace RatCow.MvcFramework.Tools
       StringBuilder s = new StringBuilder();
 
       string namespaceName = "";
-      string fileToCompile = String.Format("{0}.Designer.cs", className);
+      string fileToCompile = System.IO.Path.Combine(flags.InputPath, String.Format( "{0}.Designer.cs", className ));
 
       if (!File.Exists(fileToCompile)) return false;
 
@@ -193,19 +195,19 @@ namespace RatCow.MvcFramework.Tools
       string dummy = String.Format("namespace {2} {3} partial class {0} : System.Windows.Forms.Form {1}", className, code, namespaceName, "{");
 
       //we need to look for a resource file
-      var resx = String.Format("{0}.resx", className);
+      var resx = System.IO.Path.Combine(flags.InputPath, String.Format( "{0}.resx", className ));
 
       //string rescode = null;
 
-      var compiledResourceFilename = String.Format("{0}.{1}.resources", namespaceName, className);
+      var compiledResourceFilename = System.IO.Path.Combine(flags.InputPath, String.Format( "{0}.{1}.resources", namespaceName, className ));
 
 
       //we should compile resource files by default!!
       if (!flags.IgnoreResourceFiles && File.Exists(resx))
       {
+        //we must now open the resource file and read the contents
         try
         {
-          //we must now open the resource file and read the contents
           File.Delete(compiledResourceFilename); //remove older version
         }
         catch( Exception ex)
@@ -242,6 +244,8 @@ namespace RatCow.MvcFramework.Tools
 
         compilerParams.EmbeddedResources.Add(compiledResourceFilename);
 
+        #region Old
+
         //code example I used had this, but it seems to break the compilation if included
         //string[] errors;
         //var provider = new CSharpCodeProvider(); // c#-code compiler
@@ -258,6 +262,8 @@ namespace RatCow.MvcFramework.Tools
         //provider.GenerateCodeFromCompileUnit( cu, tw, options );
         //rescode = tw.ToString();
         //tw.Close();
+
+        #endregion
       }
 
       //The files to compile
@@ -310,6 +316,7 @@ namespace RatCow.MvcFramework.Tools
       }
       catch { } //we don't care, we just don't want to throw an exception here if we compiled a successful assembly
 
+      flags.LogDebug( "Leave Compile" );
       return true;
     }
 
@@ -332,6 +339,10 @@ namespace RatCow.MvcFramework.Tools
         AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
       }
 
+      /// <summary>
+      /// Possible BUG: if we have a missing assembly, we seem to recursively hit this method till we get a stack overflow. 
+      /// TODO: Need to put in more robust checks! (e.g. cache the resolution attempts and failover if we hit 2 or 3 attempts...)
+      /// </summary>
       public Assembly AddAssembly(string assembly)
       {
         Assembly result = null;
@@ -349,6 +360,8 @@ namespace RatCow.MvcFramework.Tools
           }
           catch //this is a quick hack
           {
+            if ( assembly.Contains( ".XmlSerializers" ))  return null; //in a perfect world, sgen would have built this reference. But it's not always there - yet we seem to be able to ignore it! If we dont, it'll cause a StackOverflowException to be raised, as it will recursively hit this method.
+
             result = Assembly.LoadWithPartialName(assembly);
             if (result != null)
               externals.Add(result);

@@ -135,6 +135,8 @@ namespace RatCow.MvcFramework.Tools
     /// <returns></returns>
     public static bool Compile( string className, string outputAssemblyName, CompilerFlags flags, List<String> extraAssemblies )
     {
+      flags.LogDebug( "Enter Compile" );
+
       //we attempt to compile the file provided and then read info from it
       CSharpCodeProvider compiler = new CSharpCodeProvider();
       CompilerParameters compilerParams = new CompilerParameters();
@@ -211,6 +213,7 @@ namespace RatCow.MvcFramework.Tools
         catch (Exception ex)
         {
           System.Diagnostics.Debug.WriteLine(ex.Message);
+          System.Diagnostics.Debug.WriteLine(ex.StackTrace);
         }
 
         //IDictionary dictionary = null;
@@ -241,6 +244,8 @@ namespace RatCow.MvcFramework.Tools
 
         compilerParams.EmbeddedResources.Add( compiledResourceFilename );
 
+        #region Old
+
         //code example I used had this, but it seems to break the compilation if included
         //string[] errors;
         //var provider = new CSharpCodeProvider(); // c#-code compiler
@@ -257,6 +262,8 @@ namespace RatCow.MvcFramework.Tools
         //provider.GenerateCodeFromCompileUnit( cu, tw, options );
         //rescode = tw.ToString();
         //tw.Close();
+
+        #endregion
       }
 
       //The files to compile
@@ -309,6 +316,7 @@ namespace RatCow.MvcFramework.Tools
       }
       catch { } //we don't care, we just don't want to throw an exception here if we compiled a successful assembly
 
+      flags.LogDebug( "Leave Compile" );
       return true;
     }
 
@@ -331,6 +339,10 @@ namespace RatCow.MvcFramework.Tools
         AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler( CurrentDomain_AssemblyResolve );
       }
 
+      /// <summary>
+      /// Possible BUG: if we have a missing assembly, we seem to recursively hit this method till we get a stack overflow. 
+      /// TODO: Need to put in more robust checks! (e.g. cache the resolution attempts and failover if we hit 2 or 3 attempts...)
+      /// </summary>
       public Assembly AddAssembly( string assembly )
       {
         Assembly result = null;
@@ -348,6 +360,8 @@ namespace RatCow.MvcFramework.Tools
           }
           catch //this is a quick hack
           {
+            if ( assembly.Contains( ".XmlSerializers" ))  return null; //in a perfect world, sgen would have built this reference. But it's not always there - yet we seem to be able to ignore it! If we dont, it'll cause a StackOverflowException to be raised, as it will recursively hit this method.
+
             result = Assembly.LoadWithPartialName( assembly );
             if ( result != null )
               externals.Add( result );
