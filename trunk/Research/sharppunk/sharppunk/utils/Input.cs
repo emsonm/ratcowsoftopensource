@@ -25,12 +25,12 @@ namespace sharppunk.Utils
 
         internal static void UpdateKeyboardInput()
         {
-            //keyboardState = Keyboard.GetState();
+            keyboardState = KeyboardState.GetState();
         }
 
         internal static void SaveOldKeyboardInput()
         {
-            //oldKeyboardState = Keyboard.GetState();
+            oldKeyboardState = KeyboardState.GetState();
         }
 
         private static KeyboardState keyboardState = KeyboardState.GetState();

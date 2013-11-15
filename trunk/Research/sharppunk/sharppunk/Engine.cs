@@ -125,6 +125,8 @@ namespace sharppunk
             {
                 ClearScreen();
 
+                Update( (uint)DateTime.Now.Ticks );
+
                 MP.CurrentWorld.Render();
             }
             finally

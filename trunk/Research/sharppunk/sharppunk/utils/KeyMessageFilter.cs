@@ -12,6 +12,10 @@ namespace sharppunk.Utils
 
     public class KeyMessageFilter : System.Windows.Forms.IMessageFilter
     {
+        static KeyMessageFilter m_filter = new KeyMessageFilter();
+        public static KeyMessageFilter Filter { get { return m_filter; } }
+
+
         private Dictionary<System.Windows.Forms.Keys, bool> m_keyTable = new Dictionary<System.Windows.Forms.Keys, bool>();
 
         public Dictionary<System.Windows.Forms.Keys, bool> KeyTable
