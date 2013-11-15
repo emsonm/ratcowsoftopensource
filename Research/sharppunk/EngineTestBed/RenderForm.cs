@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using sharppunk;
+using sharppunk.Utils;
 
 namespace EngineTestBed
 {
@@ -9,6 +10,8 @@ namespace EngineTestBed
         public RenderForm()
         {
             InitializeComponent();
+
+            Application.AddMessageFilter( KeyMessageFilter.Filter );
         }
 
         private Engine _engine = null;
@@ -65,12 +68,21 @@ namespace EngineTestBed
 
                 if (image.Angle > 345) image.Angle = 0;
 
-                (_player.Graphic as sharppunk.graphics.Spritemap).Play("run", true);
+                (_player.Graphic as sharppunk.graphics.Spritemap).Play("run", false);
 
-                if (image.Angle % 180 == 0)
-                    (_player.Graphic as sharppunk.graphics.Image).Flipped = !(_player.Graphic as sharppunk.graphics.Image).Flipped;
+                if ( image.Angle % 180 == 0 )
+                    ( _player.Graphic as sharppunk.graphics.Image ).Flipped = !( _player.Graphic as sharppunk.graphics.Image ).Flipped;
+
+                if ( Input.Check( Keys.A ) )
+                {
+                    _player.Position.X += 1;
+                }
 
             }
+        }
+
+        private void RenderForm_PreviewKeyDown( object sender, PreviewKeyDownEventArgs e )
+        {
         }
     }
 }

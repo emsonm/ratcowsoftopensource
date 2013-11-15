@@ -57,10 +57,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 601);
             this.Controls.Add(this.OutputImage);
+            this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(815, 639);
             this.Name = "RenderForm";
             this.Text = "Render target";
             this.Load += new System.EventHandler(this.RenderForm_Load);
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.RenderForm_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.OutputImage)).EndInit();
             this.ResumeLayout(false);
 
