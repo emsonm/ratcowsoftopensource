@@ -1,0 +1,5 @@
+#The mvcframework is a "WIP" (Work In Progress) MVC Style framework for MS.Net 3.5 using Windows Forms.
+
+# Introduction #
+
+This framework was borne out of me using the ASP.Net MVC for a few weeks and being a Cocoa programmer on the side, and really, really wanting to get to a position where I could split my GUI from the application logic more thoroughly. This framework does that at a very simplistic level - all the logic is in a separate class. There are still references to the various controls on the GUI form, this is unavoidable without creating a wrapper for the basic types used on the forms, but most of the time these types of relationships are harder to break in a clean way. Certainly - nothing going forward forces the user to use the Windows Forms controls directly. This is very much a research project. As such, I'm planning to explore ways of creating more dynamic class wrappers that allow access without assumption.
