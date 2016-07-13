@@ -1,0 +1,364 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* DoodUrlsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* DoodUrlsAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		2899E5220DE3E06400AC0155 /* DoodUrlsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2899E5210DE3E06400AC0155 /* DoodUrlsViewController.xib */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		28D7ACF80DDB3853001CB0EB /* DoodUrlsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* DoodUrlsViewController.m */; };
+		8C6C26AF105C2E4800844D61 /* DoodUrlsFeedLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6C26AE105C2E4800844D61 /* DoodUrlsFeedLoader.m */; };
+		8C6C26B4105C2F4F00844D61 /* DoodUrlsHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C6C26B3105C2F4F00844D61 /* DoodUrlsHolder.m */; };
+		8C9B526310681EC000D84B5D /* libAdMobDevice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9B526110681EC000D84B5D /* libAdMobDevice.a */; };
+		8C9B526410681EC000D84B5D /* libAdMobSimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9B526210681EC000D84B5D /* libAdMobSimulator.a */; };
+		8C9B52781068234E00D84B5D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9B52771068234E00D84B5D /* CoreLocation.framework */; };
+		8C9B52891068253900D84B5D /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9B52881068253900D84B5D /* AddressBook.framework */; };
+		8C9B528F106825A700D84B5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C9B528E106825A700D84B5D /* QuartzCore.framework */; };
+		8CB72C071072ADF800B100FA /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CB72C051072ADF800B100FA /* next.png */; };
+		8CB72C081072ADF800B100FA /* prior.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CB72C061072ADF800B100FA /* prior.png */; };
+		8CE7259B106984D50006BDE4 /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE72599106984D40006BDE4 /* loading.png */; };
+		8CE94D12123C3B5A005955AE /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE94D11123C3B5A005955AE /* Icon.png */; };
+		8CE94D16123C3B5A005955AE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE94D14123C3B5A005955AE /* Default.png */; };
+		8CE94D17123C3B5A005955AE /* MainVewBackdrop.png in Resources */ = {isa = PBXBuildFile; fileRef = 8CE94D15123C3B5A005955AE /* MainVewBackdrop.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* DoodUrlsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoodUrlsAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* DoodUrlsAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoodUrlsAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* DoodUrls.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoodUrls.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2899E5210DE3E06400AC0155 /* DoodUrlsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DoodUrlsViewController.xib; sourceTree = "<group>"; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		28D7ACF60DDB3853001CB0EB /* DoodUrlsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoodUrlsViewController.h; sourceTree = "<group>"; };
+		28D7ACF70DDB3853001CB0EB /* DoodUrlsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoodUrlsViewController.m; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* DoodUrls_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoodUrls_Prefix.pch; sourceTree = "<group>"; };
+		8C6C26AD105C2E4800844D61 /* DoodUrlsFeedLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoodUrlsFeedLoader.h; sourceTree = "<group>"; };
+		8C6C26AE105C2E4800844D61 /* DoodUrlsFeedLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoodUrlsFeedLoader.m; sourceTree = "<group>"; };
+		8C6C26B2105C2F4F00844D61 /* DoodUrlsHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DoodUrlsHolder.h; path = ../DoodUrlsHolder.h; sourceTree = "<group>"; };
+		8C6C26B3105C2F4F00844D61 /* DoodUrlsHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DoodUrlsHolder.m; path = ../DoodUrlsHolder.m; sourceTree = "<group>"; };
+		8C9B525F10681EC000D84B5D /* AdMobDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobDelegateProtocol.h; sourceTree = "<group>"; };
+		8C9B526010681EC000D84B5D /* AdMobView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdMobView.h; sourceTree = "<group>"; };
+		8C9B526110681EC000D84B5D /* libAdMobDevice.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdMobDevice.a; path = Classes/AdMob/libAdMobDevice.a; sourceTree = "<group>"; };
+		8C9B526210681EC000D84B5D /* libAdMobSimulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAdMobSimulator.a; path = Classes/AdMob/libAdMobSimulator.a; sourceTree = "<group>"; };
+		8C9B52771068234E00D84B5D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		8C9B52881068253900D84B5D /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		8C9B528E106825A700D84B5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8CB72C051072ADF800B100FA /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
+		8CB72C061072ADF800B100FA /* prior.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prior.png; sourceTree = "<group>"; };
+		8CDFAC63106AC51F00BAC275 /* DoodUrlsViewAccessProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoodUrlsViewAccessProtocol.h; sourceTree = "<group>"; };
+		8CE72599106984D40006BDE4 /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		8CE94D11123C3B5A005955AE /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		8CE94D14123C3B5A005955AE /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		8CE94D15123C3B5A005955AE /* MainVewBackdrop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MainVewBackdrop.png; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* DoodUrls-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DoodUrls-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				8C9B526310681EC000D84B5D /* libAdMobDevice.a in Frameworks */,
+				8C9B526410681EC000D84B5D /* libAdMobSimulator.a in Frameworks */,
+				8C9B52781068234E00D84B5D /* CoreLocation.framework in Frameworks */,
+				8C9B52891068253900D84B5D /* AddressBook.framework in Frameworks */,
+				8C9B528F106825A700D84B5D /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8C9B525E10681EC000D84B5D /* AdMob */,
+				8C6C26B2105C2F4F00844D61 /* DoodUrlsHolder.h */,
+				8C6C26B3105C2F4F00844D61 /* DoodUrlsHolder.m */,
+				8C6C26AD105C2E4800844D61 /* DoodUrlsFeedLoader.h */,
+				8C6C26AE105C2E4800844D61 /* DoodUrlsFeedLoader.m */,
+				1D3623240D0F684500981E51 /* DoodUrlsAppDelegate.h */,
+				1D3623250D0F684500981E51 /* DoodUrlsAppDelegate.m */,
+				28D7ACF60DDB3853001CB0EB /* DoodUrlsViewController.h */,
+				28D7ACF70DDB3853001CB0EB /* DoodUrlsViewController.m */,
+				8CDFAC63106AC51F00BAC275 /* DoodUrlsViewAccessProtocol.h */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* DoodUrls.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* DoodUrls_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8CB72C051072ADF800B100FA /* next.png */,
+				8CB72C061072ADF800B100FA /* prior.png */,
+				8CE72599106984D40006BDE4 /* loading.png */,
+				8CE94D14123C3B5A005955AE /* Default.png */,
+				8CE94D15123C3B5A005955AE /* MainVewBackdrop.png */,
+				8CE94D11123C3B5A005955AE /* Icon.png */,
+				2899E5210DE3E06400AC0155 /* DoodUrlsViewController.xib */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				8D1107310486CEB800E47090 /* DoodUrls-Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8C9B526210681EC000D84B5D /* libAdMobSimulator.a */,
+				8C9B526110681EC000D84B5D /* libAdMobDevice.a */,
+				8C9B528E106825A700D84B5D /* QuartzCore.framework */,
+				8C9B52881068253900D84B5D /* AddressBook.framework */,
+				8C9B52771068234E00D84B5D /* CoreLocation.framework */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8C9B525E10681EC000D84B5D /* AdMob */ = {
+			isa = PBXGroup;
+			children = (
+				8C9B525F10681EC000D84B5D /* AdMobDelegateProtocol.h */,
+				8C9B526010681EC000D84B5D /* AdMobView.h */,
+			);
+			path = AdMob;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* DoodUrls */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "DoodUrls" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DoodUrls;
+			productName = DoodUrls;
+			productReference = 1D6058910D05DD3D006BFB54 /* DoodUrls.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "DoodUrls" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* DoodUrls */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				2899E5220DE3E06400AC0155 /* DoodUrlsViewController.xib in Resources */,
+				8CE94D12123C3B5A005955AE /* Icon.png in Resources */,
+				8CE94D16123C3B5A005955AE /* Default.png in Resources */,
+				8CE94D17123C3B5A005955AE /* MainVewBackdrop.png in Resources */,
+				8CE7259B106984D50006BDE4 /* loading.png in Resources */,
+				8CB72C071072ADF800B100FA /* next.png in Resources */,
+				8CB72C081072ADF800B100FA /* prior.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* DoodUrlsAppDelegate.m in Sources */,
+				28D7ACF80DDB3853001CB0EB /* DoodUrlsViewController.m in Sources */,
+				8C6C26AF105C2E4800844D61 /* DoodUrlsFeedLoader.m in Sources */,
+				8C6C26B4105C2F4F00844D61 /* DoodUrlsHolder.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DoodUrls_Prefix.pch;
+				INFOPLIST_FILE = "DoodUrls-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Classes/AdMob\"",
+				);
+				PRODUCT_NAME = DoodUrls;
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DoodUrls_Prefix.pch;
+				INFOPLIST_FILE = "DoodUrls-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Classes/AdMob\"",
+				);
+				PRODUCT_NAME = DoodUrls;
+			};
+			name = Release;
+		};
+		8CC087CE106EE0F00054D672 /* Release Dist */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos2.2.1;
+			};
+			name = "Release Dist";
+		};
+		8CC087CF106EE0F00054D672 /* Release Dist */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DoodUrls_Prefix.pch;
+				INFOPLIST_FILE = "DoodUrls-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Classes/AdMob\"",
+				);
+				PRODUCT_NAME = DoodUrls;
+			};
+			name = "Release Dist";
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Matt Emson";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Matt Emson";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = "0CC9E6A0-A622-404B-B63C-AD0F4C1B0658";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0CC9E6A0-A622-404B-B63C-AD0F4C1B0658";
+				SDKROOT = iphoneos2.2.1;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos2.2.1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "DoodUrls" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+				8CC087CF106EE0F00054D672 /* Release Dist */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "DoodUrls" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+				8CC087CE106EE0F00054D672 /* Release Dist */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
