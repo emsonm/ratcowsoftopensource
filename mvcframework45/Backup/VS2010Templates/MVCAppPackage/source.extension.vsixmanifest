@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+ <Identifier Id="MVCAppPackage..e6f773e0-6f7e-4d4a-9eb5-6727de5bc914">
+  <Name>MVCAppPackage</Name>
+  <Author>Ratcow</Author>
+  <Version>1.5</Version>
+  <Description xml:space="preserve">This VSIX installer adds the various RatCow Soft MVCFramework file types and projects to Visual Studio.</Description>
+  <Locale>1033</Locale>
+  <MoreInfoUrl>http://code.google.com/p/ratcowsoftopensource/</MoreInfoUrl>
+  <License>License.txt</License>
+  <GettingStartedGuide>http://code.google.com/p/ratcowsoftopensource/wiki/MvcFramework</GettingStartedGuide>
+  <Icon>logo.png</Icon>
+  <SupportedProducts>
+   <VisualStudio Version="10.0">
+    <Edition>Ultimate</Edition>
+    <Edition>Premium</Edition>
+    <Edition>Pro</Edition>
+   </VisualStudio>
+   <VisualStudio Version="11.0">
+    <Edition>Ultimate</Edition>
+    <Edition>Premium</Edition>
+    <Edition>Pro</Edition>
+   </VisualStudio>
+  </SupportedProducts>
+  <SupportedFrameworkRuntimeEdition MinVersion="3.5" MaxVersion="4.5" />
+ </Identifier>
+ <References />
+ <Content>
+  <Assembly AssemblyName="|RatCow.Templates;AssemblyName|">|RatCow.Templates|</Assembly>
+  <ProjectTemplate>ProjectTemplates</ProjectTemplate>
+  <ItemTemplate>ItemTemplates</ItemTemplate>
+ </Content>
+</Vsix>

@@ -44,6 +44,7 @@ goto:eof
 
 if not exist ..\Controllers\MainFormController.cs ..\tools\mvctool -R -p -v -D MainForm
 else ..\tools\mvctool -R -p -v -d MainForm
+pause
 
 
 

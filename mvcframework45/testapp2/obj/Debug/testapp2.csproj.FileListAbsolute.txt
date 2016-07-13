@@ -1,0 +1,11 @@
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\bin\Debug\testapp2.exe.config
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\bin\Debug\testapp2.exe
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\bin\Debug\testapp2.pdb
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\bin\Debug\RatCow.MvcFramework.dll
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\bin\Debug\RatCow.MvcFramework.pdb
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\obj\Debug\testapp2.csprojResolveAssemblyReference.cache
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\obj\Debug\testapp2.Form1.resources
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\obj\Debug\testapp2.Properties.Resources.resources
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\obj\Debug\testapp2.csproj.GenerateResource.Cache
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\obj\Debug\testapp2.exe
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\testapp2\obj\Debug\testapp2.pdb

@@ -1,0 +1,7 @@
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework.Tools\bin\Debug\RatCow.MvcFramework.Tools.dll
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework.Tools\bin\Debug\RatCow.MvcFramework.Tools.pdb
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework.Tools\bin\Debug\log4net.dll
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework.Tools\bin\Debug\log4net.xml
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework.Tools\obj\Debug\RatCow.MvcFramework.Tools.csprojResolveAssemblyReference.cache
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework.Tools\obj\Debug\RatCow.MvcFramework.Tools.dll
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework.Tools\obj\Debug\RatCow.MvcFramework.Tools.pdb

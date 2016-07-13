@@ -1,0 +1,5 @@
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework\bin\Debug\RatCow.MvcFramework.dll
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework\bin\Debug\RatCow.MvcFramework.pdb
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework\obj\Debug\RatCow.MvcFramework.csprojResolveAssemblyReference.cache
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework\obj\Debug\RatCow.MvcFramework.dll
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\RatCow.MvcFramework\obj\Debug\RatCow.MvcFramework.pdb

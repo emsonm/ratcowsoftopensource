@@ -1,0 +1,9 @@
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\bin\Debug\mvctool.exe.config
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\bin\Debug\mvctool.exe
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\bin\Debug\mvctool.pdb
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\bin\Debug\log4net.dll
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\bin\Debug\RatCow.MvcFramework.Tools.dll
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\bin\Debug\RatCow.MvcFramework.Tools.pdb
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\bin\Debug\log4net.xml
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\obj\Debug\mvctool.exe
+C:\Users\matt\Documents\GitHub\ratcowsoftopensource\mvcframework45\MvcTool\obj\Debug\mvctool.pdb

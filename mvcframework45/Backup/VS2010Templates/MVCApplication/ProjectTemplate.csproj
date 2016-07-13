@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <PropertyGroup>
+  <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+  <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  <ProductVersion>8.0.30703</ProductVersion>
+  <SchemaVersion>2.0</SchemaVersion>
+  <ProjectGuid>$guid1$</ProjectGuid>
+  <OutputType>WinExe</OutputType>
+  <AppDesignerFolder>Properties</AppDesignerFolder>
+  <RootNamespace>$safeprojectname$</RootNamespace>
+  <AssemblyName>$safeprojectname$</AssemblyName>
+  <TargetFrameworkVersion>v$targetframeworkversion$</TargetFrameworkVersion>
+  <FileAlignment>512</FileAlignment>
+ </PropertyGroup>
+ <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <DebugSymbols>true</DebugSymbols>
+  <DebugType>full</DebugType>
+  <Optimize>false</Optimize>
+  <OutputPath>bin\Debug\</OutputPath>
+  <DefineConstants>DEBUG;TRACE</DefineConstants>
+  <ErrorReport>prompt</ErrorReport>
+  <WarningLevel>4</WarningLevel>
+ </PropertyGroup>
+ <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <DebugType>pdbonly</DebugType>
+  <Optimize>true</Optimize>
+  <OutputPath>bin\Release\</OutputPath>
+  <DefineConstants>TRACE</DefineConstants>
+  <ErrorReport>prompt</ErrorReport>
+  <WarningLevel>4</WarningLevel>
+ </PropertyGroup>
+ <ItemGroup>
+  <Reference Include="System"/>
+  $if$ ($targetframeworkversion$ >= 3.5)
+  <Reference Include="System.Core"/>
+  <Reference Include="System.Xml.Linq"/>
+  <Reference Include="System.Data.DataSetExtensions"/>
+  $endif$
+  $if$ ($targetframeworkversion$ >= 4.0)
+  <Reference Include="Microsoft.CSharp"/>
+  $endif$
+  <Reference Include="System.Data"/>
+  <Reference Include="System.Xml"/>
+  <Reference Include="System.Drawing" />
+  <Reference Include="System.Windows.Forms" />
+  <Reference Include="RatCow.MvcFramework, Culture=neutral, processorArchitecture=MSIL">
+   <HintPath>Libraries\RatCow.MvcFramework.dll</HintPath>
+  </Reference>
+  <Reference Include="RatCow.MvcFramework.Mapping, Culture=neutral, processorArchitecture=MSIL" >
+   <HintPath>Libraries\RatCow.MvcFramework.Mapping.dll</HintPath>
+  </Reference>
+ </ItemGroup>
+ <ItemGroup>
+  <Content Include="Libraries\RatCow.MvcFramework.dll">
+  </Content>
+  <Content Include="Libraries\RatCow.MvcFramework.Mapping.dll">
+  </Content>
+ </ItemGroup>
+ <ItemGroup>
+  <Compile Include="Controllers\Form1Controller.cs" />
+  <Compile Include="Controllers\Form1Controller.Designer.cs">
+   <DependentUpon>Form1Controller.cs</DependentUpon>
+  </Compile>
+  <Compile Include="Views\Form1.cs">
+   <SubType>Form</SubType>
+  </Compile>
+  <Compile Include="Views\Form1.Designer.cs">
+   <DependentUpon>Form1.cs</DependentUpon>
+  </Compile>
+  <Compile Include="Program.cs" />
+  <Compile Include="Properties\AssemblyInfo.cs" />
+  <EmbeddedResource Include="Properties\Resources.resx">
+   <Generator>ResXFileCodeGenerator</Generator>
+   <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+   <SubType>Designer</SubType>
+  </EmbeddedResource>
+  <EmbeddedResource Include="Views\Form1.resx">
+   <DependentUpon>Form1.cs</DependentUpon>
+  </EmbeddedResource>
+  <Compile Include="Properties\Resources.Designer.cs">
+   <AutoGen>True</AutoGen>
+   <DependentUpon>Resources.resx</DependentUpon>
+  </Compile>
+  <None Include="Views\form1.mvcmap">
+    <DependentUpon>Form1.cs</DependentUpon>
+  </None>
+  <None Include="Views\compile.bat" />
+  <None Include="tools\mvctool.exe" />
+  <None Include="tools\RatCow.MvcFramework.Tools.dll" />
+  <None Include="Properties\Settings.Designer.cs" />
+  <None Include="Properties\Settings.settings" />
+ </ItemGroup>
+ <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+ <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+ <PropertyGroup>
+  <PreBuildEvent>
+   cd "$(ProjectDir)\views"
+   "$(ProjectDir)\views\compile.bat"
+  </PreBuildEvent>
+ </PropertyGroup>
+
+</Project>
