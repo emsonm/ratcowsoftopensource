@@ -1,0 +1,2 @@
+#Async Call
+A demo project I wrote to demonstrate how to call an async method sync - which happens a lot if you are integrating Win Forms apps with event based code. As the UI rund in a specific thread, one must use some sync method or another to make the call, otherwise an exception is thrown.

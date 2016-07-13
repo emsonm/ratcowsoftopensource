@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>NLua</id>
+    <version>1.3.2.1</version>
+    <title>NLua is the bind between Lua and the .NET</title>
+    <authors>viniciusjarina</authors>
+    <owners>viniciusjarina</owners>
+    <projectUrl>http://nlua.org/</projectUrl>
+    <iconUrl>https://secure.gravatar.com/avatar/77ecf0fb9d8419be7715c6e822e66562?s=32</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>NLua (Windows) - x86 and x64
+This package is for Windows only, to use NLua in other platforms check NuGet packages.</description>
+    <summary>NLua allow use Lua from C#, using Windows, Linux, Mac, iOS , Android, Windows Phone 7 and Windows Phone 8.</summary>
+    <releaseNotes>NLua 1.3.1
+Added support to WinRT (Windows Phone 8)
+Added support to Unity3D
+Update Lua 5.2.3 with latest patches
+Fixed support to Unicode strings (UTF-8)
+Fixed x86/x64 issue.
+Fixed overload issue
+Fixed support to Debug and DebugHook APIs
+Added support to operators call
+Fixed access to keys with .
+Fixed issue with ValueTypes</releaseNotes>
+    <copyright>Copyright (c) 2014 Vinicius Jarina (viniciusjarina@gmail.com)</copyright>
+    <language />
+    <tags>Lua Script NLua LuaInterface</tags>
+  </metadata>
+</package>

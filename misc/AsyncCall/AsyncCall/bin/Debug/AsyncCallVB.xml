@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+AsyncCallVB
+</name>
+</assembly>
+<members>
+<member name="T:AsyncCallVB.SyncAsyncAction`1">
+ <summary>
+ Make an async call look like a sync call
+ </summary>
+</member>
+<member name="M:AsyncCallVB.SyncAsyncAction`1.CallAction``1(AsyncCallVB.SyncAsyncAction{``0}.SyncAsyncActionHandlerDelegate{``0},``0)">
+ <summary>
+ Call this to make an sync call from an async action
+ </summary>
+</member>
+<member name="M:AsyncCallVB.SyncAsyncAction`1.CallActionAsync``1(AsyncCallVB.SyncAsyncAction{``0}.SyncAsyncActionHandlerDelegate{``0},``0)">
+ <summary>
+ Call this to make an async call
+ </summary>
+</member>
+<member name="M:AsyncCallVB.SyncAsyncAction`1.CallAction(System.Object,`0)">
+ <summary>
+ Sync call
+ </summary>
+</member>
+<member name="M:AsyncCallVB.SyncAsyncAction`1.CallActionAsync(System.Object,`0)">
+ <summary>
+ Async call
+ </summary>
+</member>
+<member name="M:AsyncCallVB.SyncAsyncAction`1.CallAction(System.Object,`0,System.Boolean)">
+ <summary>
+ Will either call async or sync, depending on what the caller specified.
+ </summary>
+</member>
+<member name="T:AsyncCallVB.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:AsyncCallVB.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:AsyncCallVB.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+</members>
+</doc>
