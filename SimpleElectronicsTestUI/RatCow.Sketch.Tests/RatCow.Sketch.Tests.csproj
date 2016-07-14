@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="LCDTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UITest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RatCow.Sketch.UI\RatCow.Sketch.UI.csproj">

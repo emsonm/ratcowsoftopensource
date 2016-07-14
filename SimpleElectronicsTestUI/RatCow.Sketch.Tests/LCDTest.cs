@@ -3,22 +3,8 @@ using RatCow.Sketch;
 
 namespace RatCow.Sketch.Tests
 {
-    public class LCDTest : Sketch
-    {
-        ILcd lcd = null;
-
-        public override void InitInterface<T>(T inf)
-        {
-          if (typeof(T) == typeof(ILcd))
-          {
-              lcd = (ILcd)inf;
-          }
-          else
-              base.InitInterface(inf);
-        }
-
-        //LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
-
+    public class LCDTest : LCDSketch
+    {        
         const int buttonPin1 = 1;
         const int ledPin1 = 4;
 

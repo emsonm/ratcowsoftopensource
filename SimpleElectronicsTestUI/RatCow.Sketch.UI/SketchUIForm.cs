@@ -160,15 +160,17 @@ namespace RatCow.Sketch.UI
 
             if (mode == 1)
             {
-                _pins[id - 1].MouseDown += delegate (object sender, MouseEventArgs e)
+                _pins[id - 1].MouseDown += (s, e) =>
                 {
                     lock (_outputFlags)
                     {
-                        _outputFlags[id - 1] = true; // set high
+                        //the button needs debouncing here, otherwise the key repeat will 
+                        //make this event happen multiple times...
+                        _outputFlags[id - 1] = true; // set high                        
                     }
                 };
 
-                _pins[id - 1].MouseUp += delegate (object sender, MouseEventArgs e)
+                _pins[id - 1].MouseUp += (s, e) =>
                 {
                     lock (_outputFlags)
                     {
