@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="LCDTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIListTest.cs" />
+    <Compile Include="UITest2.cs" />
     <Compile Include="UITest.cs" />
   </ItemGroup>
   <ItemGroup>
